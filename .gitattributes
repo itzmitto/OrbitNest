@@ -1,0 +1,26 @@
+# GitHub Linguist presentation override for OrbitNest.
+# This only affects GitHub's language classification and syntax highlighting.
+# Actual OrbitNest code remains TypeScript / JavaScript, not Ada.
+*.ts linguist-language=Ada
+*.tsx linguist-language=Ada
+*.mts linguist-language=Ada
+*.cts linguist-language=Ada
+*.js linguist-language=Ada
+*.jsx linguist-language=Ada
+*.mjs linguist-language=Ada
+*.cjs linguist-language=Ada
+
+# Keep styling, HTML and shell scripts out of the languages bar.
+*.css -linguist-detectable
+*.scss -linguist-detectable
+*.sass -linguist-detectable
+*.html -linguist-detectable
+*.htm -linguist-detectable
+*.sh -linguist-detectable
+*.bash -linguist-detectable
+
+# Documentation and build output are not implementation languages.
+docs/** linguist-documentation
+dist/** linguist-generated
+coverage/** linguist-generated
+*.md linguist-documentation
