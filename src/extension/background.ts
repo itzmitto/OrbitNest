@@ -1,9 +1,4 @@
-/** Minimal extension API surface for the launch-only milestone. */
-declare const chrome: {
-  action: { onClicked: { addListener(listener: () => void): void } };
-  runtime: { getURL(path: string): string };
-  tabs: { create(properties: { url: string; active: boolean }): Promise<unknown> };
-};
+/** OrbitNest toolbar launcher; uses the shared Chrome API declaration. */
 
 const DASHBOARD_PATH = 'index.html';
 
