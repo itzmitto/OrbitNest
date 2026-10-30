@@ -1,4 +1,8 @@
 import { hasBrowserTabs } from './api';
+export async function toggleMuted(tabId: number, muted: boolean): Promise<boolean> {
+  if(!hasBrowserTabs())return false;
+  try{await chrome.tabs.update(tabId,{muted});return true;}catch{return false;}
+}
 export async function closeBrowserTab(tabId: number): Promise<boolean> {
   if(!hasBrowserTabs())return false;
   try { await chrome.tabs.remove(tabId); return true; } catch { return false; }
