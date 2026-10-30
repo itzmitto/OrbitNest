@@ -26,3 +26,4 @@
 .favorites-filter{font-size:12px;color:#ceddff;display:flex;align-items:center;gap:7px;white-space:nowrap}.favorites-filter input{accent-color:#9fb2ff;width:15px;height:15px}
 .close-btn{position:absolute;right:11px;top:48px;border:1px solid #fb8d9b55;border-radius:9px;background:#49283870;color:#ffadb9;width:29px;height:27px;font-size:19px}.close-btn:hover{background:#7b3448}
 .mute-btn{position:absolute;right:45px;top:48px;border:1px solid #ffffff20;border-radius:9px;background:#162d4970;color:#aac9f5;width:29px;height:27px;font-size:15px}
+.pin-btn{position:absolute;right:79px;top:48px;border:1px solid #ffffff20;border-radius:9px;background:#162d4970;color:#a3c8ed;width:29px;height:27px;font-size:16px}
