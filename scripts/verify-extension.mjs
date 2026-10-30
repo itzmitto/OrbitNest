@@ -13,7 +13,7 @@ assert.equal(manifest.background.service_worker, 'background.js');
 assert.equal(manifest.background.type, 'module');
 assert.ok(manifest.action.default_title, 'Toolbar action has no title');
 assert.ok(!('default_popup' in manifest.action), 'Popup prevents onClicked from firing');
-assert.ok(!('permissions' in manifest), 'Unexpected permission in early extension');
+assert.deepEqual(manifest.permissions, ['tabs'], 'Expected only tabs metadata permission');
 assert.ok(!('host_permissions' in manifest), 'Unexpected host permission');
 assert.ok(!('content_scripts' in manifest), 'Unexpected page content scripts');
 

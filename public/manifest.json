@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "OrbitNest — Browser Tab Universe",
+  "name": "OrbitNest \u2014 Browser Tab Universe",
   "short_name": "OrbitNest",
   "version": "0.2.0",
-  "description": "Your tabs. Your universe. Open the OrbitNest tab dashboard (early preview).",
+  "description": "Visualize and manage open browser tabs locally in OrbitNest.",
   "action": {
     "default_title": "Open OrbitNest Universe",
     "default_icon": {
@@ -20,5 +20,8 @@
   "background": {
     "service_worker": "background.js",
     "type": "module"
-  }
+  },
+  "permissions": [
+    "tabs"
+  ]
 }
