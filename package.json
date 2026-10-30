@@ -1,13 +1,14 @@
 {
   "name": "orbitnest",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:extension": "node scripts/verify-extension.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

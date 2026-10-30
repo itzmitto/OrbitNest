@@ -6,7 +6,7 @@ The 120 work packages in the original project plan are **candidates**, not a PR 
 
 | Phase | Scope | Status |
 | --- | --- | --- |
-| 01 | Repository and developer tooling | In progress |
+| 01 | Repository and developer tooling | In progress (MV3 installer added in PR #002) |
 | 02 | Tabs and windows APIs, state updates | Planned |
 | 03 | Dashboard layout, navigation and themes | Planned |
 | 04 | Planet rendering and favicons | Planned |
@@ -22,11 +22,11 @@ The 120 work packages in the original project plan are **candidates**, not a PR 
 ## Initial PR sequence
 
 1. `chore: initialize OrbitNest workspace` — Vite, React, TypeScript and build scripts.
-2. `chore: add Manifest V3 extension config` — manifest and bundle output.
+2. `chore: add Manifest V3 extension config` — manifest, installable bundle, PNG icons, basic launcher and package verification.
 3. `chore: configure linting and formatting` — ESLint and Prettier.
 4. `test: establish unit test infrastructure` — Vitest and initial tests.
 5. `ci: add pull request validation workflow` — typecheck, lint, test, build.
-6. `feat: add extension dashboard launcher` — browser button opens dashboard.
+6. `feat: improve extension dashboard launcher` — reuse an existing dashboard tab and focus its window.
 7. `feat: create responsive dashboard shell` — real interface layout.
 8. `feat: implement browser tab discovery` — query tab metadata locally.
 9. `feat: normalize browser tab metadata` — deterministic model and fallbacks.

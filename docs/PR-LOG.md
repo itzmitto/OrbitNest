@@ -1,7 +1,10 @@
 # Pull Request Log
 
-Only record pull requests after they actually exist. Never mark a PR merged before it is merged.
+This log records project milestones, not GitHub achievement eligibility. Verify status on GitHub rather than assuming a PR is merged.
 
-| PR | Title | Status | Evidence |
+| PR | Title | Tracking status | Evidence |
 | --- | --- | --- | --- |
-| — | PR #001 workspace — local preparation | Awaiting GitHub publication | Local build results shown by apply.sh |
+| [#1](https://github.com/itzmitto/OrbitNest/pull/1) | `chore: initialize OrbitNest workspace` | Present in `main` (required before PR #002) | `npm run typecheck` and `npm run build` from user terminal |
+| #2 (planned) | `chore: add Manifest V3 extension config` | Locally prepared by the PR #002 bundle | Typecheck, build and `verify:extension` run by bundle; inspect local output |
+
+Update the PR #2 row with its real link and merge status after publication and review.
