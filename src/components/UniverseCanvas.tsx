@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { TabRecord } from '../domain/tab';
 import { drawUniverse, type PlanetPoint } from '../graph/draw';
 import { layoutPlanets } from '../graph/layout';
+import { hitPlanet } from '../graph/hit';
 export function UniverseCanvas({ tabs, selected, onOpen }: { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void }) {
   const ref=useRef<HTMLCanvasElement>(null);
   const points=useRef<PlanetPoint[]>([]);
@@ -17,5 +18,5 @@ export function UniverseCanvas({ tabs, selected, onOpen }: { tabs: TabRecord[]; 
     };
     render();const observer=new ResizeObserver(render);observer.observe(canvas);return()=>observer.disconnect();
   },[tabs,selected]);
-  return <canvas ref={ref} className="universe-canvas" role="img" aria-label={`Universe preview showing ${tabs.length} planets. Use Galaxy List for keyboard access.`} onClick={()=>{void onOpen;}} />;
+  return <canvas ref={ref} className="universe-canvas" role="img" aria-label={`Universe preview showing ${tabs.length} planets. Use Galaxy List for keyboard access.`} onClick={(event)=>{const box=event.currentTarget.getBoundingClientRect();const planet=hitPlanet(points.current,event.clientX-box.left,event.clientY-box.top);if(planet)onOpen(planet.tab);}} />;
 }
