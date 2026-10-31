@@ -75,20 +75,35 @@ void main() {
     // Verdant atmospheric forest planet.
     base=mix(vec3(0.017,0.18,0.17),vec3(0.10,0.74,0.50),smoothstep(0.31,0.66,n));
     base=mix(base,vec3(0.57,0.93,0.76),smoothstep(0.77,0.95,detail)*0.26);
-  } else {
-    // Violet crystalline atmosphere.
+  } else if(uKind==6){
+    // Violet crystal world with fine luminous veins.
     float lattice=abs(sin(p.x*28.0+p.z*16.0+n*5.0));
     base=mix(vec3(0.20,0.12,0.47),vec3(0.82,0.50,0.96),smoothstep(0.34,0.73,n));
     base+=vec3(0.18,0.12,0.23)*pow(lattice,18.0);
+  } else if(uKind==7){
+    // A turbulent purple-blue nebula gas world.
+    float swirls=sin(p.y*19.0+n*7.5+sin(p.z*12.0)*1.6);
+    base=mix(vec3(0.19,0.07,0.41),vec3(0.48,0.32,0.94),smoothstep(-0.78,0.7,swirls));
+    base=mix(base,vec3(0.24,0.89,0.83),smoothstep(0.71,0.92,detail)*0.64);
+  } else if(uKind==8){
+    // A rocky moon with craters and mineral dust.
+    float craters=pow(abs(sin(n*36.0+detail*17.0)),18.0);
+    base=mix(vec3(0.12,0.18,0.31),vec3(0.73,0.78,0.87),smoothstep(0.17,0.8,n));
+    base-=vec3(0.12,0.15,0.18)*craters;
+  } else {
+    // Electric aurora world with irregular polar arcs.
+    float arcs=sin(p.y*31.0 + sin(p.x*14.0)*2.1 + n*8.0);
+    base=mix(vec3(0.027,0.21,0.27),vec3(0.06,0.65,0.64),smoothstep(-0.6,0.8,arcs));
+    base+=vec3(0.12,0.37,0.62)*pow(detail,2.5)*0.9;
   }
   vec3 normal=normalize(vNormal);
   vec3 lightDir=normalize(vec3(-0.55,0.67,1.0));
   float lit=max(dot(normal,lightDir),0.0);
-  float ambient=0.24+lit*0.85;
+  float ambient=0.19+lit*0.9;
   float softShadow=pow(1.0-lit,2.1)*0.14;
   float rim=pow(1.0-max(dot(normal,vec3(0,0,1)),0.0),3.0);
-  vec3 glow=(uKind==2?vec3(1.0,0.18,0.05):vec3(0.22,0.65,1.0));
-  vec3 shaded=base*(ambient-softShadow)+glow*rim*0.46;
+  vec3 glow=(uKind==2?vec3(1.0,0.18,0.05):(uKind==9?vec3(0.10,1.0,0.74):vec3(0.22,0.65,1.0)));
+  vec3 shaded=base*(ambient-softShadow)+glow*rim*0.64;
   shaded+=vec3(1.0)*pow(max(dot(reflect(-lightDir,normal),vec3(0,0,1)),0.0),28.0)*0.17;
   shaded+=vec3(0.13,0.19,0.3)*uSelected*0.42;
   colorOut=vec4(shaded,1.0);

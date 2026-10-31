@@ -4,6 +4,7 @@ import type { TabRecord } from '../domain/tab';
 import { createPlanetNodes, findPlanet, type PlanetNode } from '../graph/planet-system';
 import { PlanetRenderer } from '../graph/planet-webgl';
 import { drawUniverse } from '../graph/draw';
+import { PlanetCatalog } from './PlanetCatalog';
 import { layoutPlanets } from '../graph/layout';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -21,12 +22,20 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
+  const [pageVisible, setPageVisible] = useState(() => typeof document === 'undefined' || document.visibilityState === 'visible');
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglFallback, setWebglFallback] = useState(false);
   const nodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset), [tabs, viewport, zoom, offset]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === selected);
-  const motionStopped = paused || reducedMotion;
+  const motionStopped = paused || reducedMotion || !pageVisible;
+
+  // A background extension dashboard should never keep rendering unseen frames.
+  useEffect(() => {
+    const update = () => setPageVisible(document.visibilityState === 'visible');
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -151,7 +160,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           ))}
         </div>
         <div className="planetarium-hud">
-          <span className="planetarium-hud-title">UNIVERSE CONTROLS <em>{webglFallback ? '2D FALLBACK' : 'LIVE 3D'}</em></span>
+          <span className="planetarium-hud-title">MISSION NAVIGATION <em>{webglFallback ? '2D FALLBACK' : 'LIVE 3D'}</em></span>
           <div className="planetarium-zoom-actions" role="group" aria-label="Universe controls">
             <button type="button" aria-label="Zoom out" onClick={() => changeZoom(-0.2)}>−</button>
             <span>{Math.round(zoom * 100)}%</span>
@@ -164,6 +173,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
         {tabs.length === 0 && <div className="planetarium-empty">No planets in this sector. Open a tab or change your filters.</div>}
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
+      <PlanetCatalog tabs={tabs} onOpen={onOpen} />
       <div className="planetarium-footer"><span>ORBITAL MAP / LIVE TAB NETWORK</span><span>PRIVATE BY DESIGN · YOUR TABS STAY IN YOUR BROWSER</span></div>
     </div>
   );

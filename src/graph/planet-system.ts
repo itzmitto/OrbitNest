@@ -1,7 +1,7 @@
 import type { TabRecord } from '../domain/tab';
 
-export type PlanetKind = 'ocean' | 'gas' | 'volcanic' | 'ice' | 'desert' | 'forest' | 'amethyst';
-export const PLANET_KINDS: readonly PlanetKind[] = ['ocean', 'gas', 'volcanic', 'ice', 'desert', 'forest', 'amethyst'];
+export type PlanetKind = 'ocean' | 'gas' | 'volcanic' | 'ice' | 'desert' | 'forest' | 'amethyst' | 'nebula' | 'moon' | 'aurora';
+export const PLANET_KINDS: readonly PlanetKind[] = ['ocean', 'gas', 'volcanic', 'ice', 'desert', 'forest', 'amethyst', 'nebula', 'moon', 'aurora'];
 export type PlanetNode = {
   tab: TabRecord;
   id: number;
@@ -49,7 +49,7 @@ export function createPlanetNodes(tabs: readonly TabRecord[], width: number, hei
       const kindIndex = domainHash % PLANET_KINDS.length;
       const angle = -Math.PI / 2 + (i + ((orbit % 2) * 0.42)) * 2 * Math.PI / count;
       const eccentricity = 0.96 + (seed % 100) / 1300;
-      const radius = Math.max(13, Math.min(37, (compact ? 26 : 33) - orbit * 2.5 + (seed % 8)));
+      const radius = Math.max(17, Math.min(47, (compact ? 28 : 39) - orbit * 2 + (seed % 9)));
       const x = cx + Math.cos(angle) * rx * eccentricity * zoom;
       const y = cy + Math.sin(angle) * ry * eccentricity * zoom;
       result.push({
@@ -59,7 +59,7 @@ export function createPlanetNodes(tabs: readonly TabRecord[], width: number, hei
         phase: (seed % 360) * Math.PI / 180,
         speed: 0.11 + (seed % 80) / 260,
         seed: (seed % 997) / 997,
-        ringed: kindIndex === 1 || (seed % 9 === 0 && kindIndex !== 2),
+        ringed: kindIndex === 1 || kindIndex === 7 || (seed % 11 === 0 && kindIndex !== 2),
       });
     }
     cursor += count;
