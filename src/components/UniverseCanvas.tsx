@@ -5,7 +5,7 @@ import { createPlanetNodes, findPlanet, type PlanetNode } from '../graph/planet-
 import { PlanetRenderer } from '../graph/planet-webgl';
 import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
-import { centerOnPlanet } from '../graph/camera';
+import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -103,6 +103,21 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     return () => window.cancelAnimationFrame(frameId);
   }, [tabs, nodes, selected, viewport, motionStopped, webglFallback]);
 
+  // Native non-passive wheel listener: prevent page scrolling only over the planet map.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const wheel = (event: WheelEvent) => {
+      if (event.ctrlKey) return; // Preserve browser pinch gestures.
+      event.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const next = zoomAtPoint(zoom, offset, { x: event.clientX - rect.left, y: event.clientY - rect.top }, viewport.width, viewport.height, event.deltaY);
+      setZoom(next.zoom);
+      setOffset(next.offset);
+    };
+    canvas.addEventListener('wheel', wheel, { passive: false });
+    return () => canvas.removeEventListener('wheel', wheel);
+  }, [zoom, offset, viewport]);
   const changeZoom = (delta: number) => setZoom(previous => Math.max(0.55, Math.min(2.25, Math.round((previous + delta) * 100) / 100)));
   const pickNode = (event: PointerEvent<HTMLCanvasElement>): PlanetNode | undefined => {
     const rect = event.currentTarget.getBoundingClientRect();
