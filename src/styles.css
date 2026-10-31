@@ -430,3 +430,10 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   outline-offset: 3px;
   box-shadow: 0 0 0 6px rgba(74, 172, 236, .18);
 }
+
+/* Inert when pointer hover is unavailable on touch devices. */
+@media (hover: hover) {
+  .universe-app button:not(:disabled) { transition: transform .16s ease, border-color .16s ease, filter .16s ease; }
+  .universe-app button:not(:disabled):hover { filter: brightness(1.12); }
+  .planetarium-zoom-actions button:not(:disabled):active { transform: scale(.96); }
+}
