@@ -7,6 +7,7 @@ import { PlanetRenderer } from '../graph/planet-webgl';
 import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
 import { Starfield } from './Starfield';
+import { PlanetDetails } from './PlanetDetails';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
 import { useScene } from '../hooks/useScene';
@@ -226,6 +227,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
         {nodes.length === 0 && <div className="planetarium-empty">No planets of this type in this sector. Choose another filter.</div>}
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
+      <PlanetDetails tab={(hovered || active)?.tab} onOpen={onOpen} />
       <PlanetCatalog tabs={nodes.map(node => node.tab)} onOpen={onOpen} />
       <div className="planetarium-footer"><span>ORBITAL MAP / LIVE TAB NETWORK</span><span>PRIVATE BY DESIGN · YOUR TABS STAY IN YOUR BROWSER</span></div>
     </div>

@@ -375,3 +375,12 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planet-family-picker {display:flex;gap:12px;align-items:center;padding:10px 19px 16px;color:#8fa5c6;font-weight:800;letter-spacing:1.3px;font-size:10px}
 .planet-family-picker select {background:#111b33;border:1px solid #94a8e93b;border-radius:10px;color:#e6f1ff;padding:10px 12px;min-width:160px}
 .planet-family-picker span:last-child {margin-left:auto;color:#83eedb;font-size:10px;text-transform:uppercase}
+
+
+.world-detail {display:grid;gap:9px;margin:18px 18px 4px;padding:19px 21px;background:linear-gradient(100deg,#192449cc,#10192fbd);border:1px solid #a9b4ff30;border-radius:14px;box-shadow:inset 0 1px #ffffff10}
+.world-detail>span {color:#81ecda;letter-spacing:1.8px;font-weight:800;font-size:9px}
+.world-detail strong {font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#f1f3ff}
+.world-detail p {margin:0;color:#9daccc;font-size:12px}
+.world-detail p b {color:#61739a}
+.world-detail button {width:max-content;background:#1d3558;border:1px solid #8bdfe852;color:#cdfbf1;padding:9px 13px;border-radius:9px;font-weight:700;font-size:11px}
+.world-detail button:hover {background:#294c6b}
