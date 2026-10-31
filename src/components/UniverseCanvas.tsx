@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { PointerEvent } from 'react';
+import type { PointerEvent, KeyboardEvent } from 'react';
 import type { TabRecord } from '../domain/tab';
 import { createPlanetNodes, findPlanet, type PlanetNode } from '../graph/planet-system';
 import { PlanetRenderer } from '../graph/planet-webgl';
@@ -7,6 +7,7 @@ import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
+import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -146,6 +147,14 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     const node = pickNode(event);
     if (node) onOpen(node.tab);
   };
+  const onCanvasKeyDown = (event: KeyboardEvent<HTMLCanvasElement>) => {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) {
+      event.preventDefault();
+      setOffset(previous => keyboardCameraOffset(event.key as NavigationCommand, previous));
+    } else if (event.key === '+' || event.key === '=') { event.preventDefault(); changeZoom(0.2); }
+    else if (event.key === '-') { event.preventDefault(); changeZoom(-0.2); }
+    else if (event.key === '0') { event.preventDefault(); setZoom(1); setOffset({ x: 0, y: 0 }); }
+  };
   const ringCount = Math.min(8, Math.max(2, Math.ceil(Math.sqrt(tabs.length / 3.5))));
   const rings = Array.from({ length: ringCount }, (_, index) => {
     const scale = (index + 1) / ringCount;
@@ -164,7 +173,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           {rings.map((ring, index) => <ellipse key={index} cx={viewport.width / 2 + offset.x} cy={viewport.height / 2 + offset.y} rx={ring.rx} ry={ring.ry} fill="none" stroke="url(#orbitGlow)" strokeWidth="1" strokeDasharray={index % 2 ? '3 7' : undefined} />)}
         </svg>
         <div className="planetarium-core" aria-hidden="true" style={{ left: viewport.width / 2 + offset.x, top: viewport.height / 2 + offset.y }}><span /></div>
-        <canvas key={webglFallback ? 'canvas-2d' : 'canvas-3d'} ref={canvasRef} className="planetarium-webgl" aria-label={`${tabs.length} rotating planet representations of open tabs. Choose Galaxy List for keyboard navigation.`} role="img"
+        <canvas key={webglFallback ? 'canvas-2d' : 'canvas-3d'} ref={canvasRef} className="planetarium-webgl" aria-label={`${tabs.length} rotating planet representations of open tabs. Use arrow keys to pan, plus or minus to zoom, zero to reset. Choose Galaxy List to open tabs with the keyboard.`} role="group" tabIndex={0} onKeyDown={onCanvasKeyDown}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}
           onPointerCancel={() => { dragRef.current = null; }} onPointerLeave={() => setHoveredId(null)} />
         <div className="planetarium-label-layer" aria-hidden="true">

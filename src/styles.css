@@ -350,3 +350,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 /* The focus control recenters the orbit on the actual active browser tab. */
 .planetarium-zoom-actions button[title="Center on the active browser tab"] { color:#97f1d8; border-color:#8ff6d53e; }
 .planetarium-zoom-actions button[title="Center on the active browser tab"]:hover:not(:disabled) { background:#275c66; }
+
+
+/* Focused keyboard navigation remains discoverable on the visual map. */
+.planetarium-webgl:focus-visible { outline:2px solid #81f4d8; outline-offset:-5px; border-radius:12px; }
