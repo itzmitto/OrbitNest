@@ -363,3 +363,10 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-shell[data-scene="starlight"] .planetarium-stage {background:radial-gradient(ellipse at 45% 40%,#254d6980,transparent 58%),radial-gradient(ellipse at 83% 82%,#25325d8c,transparent 55%),#06111c}
 .planetarium-shell[data-scene="nebula"] .planetarium-nebula {filter:hue-rotate(65deg) saturate(1.4)}
 .planetarium-shell[data-scene="starlight"] .planetarium-nebula {filter:hue-rotate(-25deg) brightness(1.35)}
+
+
+/* Stable star positions: motion is only a subtle luminance pulse. */
+.orbit-starfield {position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.orbit-star {position:absolute;display:block;border-radius:50%;background:#e4f2ff;box-shadow:0 0 9px 1px #b8caff7a;animation:orbit-twinkle 6s ease-in-out infinite alternate}
+@keyframes orbit-twinkle {from{filter:brightness(.58);transform:scale(.8)}to{filter:brightness(1.65);transform:scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.orbit-star{animation:none!important}}

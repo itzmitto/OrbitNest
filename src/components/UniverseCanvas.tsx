@@ -5,6 +5,7 @@ import { createPlanetNodes, findPlanet, type PlanetNode } from '../graph/planet-
 import { PlanetRenderer } from '../graph/planet-webgl';
 import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
+import { Starfield } from './Starfield';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
 import { useScene } from '../hooks/useScene';
@@ -174,6 +175,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
       </div>
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
+        <Starfield density={112} />
         <svg className="planetarium-orbits" viewBox={`0 0 ${viewport.width} ${viewport.height}`} aria-hidden="true">
           <defs><linearGradient id="orbitGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#78c6fe" stopOpacity="0.1" /><stop offset="0.55" stopColor="#7c85dc" stopOpacity="0.3" /><stop offset="1" stopColor="#83fcda" stopOpacity="0.09" /></linearGradient></defs>
           {rings.map((ring, index) => <ellipse key={index} cx={viewport.width / 2 + offset.x} cy={viewport.height / 2 + offset.y} rx={ring.rx} ry={ring.ry} fill="none" stroke="url(#orbitGlow)" strokeWidth="1" strokeDasharray={index % 2 ? '3 7' : undefined} />)}
