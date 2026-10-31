@@ -448,3 +448,10 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .sidebar-system::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(ellipse at 65% 18%, rgba(92,126,235,.15), transparent 65%); }
 .sidebar-system p { text-wrap: pretty; }
+
+.workspace-intro h1 { text-wrap: balance; }
+.workspace-intro p { text-wrap: pretty; }
+@media (max-width: 720px) {
+  .workspace-intro h1 { font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1.08; }
+  .hero-actions { flex-wrap: wrap; }
+}
