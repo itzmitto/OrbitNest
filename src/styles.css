@@ -408,3 +408,18 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .rotation-speed {display:flex;align-items:center;gap:7px;padding:0 6px;color:#8cebd6;font-size:9px;letter-spacing:1px}
 .rotation-speed select {background:#1d2d49;border:1px solid #8dbde54a;color:#d5e4fe;border-radius:8px;padding:7px 9px;font-size:11px}
 .rotation-speed select:disabled {opacity:.45}
+
+
+/* Smaller screens keep overlays and controls usable without clipping buttons. */
+@media(max-width:740px){
+ .scene-select {font-size:9px;max-width:100%}
+ .planetarium-header {flex-wrap:wrap;gap:12px}
+ .planet-family-picker {flex-wrap:wrap}
+ .planetarium-zoom-actions {max-width:min(100%,410px);gap:4px}
+ .planetarium-zoom-actions button {min-height:34px}
+ .world-detail {margin:12px}
+ .switch-overlay {padding-top:6vh}
+}
+@media(prefers-reduced-motion:reduce){
+ .save-session,.world-card,.quick-switch-trigger {transition:none!important}
+}

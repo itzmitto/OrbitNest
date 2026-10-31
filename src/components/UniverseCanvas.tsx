@@ -14,6 +14,7 @@ import { useScene } from '../hooks/useScene';
 import { useOrbitLines } from '../hooks/useOrbitLines';
 import { useAnimationSpeed } from '../hooks/useAnimationSpeed';
 import { ANIMATION_FACTORS } from '../domain/animation-speed';
+import { parseCameraPreference } from '../domain/camera-preferences';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -30,8 +31,12 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const { scene, setScene } = useScene();
   const { showOrbits, setShowOrbits } = useOrbitLines();
   const { speed, setSpeed } = useAnimationSpeed();
-  const [zoom, setZoom] = useState(1);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [initialCamera] = useState(() => {
+    try { return parseCameraPreference(localStorage.getItem('orbitnest:camera:v1')); }
+    catch { return parseCameraPreference(null); }
+  });
+  const [zoom, setZoom] = useState(initialCamera.zoom);
+  const [offset, setOffset] = useState(initialCamera.offset);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [kindFilter, setKindFilter] = useState<PlanetFilter>('all');
   const [paused, setPaused] = useState(false);
@@ -44,6 +49,15 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const active = nodes.find(node => node.id === selected);
   const activeBrowserTab = tabs.find(tab => tab.active);
   const motionStopped = paused || reducedMotion || !pageVisible;
+
+  // Persist camera state at a low frequency while dragging or zooming.
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      try { localStorage.setItem('orbitnest:camera:v1', JSON.stringify({ zoom, offset })); }
+      catch { /* storage may be blocked */ }
+    }, 300);
+    return () => window.clearTimeout(id);
+  }, [zoom, offset]);
 
   // A background extension dashboard should never keep rendering unseen frames.
   useEffect(() => {
