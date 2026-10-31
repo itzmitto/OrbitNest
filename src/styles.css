@@ -384,3 +384,22 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .world-detail p b {color:#61739a}
 .world-detail button {width:max-content;background:#1d3558;border:1px solid #8bdfe852;color:#cdfbf1;padding:9px 13px;border-radius:9px;font-weight:700;font-size:11px}
 .world-detail button:hover {background:#294c6b}
+
+
+.quick-switch-trigger {border:1px solid #b3caff45;background:#131d34;color:#d7e4fc;border-radius:11px;padding:12px 16px;margin-top:20px;font-size:12px}
+.quick-switch-trigger kbd {margin-left:12px;color:#9caece;font-size:10px}
+.switch-overlay {position:fixed;z-index:500;inset:0;background:#030815bd;backdrop-filter:blur(14px);display:flex;align-items:flex-start;justify-content:center;padding:12vh 18px 20px}
+.switch-dialog {width:min(100%,650px);background:#0e1830;border:1px solid #b2bbff55;border-radius:19px;box-shadow:0 30px 120px #000b;overflow:hidden}
+.switch-header {padding:18px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #9dafff23}
+.switch-header>span {font-size:23px;color:#9ce8ff}
+.switch-header input {background:none;border:none;outline:none;color:#f4f7ff;font-size:17px;flex:1;min-width:0}
+.switch-header button {background:#243451;border:1px solid #7689a747;border-radius:7px;color:#bad0ee;padding:7px 10px;font-size:10px}
+.switch-results {padding:10px;max-height:54vh;overflow:auto}
+.switch-results button {width:100%;display:flex;align-items:center;gap:14px;text-align:left;border:1px solid transparent;background:transparent;padding:13px 14px;border-radius:11px;color:#edf3ff}
+.switch-results button[aria-selected="true"] {background:#28355e;border-color:#8eacfd55}
+.switch-results button>span:nth-child(2) {min-width:0;display:grid;gap:4px;flex:1}
+.switch-results strong {font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.switch-results small {color:#8ca5cd}
+.switch-results p {padding:18px;color:#b5c2d9}
+.switch-enter {color:#82e6dc}
+.switch-dialog footer {padding:13px 18px;border-top:1px solid #ffffff14;color:#93a6cb;font-size:10px;letter-spacing:1.3px}

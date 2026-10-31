@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Brand } from './components/Brand';
 import { TabIcon } from './components/TabIcon';
 import { TabStatus } from './components/TabStatus';
 import { GalaxyList } from './components/GalaxyList';
 import { UniverseCanvas } from './components/UniverseCanvas';
+import { QuickSwitch } from './components/QuickSwitch';
 import { useBrowserTabs } from './hooks/useBrowserTabs';
 import { useFavorites } from './hooks/useFavorites';
 import { useSessions } from './hooks/useSessions';
@@ -40,6 +41,7 @@ export default function App() {
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [view, setView] = useState<'universe' | 'list' | 'cards'>('universe');
   const [copyResult, setCopyResult] = useState('');
+  const [quickSwitchOpen, setQuickSwitchOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const duplicateIds = duplicateTabIds(tabs);
   const visibleTabs = sortTabs(searchTabs(tabs, query), sort).filter(tab =>
@@ -56,6 +58,17 @@ export default function App() {
     () => setView('list'),
     () => setView('universe')
   );
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setQuickSwitchOpen(value => !value);
+      }
+    };
+    document.addEventListener('keydown',onKeyDown);
+    return () => document.removeEventListener('keydown',onKeyDown);
+  }, []);
 
   function openTab(tab: TabRecord) {
     setSelected(tab.id);
@@ -156,10 +169,12 @@ export default function App() {
             </section>
             <section className="signal-panel" aria-label="Connection details"><div className="section-title"><div><span className="kicker">MISSION STATUS</span><h2>All systems in orbit</h2></div><span className="signal-orb">{illustration}</span></div><div className="signal-row"><span>Browser connection</span><strong><i /> {demo ? 'Preview' : 'Connected'}</strong></div><div className="signal-row"><span>Active destination</span><strong title={activeTab?.title ?? 'None'}>{activeTab?.domain ?? 'None'}</strong></div><div className="signal-row"><span>Data storage</span><strong>On this device</strong></div><div className="signal-note">Your universe stays yours. OrbitNest reads tab metadata, never webpage contents.</div></section>
           </div>
+          <button className="quick-switch-trigger" type="button" onClick={() => setQuickSwitchOpen(true)}>⌘ Quick switch <kbd>Ctrl K</kbd></button>
           <footer className="workspace-footer"><span>© ORBITNEST · YOUR TABS, YOUR UNIVERSE.</span><span>SEARCH <kbd>/</kbd> · LIST <kbd>L</kbd> · UNIVERSE <kbd>G</kbd></span><span>{selectedTab ? `FOCUSED: ${selectedTab.domain}` : 'READY TO EXPLORE'}</span></footer>
           {loading && <span className="sr-only" role="status">Scanning browser tabs</span>}
         </main>
       </div>
+      {quickSwitchOpen && <QuickSwitch tabs={tabs} onOpen={openTab} onClose={() => setQuickSwitchOpen(false)} />}
     </div>
   );
 }
