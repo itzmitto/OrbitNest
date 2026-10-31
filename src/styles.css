@@ -340,3 +340,9 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 @media(max-width:1150px) { .planet-catalog-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media(max-width:650px) { .planet-catalog { padding:20px 15px; } .planet-catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .catalog-count { display:none; } }
 @media(prefers-reduced-motion:reduce) { .world-card { transition:none; } }
+
+/* Explicit, local-only tab-map copy action. */
+.copy-map { background:transparent; border:1px solid #aabafa40; color:#b6c9e8; padding:10px 16px; border-radius:10px; font-weight:730; font-size:11px; }
+.copy-map:hover { border-color:#a3e5d5c2; color:#b8ffe6; background:#84b9ae13; }
+.copy-feedback { color:#79e4ce; font-size:10px; min-height:11px; }
+@media(max-width:650px) { .copy-map { padding:10px 13px; } }

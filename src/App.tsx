@@ -15,6 +15,7 @@ import { searchTabs } from './domain/search';
 import { groupTabs } from './domain/group';
 import { sortTabs } from './domain/sort';
 import { duplicateTabIds } from './domain/duplicates';
+import { makeTabMap } from './domain/tab-map';
 
 const illustration = '✧';
 
@@ -38,6 +39,7 @@ export default function App() {
   const [duplicatesOnly, setDuplicatesOnly] = useState(false);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [view, setView] = useState<'universe' | 'list' | 'cards'>('universe');
+  const [copyResult, setCopyResult] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
   const duplicateIds = duplicateTabIds(tabs);
   const visibleTabs = sortTabs(searchTabs(tabs, query), sort).filter(tab =>
@@ -58,6 +60,16 @@ export default function App() {
   function openTab(tab: TabRecord) {
     setSelected(tab.id);
     if (!demo) void focusBrowserTab(tab.id, tab.windowId);
+  }
+
+  async function copyTabMap() {
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard not available');
+      await navigator.clipboard.writeText(makeTabMap(tabs));
+      setCopyResult('Map copied locally');
+    } catch {
+      setCopyResult('Clipboard access unavailable');
+    }
   }
 
   function requestClose(tab: TabRecord) {
@@ -97,7 +109,7 @@ export default function App() {
               <p>Turn a constellation of open tabs into something extraordinary. Explore, organize and jump between worlds.</p>
               <div className="hero-highlights"><span>✦ LIVE GALAXY</span><span>◌ LOCAL FIRST</span><span>◎ 3D EXPLORER</span></div>
             </div>
-            <div className="hero-actions"><span className="count-pill"><i /> {tabs.length} planets discovered</span><button className="save-session" type="button" onClick={() => saveSession(tabs)}>＋ Save this universe</button></div>
+            <div className="hero-actions"><span className="count-pill"><i /> {tabs.length} planets discovered</span><button className="save-session" type="button" onClick={() => saveSession(tabs)}>＋ Save this universe</button><button className="copy-map" type="button" onClick={() => void copyTabMap()}>⇧ Copy tab map</button><span className="copy-feedback" role="status">{copyResult}</span></div>
           </div>
           {error && <p className="error-alert" role="alert">{error}</p>}
           <div className="stats" aria-label="Workspace statistics">
