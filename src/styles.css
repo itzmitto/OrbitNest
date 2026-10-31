@@ -423,3 +423,10 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 @media(prefers-reduced-motion:reduce){
  .save-session,.world-card,.quick-switch-trigger {transition:none!important}
 }
+
+/* Mission-control accessibility: unmistakable keyboard focus. */
+.universe-app :is(button, input, select, canvas):focus-visible {
+  outline: 3px solid #86d8ff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(74, 172, 236, .18);
+}
