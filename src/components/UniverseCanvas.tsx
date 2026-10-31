@@ -5,6 +5,7 @@ import { createPlanetNodes, findPlanet, type PlanetNode } from '../graph/planet-
 import { PlanetRenderer } from '../graph/planet-webgl';
 import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
+import { centerOnPlanet } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -28,6 +29,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const nodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset), [tabs, viewport, zoom, offset]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === selected);
+  const activeBrowserTab = tabs.find(tab => tab.active);
   const motionStopped = paused || reducedMotion || !pageVisible;
 
   // A background extension dashboard should never keep rendering unseen frames.
@@ -166,6 +168,9 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
             <span>{Math.round(zoom * 100)}%</span>
             <button type="button" aria-label="Zoom in" onClick={() => changeZoom(0.2)}>+</button>
             <button type="button" onClick={() => { setOffset({ x: 0, y: 0 }); setZoom(1); }}>Reset</button>
+            <button type="button" disabled={!activeBrowserTab} title="Center on the active browser tab" onClick={() => {
+              if (activeBrowserTab) setOffset(previous => centerOnPlanet(nodes, activeBrowserTab.id, viewport.width, viewport.height, previous));
+            }}>⌖ Focus</button>
             <button type="button" aria-pressed={motionStopped} onClick={() => setPaused(previous => !previous)} disabled={reducedMotion} title={reducedMotion ? 'Reduced motion is enabled in your system settings' : undefined}>{motionStopped ? '▶ Play' : 'Ⅱ Pause'}</button>
           </div>
         </div>

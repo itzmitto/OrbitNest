@@ -346,3 +346,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .copy-map:hover { border-color:#a3e5d5c2; color:#b8ffe6; background:#84b9ae13; }
 .copy-feedback { color:#79e4ce; font-size:10px; min-height:11px; }
 @media(max-width:650px) { .copy-map { padding:10px 13px; } }
+
+/* The focus control recenters the orbit on the actual active browser tab. */
+.planetarium-zoom-actions button[title="Center on the active browser tab"] { color:#97f1d8; border-color:#8ff6d53e; }
+.planetarium-zoom-actions button[title="Center on the active browser tab"]:hover:not(:disabled) { background:#275c66; }
