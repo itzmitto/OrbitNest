@@ -437,3 +437,9 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .universe-app button:not(:disabled):hover { filter: brightness(1.12); }
   .planetarium-zoom-actions button:not(:disabled):active { transform: scale(.96); }
 }
+
+.stats { align-items: stretch; }
+.stat-card { position: relative; overflow: hidden; }
+.stat-card::after { content: ''; position: absolute; right: -25px; top: -35px; width: 95px; height: 95px;
+  border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(114,180,255,.11), transparent 70%); }
+.stat-card strong { font-variant-numeric: tabular-nums; }
