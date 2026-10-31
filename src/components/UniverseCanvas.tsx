@@ -12,6 +12,8 @@ import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
 import { useScene } from '../hooks/useScene';
 import { useOrbitLines } from '../hooks/useOrbitLines';
+import { useAnimationSpeed } from '../hooks/useAnimationSpeed';
+import { ANIMATION_FACTORS } from '../domain/animation-speed';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -27,6 +29,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const { scene, setScene } = useScene();
   const { showOrbits, setShowOrbits } = useOrbitLines();
+  const { speed, setSpeed } = useAnimationSpeed();
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -90,7 +93,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     const drawFrame = (now: number) => {
       const step = previousTime ? Math.min((now - previousTime) / 1000, 0.06) : 0;
       previousTime = now;
-      if (!motionStopped) motionRef.current += step;
+      if (!motionStopped) motionRef.current += step * ANIMATION_FACTORS[speed];
       if (now - lastPaint > (nodes.length > 70 ? 33 : 15) || motionStopped) {
         lastPaint = now;
         if (rendererRef.current && !webglFallback) {
@@ -111,7 +114,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     };
     frameId = window.requestAnimationFrame(drawFrame);
     return () => window.cancelAnimationFrame(frameId);
-  }, [tabs, nodes, selected, viewport, motionStopped, webglFallback]);
+  }, [tabs, nodes, selected, viewport, motionStopped, webglFallback, speed]);
 
   // Native non-passive wheel listener: prevent page scrolling only over the planet map.
   useEffect(() => {
@@ -217,6 +220,9 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
             <button type="button" aria-label="Zoom in" onClick={() => changeZoom(0.2)}>+</button>
             <button type="button" onClick={() => { setOffset({ x: 0, y: 0 }); setZoom(1); }}>Reset</button>
             <button type="button" aria-pressed={showOrbits} onClick={() => setShowOrbits(v => !v)}>{showOrbits ? '◎ Orbits' : '◌ Orbits'}</button>
+            <label className="rotation-speed"><span>SPIN</span><select aria-label="Planet rotation speed" value={speed} onChange={event => setSpeed(event.target.value as typeof speed)} disabled={reducedMotion}>
+              <option value="drift">Drift</option><option value="normal">Normal</option><option value="hyperdrive">Hyperdrive</option>
+            </select></label>
             <button type="button" disabled={!activeBrowserTab} title="Center on the active browser tab" onClick={() => {
               if (activeBrowserTab) setOffset(previous => centerOnPlanet(nodes, activeBrowserTab.id, viewport.width, viewport.height, previous));
             }}>⌖ Focus</button>

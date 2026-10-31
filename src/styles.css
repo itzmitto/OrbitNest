@@ -403,3 +403,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .switch-results p {padding:18px;color:#b5c2d9}
 .switch-enter {color:#82e6dc}
 .switch-dialog footer {padding:13px 18px;border-top:1px solid #ffffff14;color:#93a6cb;font-size:10px;letter-spacing:1.3px}
+
+
+.rotation-speed {display:flex;align-items:center;gap:7px;padding:0 6px;color:#8cebd6;font-size:9px;letter-spacing:1px}
+.rotation-speed select {background:#1d2d49;border:1px solid #8dbde54a;color:#d5e4fe;border-radius:8px;padding:7px 9px;font-size:11px}
+.rotation-speed select:disabled {opacity:.45}
