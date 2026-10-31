@@ -9,6 +9,7 @@ import { Starfield } from './Starfield';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
 import { useScene } from '../hooks/useScene';
+import { useOrbitLines } from '../hooks/useOrbitLines';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -23,6 +24,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const motionRef = useRef(0);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const { scene, setScene } = useScene();
+  const { showOrbits, setShowOrbits } = useOrbitLines();
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -176,10 +178,10 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
         <Starfield density={112} />
-        <svg className="planetarium-orbits" viewBox={`0 0 ${viewport.width} ${viewport.height}`} aria-hidden="true">
+        {showOrbits && <svg className="planetarium-orbits" viewBox={`0 0 ${viewport.width} ${viewport.height}`} aria-hidden="true">
           <defs><linearGradient id="orbitGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#78c6fe" stopOpacity="0.1" /><stop offset="0.55" stopColor="#7c85dc" stopOpacity="0.3" /><stop offset="1" stopColor="#83fcda" stopOpacity="0.09" /></linearGradient></defs>
           {rings.map((ring, index) => <ellipse key={index} cx={viewport.width / 2 + offset.x} cy={viewport.height / 2 + offset.y} rx={ring.rx} ry={ring.ry} fill="none" stroke="url(#orbitGlow)" strokeWidth="1" strokeDasharray={index % 2 ? '3 7' : undefined} />)}
-        </svg>
+        </svg>}
         <div className="planetarium-core" aria-hidden="true" style={{ left: viewport.width / 2 + offset.x, top: viewport.height / 2 + offset.y }}><span /></div>
         <canvas key={webglFallback ? 'canvas-2d' : 'canvas-3d'} ref={canvasRef} className="planetarium-webgl" aria-label={`${tabs.length} rotating planet representations of open tabs. Use arrow keys to pan, plus or minus to zoom, zero to reset. Choose Galaxy List to open tabs with the keyboard.`} role="group" tabIndex={0} onKeyDown={onCanvasKeyDown}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}
@@ -200,6 +202,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
             <span>{Math.round(zoom * 100)}%</span>
             <button type="button" aria-label="Zoom in" onClick={() => changeZoom(0.2)}>+</button>
             <button type="button" onClick={() => { setOffset({ x: 0, y: 0 }); setZoom(1); }}>Reset</button>
+            <button type="button" aria-pressed={showOrbits} onClick={() => setShowOrbits(v => !v)}>{showOrbits ? '◎ Orbits' : '◌ Orbits'}</button>
             <button type="button" disabled={!activeBrowserTab} title="Center on the active browser tab" onClick={() => {
               if (activeBrowserTab) setOffset(previous => centerOnPlanet(nodes, activeBrowserTab.id, viewport.width, viewport.height, previous));
             }}>⌖ Focus</button>
