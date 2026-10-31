@@ -465,3 +465,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-planet-label.hovered { z-index: 4; filter: drop-shadow(0 3px 8px rgba(49,169,241,.25)); }
 .planetarium-planet-label.selected { z-index: 5; }
 .planetarium-planet-label small { max-width: min(220px, 50vw); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.planetarium-hud { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.planetarium-zoom-actions { gap: .4rem; }
+.planetarium-zoom-actions button { min-height: 32px; min-width: 32px; }
+.planetarium-zoom-actions button:disabled { opacity: .48; cursor: not-allowed; }
