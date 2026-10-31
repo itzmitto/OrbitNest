@@ -455,3 +455,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   .workspace-intro h1 { font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1.08; }
   .hero-actions { flex-wrap: wrap; }
 }
+
+.panel { position: relative; isolation: isolate; }
+.panel::before { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(219,233,255,.065); }
+.panel-title { position: relative; z-index: 1; }
