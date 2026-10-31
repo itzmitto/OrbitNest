@@ -370,3 +370,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .orbit-star {position:absolute;display:block;border-radius:50%;background:#e4f2ff;box-shadow:0 0 9px 1px #b8caff7a;animation:orbit-twinkle 6s ease-in-out infinite alternate}
 @keyframes orbit-twinkle {from{filter:brightness(.58);transform:scale(.8)}to{filter:brightness(1.65);transform:scale(1.12)}}
 @media(prefers-reduced-motion:reduce){.orbit-star{animation:none!important}}
+
+
+.planet-family-picker {display:flex;gap:12px;align-items:center;padding:10px 19px 16px;color:#8fa5c6;font-weight:800;letter-spacing:1.3px;font-size:10px}
+.planet-family-picker select {background:#111b33;border:1px solid #94a8e93b;border-radius:10px;color:#e6f1ff;padding:10px 12px;min-width:160px}
+.planet-family-picker span:last-child {margin-left:auto;color:#83eedb;font-size:10px;text-transform:uppercase}

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { PointerEvent, KeyboardEvent } from 'react';
 import type { TabRecord } from '../domain/tab';
-import { createPlanetNodes, findPlanet, type PlanetNode } from '../graph/planet-system';
+import { createPlanetNodes, findPlanet, PLANET_KINDS, type PlanetNode } from '../graph/planet-system';
+import { filterPlanetNodes, isPlanetFilter, type PlanetFilter } from '../graph/planet-filter';
 import { PlanetRenderer } from '../graph/planet-webgl';
 import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
@@ -28,11 +29,13 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [kindFilter, setKindFilter] = useState<PlanetFilter>('all');
   const [paused, setPaused] = useState(false);
   const [pageVisible, setPageVisible] = useState(() => typeof document === 'undefined' || document.visibilityState === 'visible');
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglFallback, setWebglFallback] = useState(false);
-  const nodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset), [tabs, viewport, zoom, offset]);
+  const allNodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset), [tabs, viewport, zoom, offset]);
+  const nodes = useMemo(() => filterPlanetNodes(allNodes, kindFilter), [allNodes, kindFilter]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === selected);
   const activeBrowserTab = tabs.find(tab => tab.active);
@@ -175,6 +178,16 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           </select>
         </label>
       </div>
+      <label className="planet-family-picker">PLANET FAMILY
+        <select aria-label="Filter planets by type" value={kindFilter} onChange={event => {
+          const next = event.target.value;
+          if (isPlanetFilter(next)) setKindFilter(next);
+        }}>
+          <option value="all">All planet types</option>
+          {PLANET_KINDS.map(kind => <option key={kind} value={kind}>{kind[0].toUpperCase() + kind.slice(1)}</option>)}
+        </select>
+        <span>{nodes.length} visible</span>
+      </label>
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
         <Starfield density={112} />
@@ -210,10 +223,10 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           </div>
         </div>
         {(hovered || active) && <div className="planetarium-inspector" role="status"><span>{(hovered || active)?.kind.toUpperCase()} PLANET</span><strong>{(hovered || active)?.tab.title}</strong><small>{(hovered || active)?.tab.domain} · Click planet to switch tab</small></div>}
-        {tabs.length === 0 && <div className="planetarium-empty">No planets in this sector. Open a tab or change your filters.</div>}
+        {nodes.length === 0 && <div className="planetarium-empty">No planets of this type in this sector. Choose another filter.</div>}
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
-      <PlanetCatalog tabs={tabs} onOpen={onOpen} />
+      <PlanetCatalog tabs={nodes.map(node => node.tab)} onOpen={onOpen} />
       <div className="planetarium-footer"><span>ORBITAL MAP / LIVE TAB NETWORK</span><span>PRIVATE BY DESIGN · YOUR TABS STAY IN YOUR BROWSER</span></div>
     </div>
   );
