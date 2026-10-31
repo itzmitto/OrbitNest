@@ -354,3 +354,12 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 
 /* Focused keyboard navigation remains discoverable on the visual map. */
 .planetarium-webgl:focus-visible { outline:2px solid #81f4d8; outline-offset:-5px; border-radius:12px; }
+
+
+/* Three distinct scene presets; only CSS colors change, never tab data. */
+.scene-select {display:flex;align-items:center;gap:10px;color:#a1b2d6;font-size:10px;font-weight:800;letter-spacing:1px}
+.scene-select select {color:#f3f7ff;background:#151d37;border:1px solid #7889bb55;padding:9px 12px;border-radius:9px;max-width:170px}
+.planetarium-shell[data-scene="nebula"] .planetarium-stage {background:radial-gradient(ellipse at 35% 55%,#57235a73,transparent 52%),radial-gradient(ellipse at 82% 14%,#283f8970,transparent 53%),#080717}
+.planetarium-shell[data-scene="starlight"] .planetarium-stage {background:radial-gradient(ellipse at 45% 40%,#254d6980,transparent 58%),radial-gradient(ellipse at 83% 82%,#25325d8c,transparent 55%),#06111c}
+.planetarium-shell[data-scene="nebula"] .planetarium-nebula {filter:hue-rotate(65deg) saturate(1.4)}
+.planetarium-shell[data-scene="starlight"] .planetarium-nebula {filter:hue-rotate(-25deg) brightness(1.35)}

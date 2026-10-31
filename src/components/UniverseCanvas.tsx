@@ -7,6 +7,7 @@ import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
+import { useScene } from '../hooks/useScene';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
@@ -20,6 +21,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const dragRef = useRef<DragState | null>(null);
   const motionRef = useRef(0);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
+  const { scene, setScene } = useScene();
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -161,10 +163,14 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     return { rx: viewport.width * 0.435 * scale * zoom, ry: viewport.height * 0.405 * scale * zoom };
   });
   return (
-    <div className="planetarium-shell">
+    <div className="planetarium-shell" data-scene={scene}>
       <div className="planetarium-header">
         <div className="planetarium-brand"><span className="planetarium-live-dot" /> <strong>THE ORBITNEST SYSTEM</strong><span>{tabs.length} celestial tabs</span></div>
-        <div className="planetarium-legend"><span>● Terrestrial</span><span>● Gas giant</span><span>● Exotic</span></div>
+        <label className="scene-select">SPACE ENVIRONMENT
+          <select aria-label="Space environment" value={scene} onChange={event => setScene(event.target.value as typeof scene)}>
+            <option value="deep-space">Deep Space</option><option value="nebula">Nebula</option><option value="starlight">Starlight</option>
+          </select>
+        </label>
       </div>
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
