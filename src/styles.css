@@ -500,3 +500,11 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-shell[data-scene="deep-space"] .nebula-clouds {opacity:.43}
 .planetarium-shell[data-scene="starlight"] .nebula-clouds {opacity:.19}
 @media(prefers-reduced-motion:reduce){.nebula-clouds i{animation:none;opacity:.4}}
+
+.universe-minimap {position:absolute;right:16px;bottom:65px;width:158px;height:128px;z-index:5;padding:10px;border:1px solid #9bc5fa42;border-radius:16px;background:#081327d9;backdrop-filter:blur(13px);box-shadow:0 12px 45px #02060c99}
+.universe-minimap-title{font-size:9px;color:#9fd9fc;letter-spacing:1.5px;font-weight:750}
+.universe-minimap-field{position:relative;height:92px;isolation:isolate;background:radial-gradient(circle at center,#4072ac29,transparent 70%)}
+.universe-minimap-dot{position:absolute;width:8px;height:8px;min-width:0;min-height:0;padding:0;translate:-50% -50%;border:1px solid #b1e0ff99;border-radius:50%;background:#70aaff;cursor:pointer}
+.universe-minimap-dot.active,.universe-minimap-dot:hover{background:#f4edb2;box-shadow:0 0 12px #7ac9ff}
+.universe-minimap-dot:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(max-width:670px){.universe-minimap{right:10px;bottom:70px;width:112px;height:98px;padding:7px}.universe-minimap-field{height:68px}}

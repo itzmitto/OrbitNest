@@ -8,6 +8,7 @@ import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
 import { Starfield } from './Starfield';
 import { NebulaClouds } from './NebulaClouds';
+import { UniverseMinimap } from './UniverseMinimap';
 import { parseStarDensity, STAR_COUNTS } from '../domain/star-density';
 import { PlanetDetails } from './PlanetDetails';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
@@ -269,6 +270,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
         </div>
         {(hovered || active) && <div className="planetarium-inspector" role="status"><span>{(hovered || active)?.kind.toUpperCase()} PLANET</span><strong>{(hovered || active)?.tab.title}</strong><small>{(hovered || active)?.tab.domain} · Click planet to switch tab</small></div>}
         {nodes.length === 0 && <div className="planetarium-empty">No planets of this type in this sector. Choose another filter.</div>}
+        <UniverseMinimap nodes={nodes} selected={selected} onFocus={id=>setOffset(previous=>centerOnPlanet(nodes,id,viewport.width,viewport.height,previous))}/>
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
       <PlanetDetails tab={(hovered || active)?.tab} onOpen={onOpen} />
