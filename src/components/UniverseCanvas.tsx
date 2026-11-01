@@ -17,6 +17,7 @@ import { ANIMATION_FACTORS } from '../domain/animation-speed';
 import { parseCameraPreference } from '../domain/camera-preferences';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 import { parseGalaxyLayout } from '../graph/layout-mode';
+import { fitPlanetCamera } from '../graph/fit-camera';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -241,6 +242,11 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
             <span>{Math.round(zoom * 100)}%</span>
             <button type="button" aria-label="Zoom in" onClick={() => changeZoom(0.2)}>+</button>
             <button type="button" onClick={() => { setOffset({ x: 0, y: 0 }); setZoom(1); }}>Reset</button>
+            <button type="button" title="Fit all visible planets into the universe" onClick={() => {
+              const originals=createPlanetNodes(tabs,viewport.width,viewport.height,1,{x:0,y:0},layoutMode);
+              const next=fitPlanetCamera(filterPlanetNodes(originals,kindFilter),viewport);
+              setZoom(next.zoom);setOffset(next.offset);
+            }}>Fit all</button>
             <button type="button" aria-pressed={showOrbits} onClick={() => setShowOrbits(v => !v)}>{showOrbits ? '◎ Orbits' : '◌ Orbits'}</button>
             <label className="rotation-speed"><span>SPIN</span><select aria-label="Planet rotation speed" value={speed} onChange={event => setSpeed(event.target.value as typeof speed)} disabled={reducedMotion}>
               <option value="drift">Drift</option><option value="normal">Normal</option><option value="hyperdrive">Hyperdrive</option>
