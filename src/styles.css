@@ -530,3 +530,11 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .galaxy-live-metrics{display:flex;flex-wrap:wrap;gap:9px;padding:11px 18px 17px;border-bottom:1px solid #a7c4ff1d}
 .galaxy-live-metrics span{padding:8px 12px;border:1px solid #90a8e32c;border-radius:24px;background:#1024429c;color:#9fb5d3;font-size:11px}
 .galaxy-live-metrics strong{color:#b4faec;font-variant-numeric:tabular-nums}
+
+/* Cosmetic galaxy moods: never affect identity or tab operations. */
+.planetarium-shell[data-palette="aurora"] .planetarium-stage{box-shadow:inset 0 0 140px #1b897b33}
+.planetarium-shell[data-palette="aurora"] .planetarium-nebula{filter:hue-rotate(115deg) saturate(1.45)}
+.planetarium-shell[data-palette="aurora"] .orbit-star{background:#b5ffed;box-shadow:0 0 10px #7ff5d17a}
+.planetarium-shell[data-palette="ember"] .planetarium-stage{box-shadow:inset 0 0 150px #a4513b32}
+.planetarium-shell[data-palette="ember"] .planetarium-nebula{filter:hue-rotate(245deg) saturate(1.5)}
+.planetarium-shell[data-palette="ember"] .orbit-star{background:#ffe2b1;box-shadow:0 0 10px #f3a87175}

@@ -25,6 +25,7 @@ import { fitPlanetCamera } from '../graph/fit-camera';
 import { visiblePlanetLabels } from '../graph/label-layout';
 import { cyclePlanetFocus } from '../graph/planet-navigation';
 import { galaxyMetrics } from '../graph/galaxy-metrics';
+import { parseGalaxyPalette } from '../domain/galaxy-palette';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -38,6 +39,8 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const motionRef = useRef(0);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const { scene, setScene } = useScene();
+  const [palette, setPalette] = useState(() => { try { return parseGalaxyPalette(localStorage.getItem('orbitnest:palette:v1')); } catch { return parseGalaxyPalette(null); } });
+  useEffect(() => { try { localStorage.setItem('orbitnest:palette:v1', palette); } catch { /* local-only preference */ } }, [palette]);
   const [starDensity, setStarDensity]=useState(()=>{try{return parseStarDensity(localStorage.getItem('orbitnest:stars:v1'));}catch{return parseStarDensity(null);}});
   useEffect(()=>{try{localStorage.setItem('orbitnest:stars:v1',starDensity);}catch{/* storage can be blocked */}},[starDensity]);
   const { showOrbits, setShowOrbits } = useOrbitLines();
@@ -213,7 +216,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     return { rx: viewport.width * 0.435 * scale * zoom, ry: viewport.height * 0.405 * scale * zoom };
   });
   return (
-    <div className="planetarium-shell" data-scene={scene}>
+    <div className="planetarium-shell" data-scene={scene} data-palette={palette}>
       <div className="planetarium-header">
         <div className="planetarium-brand"><span className="planetarium-live-dot" /> <strong>THE ORBITNEST SYSTEM</strong><span>{tabs.length} celestial tabs</span></div>
         <label className="scene-select">SPACE ENVIRONMENT
@@ -222,6 +225,11 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           </select>
         </label>
       </div>
+      <label className="galaxy-layout-select">COLOR MOOD
+        <select aria-label="Galaxy color mood" value={palette} onChange={event => setPalette(parseGalaxyPalette(event.target.value))}>
+          <option value="midnight">Midnight</option><option value="aurora">Aurora</option><option value="ember">Supernova</option>
+        </select>
+      </label>
       <label className="galaxy-layout-select">RENDER MODE
         <select aria-label="Render quality" value={quality} onChange={event=>setQuality(parseRenderQuality(event.target.value))}>
           <option value="auto">Automatic</option><option value="battery">Battery saver</option><option value="cinematic">Cinematic</option>
