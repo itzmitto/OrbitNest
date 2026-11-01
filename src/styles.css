@@ -568,3 +568,23 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .universe-help kbd{display:inline-block;padding:4px 7px;border:1px solid #88a3d94d;border-radius:6px;background:#233650;color:#d9f0ff;font-size:10px}
 .universe-help p{font-size:11px;line-height:1.6;color:#829dc0;margin-bottom:0}
 @media(max-width:550px){.universe-help-grid{grid-template-columns:1fr}}
+
+/* Mission observatory: local metadata metrics, never remote analytics. */
+.mission-observatory{position:relative;margin:1.35rem 0;padding:clamp(1rem,3vw,1.9rem);border:1px solid #38456875;border-radius:1.6rem;background:radial-gradient(ellipse at 88% -18%,#243668a6,transparent 55%),linear-gradient(140deg,#0c1530f7,#080e21f5);color:#f4f7ff;box-shadow:inset 0 1px 0 #ffffff13,0 22px 70px #03091c55}
+.mission-observatory-heading{display:flex;justify-content:space-between;align-items:start;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.mission-observatory-heading h2{font-size:clamp(1.3rem,2.5vw,2rem);margin:.35rem 0}
+.mission-observatory-heading p{color:#aab7d6;max-width:48rem;font-size:.93rem}
+.mission-kicker,.mission-observatory-count{font:700 .66rem/1.4 ui-monospace,monospace;letter-spacing:.2em;color:#75e6d3}
+.mission-observatory-count{border:1px solid #5fe9e53d;border-radius:999px;padding:.6rem .95rem;background:#30dbc111}
+.mission-observatory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:.85rem}
+.mission-observatory-card{background:#121d38aa;border:1px solid #718fc32f;border-radius:1.05rem;padding:1.1rem;min-height:10rem;transition:transform .2s ease,border-color .2s ease}
+.mission-observatory-card:hover{transform:translateY(-2px);border-color:#63dbc477}
+.mission-observatory-kind{display:block;font:700 .66rem ui-monospace,monospace;letter-spacing:.14em;color:#78d9d0;text-transform:uppercase}
+.mission-observatory-card strong{display:block;font-size:clamp(1.45rem,2vw,2.1rem);line-height:1.3;font-variant-numeric:tabular-nums;margin:.35rem 0}
+.mission-observatory-card h3{font-size:.95rem;line-height:1.3;color:#f0f4ff;margin:.2rem 0}
+.mission-observatory-card p{font-size:.79rem;line-height:1.5;color:#a4b4d3;margin:.4rem 0 0}
+.mission-observatory-more{margin-top:1rem;border:1px solid #81ebdc73;border-radius:.7rem;padding:.65rem 1rem;background:#164e5352;color:#c4fff3;font-weight:650;cursor:pointer}
+.mission-observatory-more:focus-visible{outline:3px solid #b8f9ed;outline-offset:3px}
+@media (max-width:600px){.mission-observatory{padding:1rem;border-radius:1.1rem}.mission-observatory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mission-observatory-card{padding:.8rem;min-height:9rem}}
+@media (max-width:400px){.mission-observatory-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.mission-observatory-card{transition:none}.mission-observatory-card:hover{transform:none}}
