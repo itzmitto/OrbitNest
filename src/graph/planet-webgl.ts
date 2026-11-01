@@ -96,6 +96,11 @@ void main() {
     base=mix(vec3(0.027,0.21,0.27),vec3(0.06,0.65,0.64),smoothstep(-0.6,0.8,arcs));
     base+=vec3(0.12,0.37,0.62)*pow(detail,2.5)*0.9;
   }
+  // A thin procedural cloud veil remains attached to each rotating surface.
+  // It is strongest over oceans and ice, but never hides the actual texture.
+  float cloudNoise=fbm(p*18.0+vec3(uSeed*8.0));
+  float cloudMask=smoothstep(0.69,0.84,cloudNoise);
+  if(uKind==0 || uKind==3) base=mix(base,vec3(0.88,0.96,1.0),cloudMask*0.32);
   vec3 normal=normalize(vNormal);
   vec3 lightDir=normalize(vec3(-0.55,0.67,1.0));
   float lit=max(dot(normal,lightDir),0.0);
@@ -103,8 +108,12 @@ void main() {
   float softShadow=pow(1.0-lit,2.1)*0.14;
   float rim=pow(1.0-max(dot(normal,vec3(0,0,1)),0.0),3.0);
   vec3 glow=(uKind==2?vec3(1.0,0.18,0.05):(uKind==9?vec3(0.10,1.0,0.74):vec3(0.22,0.65,1.0)));
-  vec3 shaded=base*(ambient-softShadow)+glow*rim*0.64;
-  shaded+=vec3(1.0)*pow(max(dot(reflect(-lightDir,normal),vec3(0,0,1)),0.0),28.0)*0.17;
+  // Wide scattering plus a narrow atmospheric rim builds an actual spherical silhouette.
+  float terminator=smoothstep(-0.12,0.16,dot(normal,lightDir));
+  float atmosphere=pow(1.0-max(normal.z,0.0),4.5);
+  vec3 shaded=base*(0.15+terminator*(ambient-softShadow)*0.88)+glow*rim*0.54;
+  shaded+=glow*atmosphere*0.24;
+  shaded+=vec3(1.0)*pow(max(dot(reflect(-lightDir,normal),vec3(0,0,1)),0.0),36.0)*0.20;
   shaded+=vec3(0.13,0.19,0.3)*uSelected*0.42;
   colorOut=vec4(shaded,1.0);
 }`;
