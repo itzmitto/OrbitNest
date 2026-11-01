@@ -1,3 +1,4 @@
+import { observeSecureShare } from './signals/secure-share';
 import { observeMutedShare } from './signals/muted-share';
 import { observeAudioShare } from './signals/audio-share';
 import { observePinnedShare } from './signals/pinned-share';
@@ -27,7 +28,7 @@ import { observePinnedWorldCount } from './signals/pinned-world-count';
 import { observeOpenTabCount } from './signals/open-tab-count';
 import type { TabRecord } from '../domain/tab';
 import type { Observation, Observer } from './types';
-const observers: Observer[] = [observeMutedShare, observeAudioShare, observePinnedShare, observeMailDomainCount, observeMediaDomainCount, observeDocumentDomainCount, observeDeveloperDomainCount, observeLocalhostTabCount, observeShortTitleCount, observeLongTitleCount, observeUntitledTabCount, observeFaviconMissingCount, observeFaviconAvailableCount, observeNonWebPageCount, observeInsecurePageCount, observeSecurePageCount, observeUnpinnedWorldCount, observePinnedMutedCount, observePinnedAudibleCount, observeActiveAudibleCount, observeInactiveMutedCount, observeUnfocusedWorldCount, observeActiveWorldCount, observeMutedWorldCount, observeAudibleWorldCount, observePinnedWorldCount, observeOpenTabCount, ];
+const observers: Observer[] = [observeSecureShare, observeMutedShare, observeAudioShare, observePinnedShare, observeMailDomainCount, observeMediaDomainCount, observeDocumentDomainCount, observeDeveloperDomainCount, observeLocalhostTabCount, observeShortTitleCount, observeLongTitleCount, observeUntitledTabCount, observeFaviconMissingCount, observeFaviconAvailableCount, observeNonWebPageCount, observeInsecurePageCount, observeSecurePageCount, observeUnpinnedWorldCount, observePinnedMutedCount, observePinnedAudibleCount, observeActiveAudibleCount, observeInactiveMutedCount, observeUnfocusedWorldCount, observeActiveWorldCount, observeMutedWorldCount, observeAudibleWorldCount, observePinnedWorldCount, observeOpenTabCount, ];
 /** Calculations run entirely in the dashboard; no web APIs are called. */
 export function collectObservations(tabs: readonly TabRecord[]): Observation[] {
   return observers.map(observe => observe(tabs));
