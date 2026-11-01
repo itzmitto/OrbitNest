@@ -29,11 +29,11 @@ import { parseGalaxyPalette } from '../domain/galaxy-palette';
 import { adaptiveStarBudget } from '../domain/star-budget';
 import { toggleGalaxyFullscreen } from '../graph/fullscreen';
 
-type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
+type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void; demo: boolean; onPin: (tab: TabRecord) => void; onMute: (tab: TabRecord) => void; onClose: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
 const INITIAL_VIEWPORT = { width: 960, height: 590 };
 
-export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
+export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, onClose }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<PlanetRenderer | null>(null);
@@ -313,7 +313,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
         <UniverseMinimap nodes={nodes} selected={highlightedId} onFocus={id=>setOffset(previous=>centerOnPlanet(nodes,id,viewport.width,viewport.height,previous))}/>
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
-      <PlanetDetails tab={(hovered || active)?.tab} onOpen={onOpen} />
+      <PlanetDetails tab={(active || hovered)?.tab} onOpen={onOpen} demo={demo} onPin={onPin} onMute={onMute} onClose={onClose} />
       <PlanetCatalog tabs={nodes.map(node => node.tab)} onOpen={onOpen} />
       <div className="planetarium-footer"><span>ORBITAL MAP / LIVE TAB NETWORK</span><span>PRIVATE BY DESIGN · YOUR TABS STAY IN YOUR BROWSER</span></div>
     </div>

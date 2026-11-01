@@ -153,7 +153,7 @@ export default function App() {
               <label className="filter-toggle"><input type="checkbox" checked={favoritesOnly} onChange={event => setFavoritesOnly(event.target.checked)} /><span>☆ Favorites</span></label>
               <label className="filter-toggle"><input type="checkbox" checked={duplicatesOnly} onChange={event => setDuplicatesOnly(event.target.checked)} /><span>Duplicates <small>{duplicateIds.size}</small></span></label>
             </div>
-            {view === 'universe' ? <UniverseCanvas tabs={visibleTabs} selected={selected} onOpen={openTab} /> :
+            {view === 'universe' ? <UniverseCanvas tabs={visibleTabs} selected={selected} onOpen={openTab} demo={demo} onPin={tab => { void togglePinned(tab.id,!tab.pinned); }} onMute={tab => { void toggleMuted(tab.id,!tab.muted); }} onClose={requestClose} /> :
               view === 'list' ? groups.map(item => <section className="tab-group" key={item.key}><h3>{item.name} <small>{item.tabs.length}</small></h3><GalaxyList tabs={item.tabs} selected={selected} onOpen={openTab} /></section>) :
               groups.map(item => <section className="tab-group" key={item.key}>{item.name !== 'All tabs' && <h3>{item.name} <small>{item.tabs.length}</small></h3>}
                 <div className="tab-grid">{item.tabs.map(tab => <div className="tile-wrap" key={tab.id}>

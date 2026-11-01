@@ -543,3 +543,9 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-stage:fullscreen{width:100vw;height:100vh;min-height:100vh;max-height:none;background:#061020;isolation:isolate}
 .planetarium-stage:fullscreen .planetarium-hud{top:18px;left:18px;right:auto}
 .planetarium-stage:fullscreen .universe-minimap{bottom:85px}
+
+/* Context actions act on one inspected browser tab; destructive actions require confirmation. */
+.world-detail-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:4px}
+.world-detail .world-detail-actions button{width:auto;min-height:35px}
+.world-detail .world-detail-actions button.danger{color:#ffd3d5;border-color:#d676854a;background:#53232d45}
+.world-detail .world-detail-actions button.danger:hover{background:#813242}
