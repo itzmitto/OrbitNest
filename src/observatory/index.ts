@@ -1,3 +1,4 @@
+import { observeBackgroundShare } from './signals/background-share';
 import { observeActiveShare } from './signals/active-share';
 import { observeFaviconsShare } from './signals/favicons-share';
 import { observeSecureShare } from './signals/secure-share';
@@ -30,7 +31,7 @@ import { observePinnedWorldCount } from './signals/pinned-world-count';
 import { observeOpenTabCount } from './signals/open-tab-count';
 import type { TabRecord } from '../domain/tab';
 import type { Observation, Observer } from './types';
-const observers: Observer[] = [observeActiveShare, observeFaviconsShare, observeSecureShare, observeMutedShare, observeAudioShare, observePinnedShare, observeMailDomainCount, observeMediaDomainCount, observeDocumentDomainCount, observeDeveloperDomainCount, observeLocalhostTabCount, observeShortTitleCount, observeLongTitleCount, observeUntitledTabCount, observeFaviconMissingCount, observeFaviconAvailableCount, observeNonWebPageCount, observeInsecurePageCount, observeSecurePageCount, observeUnpinnedWorldCount, observePinnedMutedCount, observePinnedAudibleCount, observeActiveAudibleCount, observeInactiveMutedCount, observeUnfocusedWorldCount, observeActiveWorldCount, observeMutedWorldCount, observeAudibleWorldCount, observePinnedWorldCount, observeOpenTabCount, ];
+const observers: Observer[] = [observeBackgroundShare, observeActiveShare, observeFaviconsShare, observeSecureShare, observeMutedShare, observeAudioShare, observePinnedShare, observeMailDomainCount, observeMediaDomainCount, observeDocumentDomainCount, observeDeveloperDomainCount, observeLocalhostTabCount, observeShortTitleCount, observeLongTitleCount, observeUntitledTabCount, observeFaviconMissingCount, observeFaviconAvailableCount, observeNonWebPageCount, observeInsecurePageCount, observeSecurePageCount, observeUnpinnedWorldCount, observePinnedMutedCount, observePinnedAudibleCount, observeActiveAudibleCount, observeInactiveMutedCount, observeUnfocusedWorldCount, observeActiveWorldCount, observeMutedWorldCount, observeAudibleWorldCount, observePinnedWorldCount, observeOpenTabCount, ];
 /** Calculations run entirely in the dashboard; no web APIs are called. */
 export function collectObservations(tabs: readonly TabRecord[]): Observation[] {
   return observers.map(observe => observe(tabs));
