@@ -30,6 +30,7 @@ import { adaptiveStarBudget } from '../domain/star-budget';
 import { toggleGalaxyFullscreen } from '../graph/fullscreen';
 import { selectionHalo } from '../graph/selection-halo';
 import { searchPlanetNodes } from '../graph/planet-search';
+import { UniverseHelp } from './UniverseHelp';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void; demo: boolean; onPin: (tab: TabRecord) => void; onMute: (tab: TabRecord) => void; onClose: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -322,6 +323,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
         <UniverseMinimap nodes={nodes} selected={highlightedId} onFocus={id=>setOffset(previous=>centerOnPlanet(nodes,id,viewport.width,viewport.height,previous))}/>
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
+      <UniverseHelp />
       <PlanetDetails tab={(active || hovered)?.tab} onOpen={onOpen} demo={demo} onPin={onPin} onMute={onMute} onClose={onClose} />
       <PlanetCatalog tabs={nodes.map(node => node.tab)} onOpen={onOpen} />
       <div className="planetarium-footer"><span>ORBITAL MAP / LIVE TAB NETWORK</span><span>PRIVATE BY DESIGN · YOUR TABS STAY IN YOUR BROWSER</span></div>

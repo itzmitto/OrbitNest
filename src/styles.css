@@ -559,3 +559,12 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-local-search label{font-size:10px;letter-spacing:1.2px;font-weight:800;color:#90b4d4}
 .planetarium-local-search input{flex:1;min-width:160px;background:#0f1d35;border:1px solid #93b7e34a;color:#ecf5ff;border-radius:9px;padding:10px 13px}
 .planetarium-local-search button{border-radius:9px;background:#213450;border:1px solid #7baade6b;color:#c6e7ff;padding:10px 15px}
+
+/* Native disclosure: keyboard accessible without custom modal plumbing. */
+.universe-help{margin:16px 18px 0;padding:14px 17px;border:1px solid #7d9cd04b;background:#0d1b32;border-radius:13px;color:#aebfda}
+.universe-help summary{cursor:pointer;color:#cceafa;font-weight:750;font-size:12px;display:flex;justify-content:space-between;gap:12px}
+.universe-help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding-top:18px}
+.universe-help-grid span{font-size:12px;color:#b9cdeb}
+.universe-help kbd{display:inline-block;padding:4px 7px;border:1px solid #88a3d94d;border-radius:6px;background:#233650;color:#d9f0ff;font-size:10px}
+.universe-help p{font-size:11px;line-height:1.6;color:#829dc0;margin-bottom:0}
+@media(max-width:550px){.universe-help-grid{grid-template-columns:1fr}}
