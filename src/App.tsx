@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Brand } from './components/Brand';
+import { MissionObservatory } from './components/MissionObservatory';
 import { TabIcon } from './components/TabIcon';
 import { TabStatus } from './components/TabStatus';
 import { GalaxyList } from './components/GalaxyList';
@@ -166,6 +167,7 @@ export default function App() {
               </section>)}
             {visibleTabs.length === 0 && !loading && <p className="empty-state">No planets found in this sector. Try another search or filter.</p>}
           </section>
+          <MissionObservatory tabs={tabs} />
           <div className="lower-panels">
             <section className="sessions-panel" aria-labelledby="sessions-heading"><div className="section-title"><div><span className="kicker">TIME CAPSULE</span><h2 id="sessions-heading">Saved universes</h2></div><span className="section-number">{sessions.length.toString().padStart(2, '0')}</span></div>
               {sessions.length === 0 ? <p className="empty-sessions"><span aria-hidden="true">◌</span> No saved sessions yet. Capture your current universe to return to these tabs later.</p> : sessions.map((session, index) =>
