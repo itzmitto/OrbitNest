@@ -29,6 +29,7 @@ import { parseGalaxyPalette } from '../domain/galaxy-palette';
 import { adaptiveStarBudget } from '../domain/star-budget';
 import { toggleGalaxyFullscreen } from '../graph/fullscreen';
 import { selectionHalo } from '../graph/selection-halo';
+import { searchPlanetNodes } from '../graph/planet-search';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void; demo: boolean; onPin: (tab: TabRecord) => void; onMute: (tab: TabRecord) => void; onClose: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -59,6 +60,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [keyboardFocusedId, setKeyboardFocusedId] = useState<number | null>(null);
   const [kindFilter, setKindFilter] = useState<PlanetFilter>('all');
+  const [planetQuery, setPlanetQuery] = useState('');
   const [layoutMode, setLayoutMode] = useState(() => { try { return parseGalaxyLayout(localStorage.getItem('orbitnest:layout:v1')); } catch { return parseGalaxyLayout(null); } });
   useEffect(() => { try { localStorage.setItem('orbitnest:layout:v1',layoutMode); } catch { /* privacy mode */ } },[layoutMode]);
   const [paused, setPaused] = useState(false);
@@ -68,7 +70,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglFallback, setWebglFallback] = useState(false);
   const allNodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset, layoutMode), [tabs, viewport, zoom, offset, layoutMode]);
-  const nodes = useMemo(() => filterPlanetNodes(allNodes, kindFilter), [allNodes, kindFilter]);
+  const nodes = useMemo(() => searchPlanetNodes(filterPlanetNodes(allNodes, kindFilter), planetQuery), [allNodes, kindFilter, planetQuery]);
   const highlightedId = keyboardFocusedId ?? selected;
   const labelNodes = useMemo(() => visiblePlanetLabels(nodes, [keyboardFocusedId, hoveredId, selected]), [nodes, keyboardFocusedId, hoveredId, selected]);
   const stats = useMemo(() => galaxyMetrics(nodes), [nodes]);
@@ -261,6 +263,10 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
         </select>
         <span>{nodes.length} visible</span>
       </label>
+      <div className="planetarium-local-search"><label htmlFor="planetarium-find">FIND IN THIS GALAXY</label>
+        <input id="planetarium-find" type="search" value={planetQuery} onChange={event => setPlanetQuery(event.target.value)} placeholder="Find a planet, website or type…" />
+        {planetQuery && <button type="button" onClick={() => setPlanetQuery('')} aria-label="Clear galaxy search">Clear</button>}
+      </div>
       <div className="galaxy-live-metrics" aria-label="Visible galaxy statistics">
         <span><strong>{stats.worlds}</strong> worlds</span><span><strong>{stats.sectors}</strong> sectors</span>
         <span><strong>{stats.families}</strong> planet types</span><span><strong>{stats.pinned}</strong> pinned</span>

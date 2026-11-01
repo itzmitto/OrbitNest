@@ -554,3 +554,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-selection-halo{pointer-events:none;position:absolute;z-index:3;transform:translate(-50%,-50%);border:2px solid #8debd4a8;border-radius:50%;box-shadow:0 0 17px #86dbe557, inset 0 0 17px #86dbe542;animation:planet-selected-glow 2.8s ease-in-out infinite alternate}
 @keyframes planet-selected-glow{from{opacity:.55;scale:.96}to{opacity:1;scale:1.03}}
 @media(prefers-reduced-motion:reduce){.planetarium-selection-halo{animation:none}}
+
+.planetarium-local-search{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 18px}
+.planetarium-local-search label{font-size:10px;letter-spacing:1.2px;font-weight:800;color:#90b4d4}
+.planetarium-local-search input{flex:1;min-width:160px;background:#0f1d35;border:1px solid #93b7e34a;color:#ecf5ff;border-radius:9px;padding:10px 13px}
+.planetarium-local-search button{border-radius:9px;background:#213450;border:1px solid #7baade6b;color:#c6e7ff;padding:10px 15px}
