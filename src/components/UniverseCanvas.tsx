@@ -59,6 +59,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
   const [zoom, setZoom] = useState(initialCamera.zoom);
   const [offset, setOffset] = useState(initialCamera.offset);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [labelsVisible, setLabelsVisible] = useState(true);
   const [keyboardFocusedId, setKeyboardFocusedId] = useState<number | null>(null);
   const [kindFilter, setKindFilter] = useState<PlanetFilter>('all');
   const [planetQuery, setPlanetQuery] = useState('');
@@ -287,7 +288,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
           onPointerCancel={() => { dragRef.current = null; }} onPointerLeave={() => setHoveredId(null)} />
         {halo && <div className="planetarium-selection-halo" aria-hidden="true" style={{ left: halo.left, top: halo.top, width: halo.diameter, height: halo.diameter }} />}
         <div className="planetarium-label-layer" aria-hidden="true">
-          {labelNodes.map(node => (
+          {labelsVisible && labelNodes.map(node => (
             <div key={node.id} className={`planetarium-planet-label${highlightedId === node.id ? ' selected' : ''}${hoveredId === node.id ? ' hovered' : ''}`}
               style={{ left: node.x, top: node.y + node.r + 12 }}>
               <strong>{node.tab.domain}</strong>
@@ -302,6 +303,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
             <span>{Math.round(zoom * 100)}%</span>
             <button type="button" aria-label="Zoom in" onClick={() => changeZoom(0.2)}>+</button>
             <button type="button" onClick={() => { setOffset({ x: 0, y: 0 }); setZoom(1); }}>Reset</button>
+            <button type="button" aria-pressed={labelsVisible} onClick={() => setLabelsVisible(v => !v)}>{labelsVisible ? '◈ Labels' : '◇ Labels'}</button>
             <button type="button" title="Fit all visible planets into the universe" onClick={() => {
               const originals=createPlanetNodes(tabs,viewport.width,viewport.height,1,{x:0,y:0},layoutMode);
               const next=fitPlanetCamera(filterPlanetNodes(originals,kindFilter),viewport);

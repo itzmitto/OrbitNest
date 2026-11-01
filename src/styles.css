@@ -588,3 +588,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 @media (max-width:600px){.mission-observatory{padding:1rem;border-radius:1.1rem}.mission-observatory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mission-observatory-card{padding:.8rem;min-height:9rem}}
 @media (max-width:400px){.mission-observatory-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.mission-observatory-card{transition:none}.mission-observatory-card:hover{transform:none}}
+
+.mission-filter-control{display:inline-flex;gap:.65rem;align-items:center;flex-wrap:wrap;color:#c8dcf9;font-size:.82rem;margin:0 .8rem .85rem 0}
+.mission-filter-control input,.mission-filter-control select{max-width:100%;border-radius:.6rem;border:1px solid #7196a970;color:#effaff;background:#0b1935;padding:.55rem .7rem}
+.mission-filter-control :is(input,select):focus-visible{outline:2px solid #81ffef;outline-offset:2px}

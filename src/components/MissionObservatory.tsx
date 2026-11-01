@@ -27,6 +27,7 @@ export function MissionObservatory({ tabs }: { tabs: readonly TabRecord[] }) {
         <p>{item.detail}</p>
       </article>)}
     </div>
+    {filtered.length === 0 && <p role="status">No matching signals. Clear the search or category filter.</p>}
     {filtered.length > 6 && <button type="button" className="mission-observatory-more" aria-expanded={expanded} onClick={() => setExpanded(v => !v)}>
       {expanded ? 'Show fewer signals' : `Explore all ${filtered.length} signals`}
     </button>}
