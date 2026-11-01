@@ -24,6 +24,7 @@ import { parseGalaxyLayout } from '../graph/layout-mode';
 import { fitPlanetCamera } from '../graph/fit-camera';
 import { visiblePlanetLabels } from '../graph/label-layout';
 import { cyclePlanetFocus } from '../graph/planet-navigation';
+import { galaxyMetrics } from '../graph/galaxy-metrics';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -62,6 +63,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const nodes = useMemo(() => filterPlanetNodes(allNodes, kindFilter), [allNodes, kindFilter]);
   const highlightedId = keyboardFocusedId ?? selected;
   const labelNodes = useMemo(() => visiblePlanetLabels(nodes, [keyboardFocusedId, hoveredId, selected]), [nodes, keyboardFocusedId, hoveredId, selected]);
+  const stats = useMemo(() => galaxyMetrics(nodes), [nodes]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === highlightedId);
   const activeBrowserTab = tabs.find(tab => tab.active);
@@ -245,6 +247,11 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
         </select>
         <span>{nodes.length} visible</span>
       </label>
+      <div className="galaxy-live-metrics" aria-label="Visible galaxy statistics">
+        <span><strong>{stats.worlds}</strong> worlds</span><span><strong>{stats.sectors}</strong> sectors</span>
+        <span><strong>{stats.families}</strong> planet types</span><span><strong>{stats.pinned}</strong> pinned</span>
+        <span><strong>{stats.audible}</strong> playing audio</span>
+      </div>
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
         <NebulaClouds />

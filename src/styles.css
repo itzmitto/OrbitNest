@@ -525,3 +525,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
  .planetarium-navigation-hint{max-width:calc(100% - 20px);text-wrap:balance}
 }
 @media(prefers-reduced-motion:reduce){.nebula-clouds i,.orbit-star{animation:none!important}}
+
+/* Compact live constellation telemetry above the canvas. */
+.galaxy-live-metrics{display:flex;flex-wrap:wrap;gap:9px;padding:11px 18px 17px;border-bottom:1px solid #a7c4ff1d}
+.galaxy-live-metrics span{padding:8px 12px;border:1px solid #90a8e32c;border-radius:24px;background:#1024429c;color:#9fb5d3;font-size:11px}
+.galaxy-live-metrics strong{color:#b4faec;font-variant-numeric:tabular-nums}
