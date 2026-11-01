@@ -23,6 +23,7 @@ import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-
 import { parseGalaxyLayout } from '../graph/layout-mode';
 import { fitPlanetCamera } from '../graph/fit-camera';
 import { visiblePlanetLabels } from '../graph/label-layout';
+import { cyclePlanetFocus } from '../graph/planet-navigation';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -47,6 +48,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [zoom, setZoom] = useState(initialCamera.zoom);
   const [offset, setOffset] = useState(initialCamera.offset);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [keyboardFocusedId, setKeyboardFocusedId] = useState<number | null>(null);
   const [kindFilter, setKindFilter] = useState<PlanetFilter>('all');
   const [layoutMode, setLayoutMode] = useState(() => { try { return parseGalaxyLayout(localStorage.getItem('orbitnest:layout:v1')); } catch { return parseGalaxyLayout(null); } });
   useEffect(() => { try { localStorage.setItem('orbitnest:layout:v1',layoutMode); } catch { /* privacy mode */ } },[layoutMode]);
@@ -58,9 +60,10 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [webglFallback, setWebglFallback] = useState(false);
   const allNodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset, layoutMode), [tabs, viewport, zoom, offset, layoutMode]);
   const nodes = useMemo(() => filterPlanetNodes(allNodes, kindFilter), [allNodes, kindFilter]);
-  const labelNodes = useMemo(() => visiblePlanetLabels(nodes, [hoveredId, selected]), [nodes, hoveredId, selected]);
+  const highlightedId = keyboardFocusedId ?? selected;
+  const labelNodes = useMemo(() => visiblePlanetLabels(nodes, [keyboardFocusedId, hoveredId, selected]), [nodes, keyboardFocusedId, hoveredId, selected]);
   const hovered = nodes.find(node => node.id === hoveredId);
-  const active = nodes.find(node => node.id === selected);
+  const active = nodes.find(node => node.id === highlightedId);
   const activeBrowserTab = tabs.find(tab => tab.active);
   const motionStopped = paused || reducedMotion || !pageVisible;
 
@@ -125,7 +128,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
       if (now - lastPaint > frameInterval(nodes.length,quality) || motionStopped) {
         lastPaint = now;
         if (rendererRef.current && !webglFallback) {
-          rendererRef.current.render(nodes, viewport.width, viewport.height, motionRef.current, selected, showDetailedRings(nodes.length,quality));
+          rendererRef.current.render(nodes, viewport.width, viewport.height, motionRef.current, highlightedId, showDetailedRings(nodes.length,quality));
         } else {
           const ctx = canvas.getContext('2d');
           if (ctx) {
@@ -134,7 +137,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
               const n = nodes.find(node => node.id === point.id);
               return n ? { ...point, x: n.x, y: n.y, r: n.r } : point;
             });
-            drawUniverse(ctx, viewport.width, viewport.height, fallbackPoints, selected);
+            drawUniverse(ctx, viewport.width, viewport.height, fallbackPoints, highlightedId);
           }
         }
       }
@@ -142,7 +145,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     };
     frameId = window.requestAnimationFrame(drawFrame);
     return () => window.cancelAnimationFrame(frameId);
-  }, [tabs, nodes, selected, viewport, motionStopped, webglFallback, speed, quality]);
+  }, [tabs, nodes, highlightedId, viewport, motionStopped, webglFallback, speed, quality]);
 
   // Native non-passive wheel listener: prevent page scrolling only over the planet map.
   useEffect(() => {
@@ -185,9 +188,16 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     dragRef.current = null;
     if (!drag || drag.moved) return;
     const node = pickNode(event);
-    if (node) onOpen(node.tab);
+    if (node) { setKeyboardFocusedId(node.id); onOpen(node.tab); }
   };
   const onCanvasKeyDown = (event: KeyboardEvent<HTMLCanvasElement>) => {
+    if (event.key === '[' || event.key === ']') {
+      event.preventDefault();
+      setKeyboardFocusedId(previous => cyclePlanetFocus(nodes, previous ?? selected, event.key === ']' ? 1 : -1));
+      return;
+    }
+    if (event.key === 'Enter' && active) { event.preventDefault(); onOpen(active.tab); return; }
+    if (event.key === 'Escape') { setKeyboardFocusedId(null); return; }
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) {
       event.preventDefault();
       setOffset(previous => keyboardCameraOffset(event.key as NavigationCommand, previous));
@@ -244,12 +254,12 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           {rings.map((ring, index) => <ellipse key={index} cx={viewport.width / 2 + offset.x} cy={viewport.height / 2 + offset.y} rx={ring.rx} ry={ring.ry} fill="none" stroke="url(#orbitGlow)" strokeWidth="1" strokeDasharray={index % 2 ? '3 7' : undefined} />)}
         </svg>}
         <div className="planetarium-core" aria-hidden="true" style={{ left: viewport.width / 2 + offset.x, top: viewport.height / 2 + offset.y }}><span /></div>
-        <canvas key={webglFallback ? 'canvas-2d' : 'canvas-3d'} ref={canvasRef} className="planetarium-webgl" aria-label={`${tabs.length} rotating planet representations of open tabs. Use arrow keys to pan, plus or minus to zoom, zero to reset. Choose Galaxy List to open tabs with the keyboard.`} role="group" tabIndex={0} onKeyDown={onCanvasKeyDown}
+        <canvas key={webglFallback ? 'canvas-2d' : 'canvas-3d'} ref={canvasRef} className="planetarium-webgl" aria-label={`${tabs.length} rotating planet representations of open tabs. Use arrow keys to pan, square brackets to choose planets, Enter to open a selected planet, plus or minus to zoom, zero to reset. Choose Galaxy List to open tabs with the keyboard.`} role="group" tabIndex={0} onKeyDown={onCanvasKeyDown}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}
           onPointerCancel={() => { dragRef.current = null; }} onPointerLeave={() => setHoveredId(null)} />
         <div className="planetarium-label-layer" aria-hidden="true">
           {labelNodes.map(node => (
-            <div key={node.id} className={`planetarium-planet-label${selected === node.id ? ' selected' : ''}${hoveredId === node.id ? ' hovered' : ''}`}
+            <div key={node.id} className={`planetarium-planet-label${highlightedId === node.id ? ' selected' : ''}${hoveredId === node.id ? ' hovered' : ''}`}
               style={{ left: node.x, top: node.y + node.r + 12 }}>
               <strong>{node.tab.domain}</strong>
               {(selected === node.id || hoveredId === node.id) && <small>{node.tab.title}</small>}
@@ -280,7 +290,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
         </div>
         {(hovered || active) && <div className="planetarium-inspector" role="status"><span>{(hovered || active)?.kind.toUpperCase()} PLANET</span><strong>{(hovered || active)?.tab.title}</strong><small>{(hovered || active)?.tab.domain} · Click planet to switch tab</small></div>}
         {nodes.length === 0 && <div className="planetarium-empty">No planets of this type in this sector. Choose another filter.</div>}
-        <UniverseMinimap nodes={nodes} selected={selected} onFocus={id=>setOffset(previous=>centerOnPlanet(nodes,id,viewport.width,viewport.height,previous))}/>
+        <UniverseMinimap nodes={nodes} selected={highlightedId} onFocus={id=>setOffset(previous=>centerOnPlanet(nodes,id,viewport.width,viewport.height,previous))}/>
         <div className="planetarium-navigation-hint">DRAG TO PAN <i /> USE + / − TO ZOOM <i /> SELECT A PLANET TO OPEN ITS TAB</div>
       </div>
       <PlanetDetails tab={(hovered || active)?.tab} onOpen={onOpen} />
