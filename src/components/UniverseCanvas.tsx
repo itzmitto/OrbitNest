@@ -22,6 +22,7 @@ import { parseCameraPreference } from '../domain/camera-preferences';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
 import { parseGalaxyLayout } from '../graph/layout-mode';
 import { fitPlanetCamera } from '../graph/fit-camera';
+import { visiblePlanetLabels } from '../graph/label-layout';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -57,6 +58,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [webglFallback, setWebglFallback] = useState(false);
   const allNodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset, layoutMode), [tabs, viewport, zoom, offset, layoutMode]);
   const nodes = useMemo(() => filterPlanetNodes(allNodes, kindFilter), [allNodes, kindFilter]);
+  const labelNodes = useMemo(() => visiblePlanetLabels(nodes, [hoveredId, selected]), [nodes, hoveredId, selected]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === selected);
   const activeBrowserTab = tabs.find(tab => tab.active);
@@ -246,7 +248,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}
           onPointerCancel={() => { dragRef.current = null; }} onPointerLeave={() => setHoveredId(null)} />
         <div className="planetarium-label-layer" aria-hidden="true">
-          {nodes.length <= 80 && nodes.map(node => (
+          {labelNodes.map(node => (
             <div key={node.id} className={`planetarium-planet-label${selected === node.id ? ' selected' : ''}${hoveredId === node.id ? ' hovered' : ''}`}
               style={{ left: node.x, top: node.y + node.r + 12 }}>
               <strong>{node.tab.domain}</strong>
