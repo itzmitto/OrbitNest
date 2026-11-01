@@ -1,3 +1,4 @@
+import { observeLocalhostTabCount } from './signals/localhost-tab-count';
 import { observeShortTitleCount } from './signals/short-title-count';
 import { observeLongTitleCount } from './signals/long-title-count';
 import { observeUntitledTabCount } from './signals/untitled-tab-count';
@@ -19,7 +20,7 @@ import { observePinnedWorldCount } from './signals/pinned-world-count';
 import { observeOpenTabCount } from './signals/open-tab-count';
 import type { TabRecord } from '../domain/tab';
 import type { Observation, Observer } from './types';
-const observers: Observer[] = [observeShortTitleCount, observeLongTitleCount, observeUntitledTabCount, observeFaviconMissingCount, observeFaviconAvailableCount, observeNonWebPageCount, observeInsecurePageCount, observeSecurePageCount, observeUnpinnedWorldCount, observePinnedMutedCount, observePinnedAudibleCount, observeActiveAudibleCount, observeInactiveMutedCount, observeUnfocusedWorldCount, observeActiveWorldCount, observeMutedWorldCount, observeAudibleWorldCount, observePinnedWorldCount, observeOpenTabCount, ];
+const observers: Observer[] = [observeLocalhostTabCount, observeShortTitleCount, observeLongTitleCount, observeUntitledTabCount, observeFaviconMissingCount, observeFaviconAvailableCount, observeNonWebPageCount, observeInsecurePageCount, observeSecurePageCount, observeUnpinnedWorldCount, observePinnedMutedCount, observePinnedAudibleCount, observeActiveAudibleCount, observeInactiveMutedCount, observeUnfocusedWorldCount, observeActiveWorldCount, observeMutedWorldCount, observeAudibleWorldCount, observePinnedWorldCount, observeOpenTabCount, ];
 /** Calculations run entirely in the dashboard; no web APIs are called. */
 export function collectObservations(tabs: readonly TabRecord[]): Observation[] {
   return observers.map(observe => observe(tabs));
