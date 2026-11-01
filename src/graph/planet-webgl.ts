@@ -143,14 +143,19 @@ in float vAngle;
 in float vRadial;
 uniform float uFront;
 uniform float uHue;
+uniform float uRingSeed;
 out vec4 colorOut;
 void main() {
   if(uFront<0.5 && vAngle>=0.0) discard;
   if(uFront>=0.5 && vAngle<0.0) discard;
-  float bands=pow(abs(sin(vRadial*24.0)),2.0);
-  float envelope=smoothstep(0.0,0.2,vRadial)*(1.0-smoothstep(0.78,1.0,vRadial));
-  vec3 tint=mix(vec3(0.46,0.57,0.94),vec3(0.97,0.81,0.57),uHue);
-  colorOut=vec4(tint*(0.58+bands*0.5),envelope*(0.18+bands*0.53));
+  // Multiple bands make icy and gas giant rings look distinct at every zoom level.
+  float ridges=sin(vRadial*52.0+uRingSeed*7.0);
+  float dust=sin(vRadial*141.0+uRingSeed*13.0);
+  float bands=0.53+0.27*ridges+0.20*dust;
+  float gap=smoothstep(0.012,0.062,abs(vRadial-0.53));
+  float envelope=smoothstep(0.015,0.17,vRadial)*(1.0-smoothstep(0.80,0.98,vRadial))*gap;
+  vec3 tint=mix(vec3(0.31,0.69,0.95),vec3(0.99,0.70,0.35),uHue);
+  colorOut=vec4(tint*(0.52+bands*0.66),clamp(envelope*(0.15+bands*0.68),0.0,0.82));
 }`;
 
 type Uniforms = { viewport: WebGLUniformLocation | null; center: WebGLUniformLocation | null; radius: WebGLUniformLocation | null };
@@ -249,6 +254,7 @@ export class PlanetRenderer {
       setCommon(this.ringUniforms,node);
       gl.uniform1f(gl.getUniformLocation(this.ringProgram,'uFront'),front?1:0);
       gl.uniform1f(gl.getUniformLocation(this.ringProgram,'uHue'),node.kindIndex===1?1:0);
+      gl.uniform1f(gl.getUniformLocation(this.ringProgram,'uRingSeed'),node.seed);
       gl.drawArrays(gl.TRIANGLE_STRIP,0,this.ringCount);
       gl.disableVertexAttribArray(position);
       gl.depthMask(true);gl.enable(gl.DEPTH_TEST);
