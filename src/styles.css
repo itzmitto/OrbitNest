@@ -508,3 +508,20 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .universe-minimap-dot.active,.universe-minimap-dot:hover{background:#f4edb2;box-shadow:0 0 12px #7ac9ff}
 .universe-minimap-dot:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media(max-width:670px){.universe-minimap{right:10px;bottom:70px;width:112px;height:98px;padding:7px}.universe-minimap-field{height:68px}}
+
+/* High-density controls, touch targets and safe-area spacing. */
+.planetarium-header,.planetarium-hud,.planetarium-navigation-hint{min-width:0}
+.planetarium-header{row-gap:14px}
+.planetarium-hud{max-width:calc(100% - 20px)}
+.planetarium-zoom-actions{flex-wrap:wrap;row-gap:8px}
+.planetarium-zoom-actions select,.galaxy-layout-select select{max-width:180px;min-height:34px}
+.planetarium-hud button,.planetarium-zoom-actions select{touch-action:manipulation}
+.planetarium-stage{overflow:hidden}
+.planetarium-planet-label{max-width:175px}
+@media(max-width:700px){
+ .planetarium-header{padding:14px}
+ .planetarium-zoom-actions{gap:6px}
+ .planetarium-zoom-actions button{min-height:38px}
+ .planetarium-navigation-hint{max-width:calc(100% - 20px);text-wrap:balance}
+}
+@media(prefers-reduced-motion:reduce){.nebula-clouds i,.orbit-star{animation:none!important}}

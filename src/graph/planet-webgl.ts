@@ -236,7 +236,7 @@ export class PlanetRenderer {
     gl.enable(gl.DEPTH_TEST);gl.clearColor(0,0,0,0);
   }
 
-  render(nodes:readonly PlanetNode[],width:number,height:number,elapsed:number,selected:number|null):void {
+  render(nodes:readonly PlanetNode[],width:number,height:number,elapsed:number,selected:number|null,detailedRings=true):void {
     const gl=this.gl;
     gl.viewport(0,0,gl.canvas.width,gl.canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -261,7 +261,7 @@ export class PlanetRenderer {
     };
     for(const node of nodes){
       if(node.x<-120||node.y<-120||node.x>width+120||node.y>height+120)continue;
-      if(node.ringed && nodes.length<100)drawRing(node,false);
+      if(node.ringed && detailedRings)drawRing(node,false);
       gl.useProgram(this.planetProgram);
       gl.bindBuffer(gl.ARRAY_BUFFER,this.sphereBuffer);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.elementBuffer);
@@ -275,7 +275,7 @@ export class PlanetRenderer {
       gl.uniform1f(gl.getUniformLocation(this.planetProgram,'uSelected'),selected===node.id?1:0);
       gl.drawElements(gl.TRIANGLES,this.sphereCount,gl.UNSIGNED_SHORT,0);
       gl.disableVertexAttribArray(position);
-      if(node.ringed && nodes.length<100)drawRing(node,true);
+      if(node.ringed && detailedRings)drawRing(node,true);
     }
   }
   dispose():void {

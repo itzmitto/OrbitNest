@@ -9,6 +9,7 @@ import { PlanetCatalog } from './PlanetCatalog';
 import { Starfield } from './Starfield';
 import { NebulaClouds } from './NebulaClouds';
 import { UniverseMinimap } from './UniverseMinimap';
+import {frameInterval,showDetailedRings,parseRenderQuality} from '../domain/render-quality';
 import { parseStarDensity, STAR_COUNTS } from '../domain/star-density';
 import { PlanetDetails } from './PlanetDetails';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
@@ -49,6 +50,8 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [layoutMode, setLayoutMode] = useState(() => { try { return parseGalaxyLayout(localStorage.getItem('orbitnest:layout:v1')); } catch { return parseGalaxyLayout(null); } });
   useEffect(() => { try { localStorage.setItem('orbitnest:layout:v1',layoutMode); } catch { /* privacy mode */ } },[layoutMode]);
   const [paused, setPaused] = useState(false);
+  const [quality,setQuality]=useState(()=>{try{return parseRenderQuality(localStorage.getItem('orbitnest:quality:v1'));}catch{return parseRenderQuality(null);}});
+  useEffect(()=>{try{localStorage.setItem('orbitnest:quality:v1',quality);}catch{/* local preferences only */}},[quality]);
   const [pageVisible, setPageVisible] = useState(() => typeof document === 'undefined' || document.visibilityState === 'visible');
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglFallback, setWebglFallback] = useState(false);
@@ -117,10 +120,10 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
       const step = previousTime ? Math.min((now - previousTime) / 1000, 0.06) : 0;
       previousTime = now;
       if (!motionStopped) motionRef.current += step * ANIMATION_FACTORS[speed];
-      if (now - lastPaint > (nodes.length > 70 ? 33 : 15) || motionStopped) {
+      if (now - lastPaint > frameInterval(nodes.length,quality) || motionStopped) {
         lastPaint = now;
         if (rendererRef.current && !webglFallback) {
-          rendererRef.current.render(nodes, viewport.width, viewport.height, motionRef.current, selected);
+          rendererRef.current.render(nodes, viewport.width, viewport.height, motionRef.current, selected, showDetailedRings(nodes.length,quality));
         } else {
           const ctx = canvas.getContext('2d');
           if (ctx) {
@@ -137,7 +140,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
     };
     frameId = window.requestAnimationFrame(drawFrame);
     return () => window.cancelAnimationFrame(frameId);
-  }, [tabs, nodes, selected, viewport, motionStopped, webglFallback, speed]);
+  }, [tabs, nodes, selected, viewport, motionStopped, webglFallback, speed, quality]);
 
   // Native non-passive wheel listener: prevent page scrolling only over the planet map.
   useEffect(() => {
@@ -205,6 +208,11 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           </select>
         </label>
       </div>
+      <label className="galaxy-layout-select">RENDER MODE
+        <select aria-label="Render quality" value={quality} onChange={event=>setQuality(parseRenderQuality(event.target.value))}>
+          <option value="auto">Automatic</option><option value="battery">Battery saver</option><option value="cinematic">Cinematic</option>
+        </select>
+      </label>
       <label className="galaxy-layout-select">STAR DETAIL
         <select aria-label="Star density" value={starDensity} onChange={event=>setStarDensity(parseStarDensity(event.target.value))}>
           <option value="minimal">Minimal</option><option value="classic">Classic</option><option value="cinematic">Cinematic</option>
