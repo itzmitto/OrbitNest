@@ -8,6 +8,7 @@ import { drawUniverse } from '../graph/draw';
 import { PlanetCatalog } from './PlanetCatalog';
 import { Starfield } from './Starfield';
 import { NebulaClouds } from './NebulaClouds';
+import { parseStarDensity, STAR_COUNTS } from '../domain/star-density';
 import { PlanetDetails } from './PlanetDetails';
 import { centerOnPlanet, zoomAtPoint } from '../graph/camera';
 import { layoutPlanets } from '../graph/layout';
@@ -32,6 +33,8 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const motionRef = useRef(0);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const { scene, setScene } = useScene();
+  const [starDensity, setStarDensity]=useState(()=>{try{return parseStarDensity(localStorage.getItem('orbitnest:stars:v1'));}catch{return parseStarDensity(null);}});
+  useEffect(()=>{try{localStorage.setItem('orbitnest:stars:v1',starDensity);}catch{/* storage can be blocked */}},[starDensity]);
   const { showOrbits, setShowOrbits } = useOrbitLines();
   const { speed, setSpeed } = useAnimationSpeed();
   const [initialCamera] = useState(() => {
@@ -201,6 +204,11 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           </select>
         </label>
       </div>
+      <label className="galaxy-layout-select">STAR DETAIL
+        <select aria-label="Star density" value={starDensity} onChange={event=>setStarDensity(parseStarDensity(event.target.value))}>
+          <option value="minimal">Minimal</option><option value="classic">Classic</option><option value="cinematic">Cinematic</option>
+        </select>
+      </label>
       <label className="galaxy-layout-select">GALAXY SHAPE
         <select aria-label="Galaxy arrangement" value={layoutMode} onChange={event => setLayoutMode(parseGalaxyLayout(event.target.value))}>
           <option value="orbits">Solar orbits</option><option value="spiral">Golden spiral</option>
@@ -219,7 +227,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
         <NebulaClouds />
-        <Starfield density={112} />
+        <Starfield density={STAR_COUNTS[starDensity]} />
         {showOrbits && layoutMode === 'orbits' && <svg className="planetarium-orbits" viewBox={`0 0 ${viewport.width} ${viewport.height}`} aria-hidden="true">
           <defs><linearGradient id="orbitGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#78c6fe" stopOpacity="0.1" /><stop offset="0.55" stopColor="#7c85dc" stopOpacity="0.3" /><stop offset="1" stopColor="#83fcda" stopOpacity="0.09" /></linearGradient></defs>
           {rings.map((ring, index) => <ellipse key={index} cx={viewport.width / 2 + offset.x} cy={viewport.height / 2 + offset.y} rx={ring.rx} ry={ring.ry} fill="none" stroke="url(#orbitGlow)" strokeWidth="1" strokeDasharray={index % 2 ? '3 7' : undefined} />)}
