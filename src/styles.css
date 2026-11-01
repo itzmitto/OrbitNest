@@ -592,3 +592,6 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .mission-filter-control{display:inline-flex;gap:.65rem;align-items:center;flex-wrap:wrap;color:#c8dcf9;font-size:.82rem;margin:0 .8rem .85rem 0}
 .mission-filter-control input,.mission-filter-control select{max-width:100%;border-radius:.6rem;border:1px solid #7196a970;color:#effaff;background:#0b1935;padding:.55rem .7rem}
 .mission-filter-control :is(input,select):focus-visible{outline:2px solid #81ffef;outline-offset:2px}
+
+.mission-planet-tally{position:absolute;top:1rem;left:1rem;z-index:3;padding:.45rem .8rem;background:#041b2ebd;border:1px solid #74e2e84f;border-radius:999px;font:700 .68rem ui-monospace,monospace;letter-spacing:.075em;color:#d7fff9;pointer-events:none}
+@media (max-width:600px){.mission-planet-tally{font-size:.59rem;top:.5rem;left:.5rem}}

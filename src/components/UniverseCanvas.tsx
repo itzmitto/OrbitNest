@@ -296,6 +296,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
             </div>
           ))}
         </div>
+        <div className="mission-planet-tally" role="status" aria-live="off">◉ {nodes.length} visible planets · {allNodes.length - nodes.length} filtered</div>
         <div className="planetarium-hud">
           <span className="planetarium-hud-title">MISSION NAVIGATION <em>{webglFallback ? '2D FALLBACK' : 'LIVE 3D'}</em></span>
           <div className="planetarium-zoom-actions" role="group" aria-label="Universe controls">
@@ -314,6 +315,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
             <label className="rotation-speed"><span>SPIN</span><select aria-label="Planet rotation speed" value={speed} onChange={event => setSpeed(event.target.value as typeof speed)} disabled={reducedMotion}>
               <option value="drift">Drift</option><option value="normal">Normal</option><option value="hyperdrive">Hyperdrive</option>
             </select></label>
+            <button type="button" disabled={selected === null || !nodes.some(n => n.id === selected)} title="Move camera to the selected planet" onClick={() => { if (selected !== null) setOffset(previous => centerOnPlanet(nodes, selected, viewport.width, viewport.height, previous)); }}>◎ Selected</button>
             <button type="button" disabled={!activeBrowserTab} title="Center on the active browser tab" onClick={() => {
               if (activeBrowserTab) setOffset(previous => centerOnPlanet(nodes, activeBrowserTab.id, viewport.width, viewport.height, previous));
             }}>⌖ Focus</button>
