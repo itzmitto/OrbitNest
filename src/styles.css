@@ -549,3 +549,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .world-detail .world-detail-actions button{width:auto;min-height:35px}
 .world-detail .world-detail-actions button.danger{color:#ffd3d5;border-color:#d676854a;background:#53232d45}
 .world-detail .world-detail-actions button.danger:hover{background:#813242}
+
+/* A selection is visible beyond the shader lighting and even in 2D fallback. */
+.planetarium-selection-halo{pointer-events:none;position:absolute;z-index:3;transform:translate(-50%,-50%);border:2px solid #8debd4a8;border-radius:50%;box-shadow:0 0 17px #86dbe557, inset 0 0 17px #86dbe542;animation:planet-selected-glow 2.8s ease-in-out infinite alternate}
+@keyframes planet-selected-glow{from{opacity:.55;scale:.96}to{opacity:1;scale:1.03}}
+@media(prefers-reduced-motion:reduce){.planetarium-selection-halo{animation:none}}

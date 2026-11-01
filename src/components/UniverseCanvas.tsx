@@ -28,6 +28,7 @@ import { galaxyMetrics } from '../graph/galaxy-metrics';
 import { parseGalaxyPalette } from '../domain/galaxy-palette';
 import { adaptiveStarBudget } from '../domain/star-budget';
 import { toggleGalaxyFullscreen } from '../graph/fullscreen';
+import { selectionHalo } from '../graph/selection-halo';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void; demo: boolean; onPin: (tab: TabRecord) => void; onMute: (tab: TabRecord) => void; onClose: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -71,6 +72,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
   const highlightedId = keyboardFocusedId ?? selected;
   const labelNodes = useMemo(() => visiblePlanetLabels(nodes, [keyboardFocusedId, hoveredId, selected]), [nodes, keyboardFocusedId, hoveredId, selected]);
   const stats = useMemo(() => galaxyMetrics(nodes), [nodes]);
+  const halo = useMemo(() => selectionHalo(nodes, highlightedId), [nodes, highlightedId]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === highlightedId);
   const activeBrowserTab = tabs.find(tab => tab.active);
@@ -276,6 +278,7 @@ export function UniverseCanvas({ tabs, selected, onOpen, demo, onPin, onMute, on
         <canvas key={webglFallback ? 'canvas-2d' : 'canvas-3d'} ref={canvasRef} className="planetarium-webgl" aria-label={`${tabs.length} rotating planet representations of open tabs. Use arrow keys to pan, square brackets to choose planets, Enter to open a selected planet, plus or minus to zoom, zero to reset. Choose Galaxy List to open tabs with the keyboard.`} role="group" tabIndex={0} onKeyDown={onCanvasKeyDown}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}
           onPointerCancel={() => { dragRef.current = null; }} onPointerLeave={() => setHoveredId(null)} />
+        {halo && <div className="planetarium-selection-halo" aria-hidden="true" style={{ left: halo.left, top: halo.top, width: halo.diameter, height: halo.diameter }} />}
         <div className="planetarium-label-layer" aria-hidden="true">
           {labelNodes.map(node => (
             <div key={node.id} className={`planetarium-planet-label${highlightedId === node.id ? ' selected' : ''}${hoveredId === node.id ? ' hovered' : ''}`}
