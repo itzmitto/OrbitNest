@@ -16,6 +16,7 @@ import { useAnimationSpeed } from '../hooks/useAnimationSpeed';
 import { ANIMATION_FACTORS } from '../domain/animation-speed';
 import { parseCameraPreference } from '../domain/camera-preferences';
 import { keyboardCameraOffset, type NavigationCommand } from '../graph/keyboard-navigation';
+import { parseGalaxyLayout } from '../graph/layout-mode';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -39,11 +40,13 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const [offset, setOffset] = useState(initialCamera.offset);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [kindFilter, setKindFilter] = useState<PlanetFilter>('all');
+  const [layoutMode, setLayoutMode] = useState(() => { try { return parseGalaxyLayout(localStorage.getItem('orbitnest:layout:v1')); } catch { return parseGalaxyLayout(null); } });
+  useEffect(() => { try { localStorage.setItem('orbitnest:layout:v1',layoutMode); } catch { /* privacy mode */ } },[layoutMode]);
   const [paused, setPaused] = useState(false);
   const [pageVisible, setPageVisible] = useState(() => typeof document === 'undefined' || document.visibilityState === 'visible');
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglFallback, setWebglFallback] = useState(false);
-  const allNodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset), [tabs, viewport, zoom, offset]);
+  const allNodes = useMemo(() => createPlanetNodes(tabs, viewport.width, viewport.height, zoom, offset, layoutMode), [tabs, viewport, zoom, offset, layoutMode]);
   const nodes = useMemo(() => filterPlanetNodes(allNodes, kindFilter), [allNodes, kindFilter]);
   const hovered = nodes.find(node => node.id === hoveredId);
   const active = nodes.find(node => node.id === selected);
@@ -196,6 +199,11 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
           </select>
         </label>
       </div>
+      <label className="galaxy-layout-select">GALAXY SHAPE
+        <select aria-label="Galaxy arrangement" value={layoutMode} onChange={event => setLayoutMode(parseGalaxyLayout(event.target.value))}>
+          <option value="orbits">Solar orbits</option><option value="spiral">Golden spiral</option>
+        </select>
+      </label>
       <label className="planet-family-picker">PLANET FAMILY
         <select aria-label="Filter planets by type" value={kindFilter} onChange={event => {
           const next = event.target.value;
@@ -209,7 +217,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
       <div className="planetarium-stage" ref={containerRef}>
         <div className="planetarium-nebula" aria-hidden="true" />
         <Starfield density={112} />
-        {showOrbits && <svg className="planetarium-orbits" viewBox={`0 0 ${viewport.width} ${viewport.height}`} aria-hidden="true">
+        {showOrbits && layoutMode === 'orbits' && <svg className="planetarium-orbits" viewBox={`0 0 ${viewport.width} ${viewport.height}`} aria-hidden="true">
           <defs><linearGradient id="orbitGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#78c6fe" stopOpacity="0.1" /><stop offset="0.55" stopColor="#7c85dc" stopOpacity="0.3" /><stop offset="1" stopColor="#83fcda" stopOpacity="0.09" /></linearGradient></defs>
           {rings.map((ring, index) => <ellipse key={index} cx={viewport.width / 2 + offset.x} cy={viewport.height / 2 + offset.y} rx={ring.rx} ry={ring.ry} fill="none" stroke="url(#orbitGlow)" strokeWidth="1" strokeDasharray={index % 2 ? '3 7' : undefined} />)}
         </svg>}

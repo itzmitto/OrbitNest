@@ -488,3 +488,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .session-row strong { overflow-wrap: anywhere; }
 .session-actions { flex-shrink: 0; }
 @media (max-width: 530px) { .session-row { align-items: flex-start; flex-wrap: wrap; } }
+
+.galaxy-layout-select {display:flex;gap:12px;align-items:center;margin:12px 18px 0;color:#a8c8ed;font-size:10px;letter-spacing:1.5px}
+.galaxy-layout-select select {background:#14213b;border:1px solid #6c89bd66;color:#f0f6ff;border-radius:10px;padding:9px 14px}
+.galaxy-layout-select select:focus-visible {outline:2px solid #82d9ff;outline-offset:3px}

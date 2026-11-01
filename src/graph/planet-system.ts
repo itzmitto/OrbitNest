@@ -1,4 +1,5 @@
 import type { TabRecord } from '../domain/tab';
+import type { GalaxyLayout } from './layout-mode';
 
 export type PlanetKind = 'ocean' | 'gas' | 'volcanic' | 'ice' | 'desert' | 'forest' | 'amethyst' | 'nebula' | 'moon' | 'aurora';
 export const PLANET_KINDS: readonly PlanetKind[] = ['ocean', 'gas', 'volcanic', 'ice', 'desert', 'forest', 'amethyst', 'nebula', 'moon', 'aurora'];
@@ -27,7 +28,7 @@ export function stableHash(value: string): number {
 }
 
 /** Independent tabs stay independent; a domain determines the planet family. */
-export function createPlanetNodes(tabs: readonly TabRecord[], width: number, height: number, zoom = 1, offset = { x: 0, y: 0 }): PlanetNode[] {
+export function createPlanetNodes(tabs: readonly TabRecord[], width: number, height: number, zoom = 1, offset = { x: 0, y: 0 }, mode: GalaxyLayout = 'orbits'): PlanetNode[] {
   if (!tabs.length) return [];
   const cx = width / 2 + offset.x;
   const cy = height / 2 + offset.y;
@@ -50,8 +51,12 @@ export function createPlanetNodes(tabs: readonly TabRecord[], width: number, hei
       const angle = -Math.PI / 2 + (i + ((orbit % 2) * 0.42)) * 2 * Math.PI / count;
       const eccentricity = 0.96 + (seed % 100) / 1300;
       const radius = Math.max(17, Math.min(47, (compact ? 28 : 39) - orbit * 2 + (seed % 9)));
-      const x = cx + Math.cos(angle) * rx * eccentricity * zoom;
-      const y = cy + Math.sin(angle) * ry * eccentricity * zoom;
+      // Golden-angle spiral spreads crowded galaxies without random jumps.
+      const spiralProgress = (cursor + i + 1) / Math.max(1, ordered.length);
+      const spiralAngle = (cursor + i) * 2.399963229728653;
+      const spiralRadius = Math.sqrt(spiralProgress);
+      const x = cx + Math.cos(mode === 'spiral' ? spiralAngle : angle) * (mode === 'spiral' ? width * 0.425 * spiralRadius : rx * eccentricity) * zoom;
+      const y = cy + Math.sin(mode === 'spiral' ? spiralAngle : angle) * (mode === 'spiral' ? height * 0.395 * spiralRadius : ry * eccentricity) * zoom;
       result.push({
         tab, id: tab.id, x, y,
         r: radius * zoom,
