@@ -18,6 +18,7 @@ import { sortTabs } from './domain/sort';
 import { duplicateTabIds } from './domain/duplicates';
 import { makeTabMap } from './domain/tab-map';
 import { filterByTabState, parseQuickTabFilter } from './domain/quick-tab-filter';
+import { filterByWindow, parseWindowSelection } from './domain/window-filter';
 
 const illustration = '✧';
 
@@ -40,13 +41,15 @@ export default function App() {
   const [group, setGroup] = useState<GroupMode>('none');
   const [duplicatesOnly, setDuplicatesOnly] = useState(false);
   const [stateFilter,setStateFilter]=useState(parseQuickTabFilter('all'));
+  const [windowFilter,setWindowFilter]=useState<number|null>(null);
+  const windowIds=Array.from(new Set(tabs.map(tab=>tab.windowId))).sort((a,b)=>a-b);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [view, setView] = useState<'universe' | 'list' | 'cards'>('universe');
   const [copyResult, setCopyResult] = useState('');
   const [quickSwitchOpen, setQuickSwitchOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const duplicateIds = duplicateTabIds(tabs);
-  const visibleTabs = sortTabs(filterByTabState(searchTabs(tabs, query),stateFilter), sort).filter(tab =>
+  const visibleTabs = sortTabs(filterByWindow(filterByTabState(searchTabs(tabs, query),stateFilter),windowFilter), sort).filter(tab =>
     (!favoritesOnly || favorites.includes(tab.id)) && (!duplicatesOnly || duplicateIds.has(tab.id))
   );
   const groups = groupTabs(visibleTabs, group);
@@ -145,6 +148,7 @@ export default function App() {
               <label className="search-box"><span aria-hidden="true">⌕</span><input ref={searchRef} type="search" aria-label="Search tabs" placeholder="Search stars, titles or websites…" value={query} onChange={event => setQuery(event.target.value)} /><kbd>/</kbd></label>
               <label className="select-box"><span>GROUP</span><select aria-label="Group tabs" value={group} onChange={event => setGroup(event.target.value as GroupMode)}><option value="none">All tabs</option><option value="window">Window</option><option value="domain">Domain</option></select></label>
               <label className="select-box"><span>SORT</span><select aria-label="Sort tabs" value={sort} onChange={event => setSort(event.target.value as SortMode)}><option value="window">Tab order</option><option value="title">Title A–Z</option><option value="domain">Domain A–Z</option></select></label>
+              <label className="select-box"><span>WINDOW</span><select aria-label="Browser window filter" value={windowFilter!==null&&windowIds.includes(windowFilter)?String(windowFilter):'all'} onChange={event=>setWindowFilter(parseWindowSelection(event.target.value,windowIds))}><option value="all">All windows</option>{windowIds.map((id,index)=><option value={id} key={id}>Window {index+1}</option>)}</select></label>
               <label className="select-box"><span>STATUS</span><select aria-label="Tab status filter" value={stateFilter} onChange={event=>setStateFilter(parseQuickTabFilter(event.target.value))}><option value="all">Any status</option><option value="pinned">Pinned</option><option value="audible">Playing audio</option><option value="active">Active tab</option></select></label>
               <label className="filter-toggle"><input type="checkbox" checked={favoritesOnly} onChange={event => setFavoritesOnly(event.target.checked)} /><span>☆ Favorites</span></label>
               <label className="filter-toggle"><input type="checkbox" checked={duplicatesOnly} onChange={event => setDuplicatesOnly(event.target.checked)} /><span>Duplicates <small>{duplicateIds.size}</small></span></label>
