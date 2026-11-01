@@ -27,6 +27,7 @@ import { cyclePlanetFocus } from '../graph/planet-navigation';
 import { galaxyMetrics } from '../graph/galaxy-metrics';
 import { parseGalaxyPalette } from '../domain/galaxy-palette';
 import { adaptiveStarBudget } from '../domain/star-budget';
+import { toggleGalaxyFullscreen } from '../graph/fullscreen';
 
 type Props = { tabs: TabRecord[]; selected: number | null; onOpen: (tab: TabRecord) => void };
 type DragState = { x: number; y: number; originX: number; originY: number; moved: boolean };
@@ -39,6 +40,8 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
   const dragRef = useRef<DragState | null>(null);
   const motionRef = useRef(0);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
+  const [fullScreen, setFullScreen] = useState(false);
+  useEffect(() => { const onChange = () => setFullScreen(document.fullscreenElement === containerRef.current); document.addEventListener('fullscreenchange', onChange); return () => document.removeEventListener('fullscreenchange', onChange); }, []);
   const { scene, setScene } = useScene();
   const [palette, setPalette] = useState(() => { try { return parseGalaxyPalette(localStorage.getItem('orbitnest:palette:v1')); } catch { return parseGalaxyPalette(null); } });
   useEffect(() => { try { localStorage.setItem('orbitnest:palette:v1', palette); } catch { /* local-only preference */ } }, [palette]);
@@ -294,6 +297,7 @@ export function UniverseCanvas({ tabs, selected, onOpen }: Props) {
               const next=fitPlanetCamera(filterPlanetNodes(originals,kindFilter),viewport);
               setZoom(next.zoom);setOffset(next.offset);
             }}>Fit all</button>
+            <button type="button" title="Toggle fullscreen universe" aria-pressed={fullScreen} onClick={() => { const el = containerRef.current; if (el) void toggleGalaxyFullscreen(el); }}>{fullScreen ? "Exit fullscreen" : "Fullscreen"}</button>
             <button type="button" aria-pressed={showOrbits} onClick={() => setShowOrbits(v => !v)}>{showOrbits ? '◎ Orbits' : '◌ Orbits'}</button>
             <label className="rotation-speed"><span>SPIN</span><select aria-label="Planet rotation speed" value={speed} onChange={event => setSpeed(event.target.value as typeof speed)} disabled={reducedMotion}>
               <option value="drift">Drift</option><option value="normal">Normal</option><option value="hyperdrive">Hyperdrive</option>

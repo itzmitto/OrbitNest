@@ -538,3 +538,8 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .planetarium-shell[data-palette="ember"] .planetarium-stage{box-shadow:inset 0 0 150px #a4513b32}
 .planetarium-shell[data-palette="ember"] .planetarium-nebula{filter:hue-rotate(245deg) saturate(1.5)}
 .planetarium-shell[data-palette="ember"] .orbit-star{background:#ffe2b1;box-shadow:0 0 10px #f3a87175}
+
+/* Fullscreen view keeps the original canvas and pointer interactions intact. */
+.planetarium-stage:fullscreen{width:100vw;height:100vh;min-height:100vh;max-height:none;background:#061020;isolation:isolate}
+.planetarium-stage:fullscreen .planetarium-hud{top:18px;left:18px;right:auto}
+.planetarium-stage:fullscreen .universe-minimap{bottom:85px}
