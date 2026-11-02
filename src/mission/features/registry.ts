@@ -1,3 +1,4 @@
+import { feature as audio_windows } from './audio-windows';
 import { feature as reading_queue } from './reading-queue';
 import { feature as browser_mix } from './browser-mix';
 import { feature as focus_priority } from './focus-priority';
@@ -19,6 +20,7 @@ import { feature as window_density } from './window-density';
 import { feature as domain_hubs } from './domain-hubs';
 import type { MissionFeature } from '../model';
 export const missionFeatures: MissionFeature[] = [
+  audio_windows,
   reading_queue,
   browser_mix,
   focus_priority,
