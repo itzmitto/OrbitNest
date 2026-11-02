@@ -56,3 +56,7 @@ Linting, comprehensive unit tests and GitHub CI are scheduled for upcoming PRs; 
 - One meaningful, reviewable change per PR. No automatic merging.
 
 See [ROADMAP](docs/ROADMAP.md), [PR-LOG](docs/PR-LOG.md) and [license](LICENSE).
+
+## Constellation Network
+
+Open **Network graph** from the dashboard to explore a connected map of browser tabs, inspired by spatial knowledge graphs. Edges show shared domains or browser windows, not inferred hyperlinks. See [Graph guide](docs/NETWORK-GRAPH.md).
