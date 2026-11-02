@@ -1,3 +1,4 @@
+import { drawConstellations } from './constellations.ts';
 import type { GraphEdge, GraphPoint, GraphTheme, GraphViewport } from './types.ts';
 import { graphToScreen } from './camera.ts';
 import { graphColor } from './palette.ts';
@@ -29,6 +30,7 @@ function planet(ctx: CanvasRenderingContext2D, x: number, y: number, radius: num
 export function paintNetwork(ctx: CanvasRenderingContext2D, points: readonly GraphPoint[], edges: readonly GraphEdge[], camera: GraphViewport,
   width: number, height: number, options: DrawOptions) {
   ctx.clearRect(0,0,width,height);
+  drawConstellations(ctx,points,camera,width,height,options.theme);
   // Stars are reproducible without saving any browser data or using a networking service.
   for (let i = 0; i < 170; i++) {
     const px = (i * 239.35 + 74) % width, py = (i * 137.71 + 26) % height;
