@@ -1,3 +1,4 @@
+import { feature as sleeping_planets } from './sleeping-planets';
 import { feature as loading_planets } from './loading-planets';
 import { feature as cross_window } from './cross-window';
 import { feature as query_matches } from './query-matches';
@@ -10,6 +11,7 @@ import { feature as window_density } from './window-density';
 import { feature as domain_hubs } from './domain-hubs';
 import type { MissionFeature } from '../model';
 export const missionFeatures: MissionFeature[] = [
+  sleeping_planets,
   loading_planets,
   cross_window,
   query_matches,
