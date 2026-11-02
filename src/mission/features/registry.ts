@@ -1,3 +1,4 @@
+import { feature as reading_queue } from './reading-queue';
 import { feature as browser_mix } from './browser-mix';
 import { feature as focus_priority } from './focus-priority';
 import { feature as domain_families } from './domain-families';
@@ -18,6 +19,7 @@ import { feature as window_density } from './window-density';
 import { feature as domain_hubs } from './domain-hubs';
 import type { MissionFeature } from '../model';
 export const missionFeatures: MissionFeature[] = [
+  reading_queue,
   browser_mix,
   focus_priority,
   domain_families,
