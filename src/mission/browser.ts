@@ -5,7 +5,8 @@ type ChromeWindowApi = { update(id: number, opts: {focused: boolean}): Promise<u
 type ChromeShim = { tabs: ChromeTabApi; windows: ChromeWindowApi };
 export function chromeApi(): ChromeShim | null {
   const possible = (globalThis as unknown as {chrome?: ChromeShim}).chrome;
-  return possible?.tabs?.query && possible?.windows?.update ? possible : null;
+  if (!possible) return null;
+  return typeof possible.tabs.query === 'function' && typeof possible.windows.update === 'function' ? possible : null;
 }
 export const demoTabs: TabInfo[] = [
   {id:1,windowId:1,title:'GitHub · Your projects',domain:'github.com',url:'https://github.com',active:true,pinned:true,audible:false,muted:false,discarded:false,loading:false},

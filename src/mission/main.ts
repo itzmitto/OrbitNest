@@ -1,6 +1,6 @@
 import './style.css';
 import { loadTabs, activateTab } from './browser';
-import { makeGraph, type MissionContext, type TabInfo, type MissionFeature } from './model';
+import { makeGraph, type MissionContext, type MissionFeature } from './model';
 import { missionFeatures } from './features/registry';
 import { paint, hitTest, screenToWorld, type Camera } from './draw';
 
@@ -32,7 +32,7 @@ function tick(time:number){if(!document.hidden&&time-lastTime>24){lastTime=time;
 function pointerPos(e:MouseEvent){const r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top,w:r.width,h:r.height};}
 canvas.addEventListener('pointerdown',e=>{const p=pointerPos(e);dragging={x:p.x,y:p.y,cx:camera.x,cy:camera.y,distance:0};canvas.setPointerCapture(e.pointerId);});
 canvas.addEventListener('pointermove',e=>{const p=pointerPos(e);if(dragging){const dx=p.x-dragging.x,dy=p.y-dragging.y;dragging.distance=Math.max(dragging.distance,Math.hypot(dx,dy));camera.x=dragging.cx+dx/camera.scale;camera.y=dragging.cy+dy/camera.scale;}else hover=hitTest(makeGraph(context.tabs).nodes,p.x,p.y,camera,p.w,p.h);});
-canvas.addEventListener('pointerup',e=>{const p=pointerPos(e);if(dragging?.distance<7)selectTab(hitTest(makeGraph(context.tabs).nodes,p.x,p.y,camera,p.w,p.h));dragging=null;});
+canvas.addEventListener('pointerup',e=>{const p=pointerPos(e);if(dragging !== null && dragging.distance < 7)selectTab(hitTest(makeGraph(context.tabs).nodes,p.x,p.y,camera,p.w,p.h));dragging=null;});
 canvas.addEventListener('wheel',e=>{e.preventDefault();const p=pointerPos(e),before=screenToWorld(p.x,p.y,camera,p.w,p.h);camera.scale=Math.min(3,Math.max(.28,camera.scale*(e.deltaY>0?.9:1.1)));const after=screenToWorld(p.x,p.y,camera,p.w,p.h);camera.x+=after.x-before.x;camera.y+=after.y-before.y;},{passive:false});
 for(const btn of Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode]')))btn.onclick=()=>{mode=btn.dataset.mode==='network'?'network':'planet';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b===btn));};
 byId('fit').addEventListener('click',()=>{camera.x=0;camera.y=0;camera.scale=.85;});byId('zoom-reset').addEventListener('click',()=>{camera.x=0;camera.y=0;camera.scale=1;});byId('zoom-in').addEventListener('click',()=>camera.scale=Math.min(3,camera.scale*1.2));byId('zoom-out').addEventListener('click',()=>camera.scale=Math.max(.28,camera.scale/1.2));byId('toggle-stars').addEventListener('click',()=>{stars=!stars;byId('toggle-stars').textContent=stars?'STARS ON':'STARS OFF';});
