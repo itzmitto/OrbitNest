@@ -1,3 +1,4 @@
+import { feature as muted_worlds } from './muted-worlds';
 import { feature as domain_diversity } from './domain-diversity';
 import { feature as long_titles } from './long-titles';
 import { feature as sleeping_planets } from './sleeping-planets';
@@ -13,6 +14,7 @@ import { feature as window_density } from './window-density';
 import { feature as domain_hubs } from './domain-hubs';
 import type { MissionFeature } from '../model';
 export const missionFeatures: MissionFeature[] = [
+  muted_worlds,
   domain_diversity,
   long_titles,
   sleeping_planets,
