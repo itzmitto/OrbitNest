@@ -1,3 +1,4 @@
+import '../styles/network.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent, PointerEvent, WheelEvent } from 'react';
 import type { TabRecord } from '../domain/tab.ts';
