@@ -9,6 +9,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         dashboard: fileURLToPath(new URL('./index.html', import.meta.url)),
+        mission: fileURLToPath(new URL('./mission.html', import.meta.url)),
         background: fileURLToPath(new URL('./src/extension/background.ts', import.meta.url)),
       },
       output: {
