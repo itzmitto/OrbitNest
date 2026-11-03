@@ -1,3 +1,4 @@
+import { lensInsecure } from './insecure.ts';
 import { lensSecure } from './secure.ts';
 import { lensDiscarded } from './discarded.ts';
 import { lensLoading } from './loading.ts';
@@ -16,3 +17,4 @@ tabLenses.push(lensBackground);
 tabLenses.push(lensLoading);
 tabLenses.push(lensDiscarded);
 tabLenses.push(lensSecure);
+tabLenses.push(lensInsecure);
