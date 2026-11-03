@@ -1,3 +1,4 @@
+import { paletteAmberDrift } from './amber-drift.ts';
 import { paletteVerdantOrbit } from './verdant-orbit.ts';
 import { paletteRoseNebula } from './rose-nebula.ts';
 import { paletteIceGiants } from './ice-giants.ts';
@@ -16,3 +17,4 @@ skyPalettes.push(paletteCopperSky);
 skyPalettes.push(paletteIceGiants);
 skyPalettes.push(paletteRoseNebula);
 skyPalettes.push(paletteVerdantOrbit);
+skyPalettes.push(paletteAmberDrift);
