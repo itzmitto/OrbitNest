@@ -1,3 +1,4 @@
+import { lensActive } from './active.ts';
 import { lensMuted } from './muted.ts';
 import { lensAudible } from './audible.ts';
 import { lensPinned } from './pinned.ts';
@@ -6,3 +7,4 @@ export const tabLenses:StudioLens[]=[{id:'all',label:'All browser tabs',filter:t
 tabLenses.push(lensPinned);
 tabLenses.push(lensAudible);
 tabLenses.push(lensMuted);
+tabLenses.push(lensActive);
