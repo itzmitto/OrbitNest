@@ -1,3 +1,4 @@
+import { lensBackground } from './background.ts';
 import { lensActive } from './active.ts';
 import { lensMuted } from './muted.ts';
 import { lensAudible } from './audible.ts';
@@ -8,3 +9,4 @@ tabLenses.push(lensPinned);
 tabLenses.push(lensAudible);
 tabLenses.push(lensMuted);
 tabLenses.push(lensActive);
+tabLenses.push(lensBackground);
