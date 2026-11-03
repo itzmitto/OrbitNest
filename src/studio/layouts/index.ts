@@ -1,3 +1,4 @@
+import { layoutStellarGrid } from './stellar-grid.ts';
 import { layoutDomainGalaxies } from './domain-galaxies.ts';
 import { layoutWindowLanes } from './window-lanes.ts';
 import { layoutOrbitRings } from './orbit-rings.ts';
@@ -8,3 +9,4 @@ export const layoutPresets:StudioLayout[]=[{id:'golden',label:'Golden Spiral',pl
 layoutPresets.push(layoutOrbitRings);
 layoutPresets.push(layoutWindowLanes);
 layoutPresets.push(layoutDomainGalaxies);
+layoutPresets.push(layoutStellarGrid);
