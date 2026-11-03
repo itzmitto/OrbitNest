@@ -1,3 +1,4 @@
+import { lensDiscarded } from './discarded.ts';
 import { lensLoading } from './loading.ts';
 import { lensBackground } from './background.ts';
 import { lensActive } from './active.ts';
@@ -12,3 +13,4 @@ tabLenses.push(lensMuted);
 tabLenses.push(lensActive);
 tabLenses.push(lensBackground);
 tabLenses.push(lensLoading);
+tabLenses.push(lensDiscarded);
