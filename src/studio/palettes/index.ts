@@ -1,3 +1,4 @@
+import { paletteObsidianDust } from './obsidian-dust.ts';
 import { paletteAmberDrift } from './amber-drift.ts';
 import { paletteVerdantOrbit } from './verdant-orbit.ts';
 import { paletteRoseNebula } from './rose-nebula.ts';
@@ -18,3 +19,4 @@ skyPalettes.push(paletteIceGiants);
 skyPalettes.push(paletteRoseNebula);
 skyPalettes.push(paletteVerdantOrbit);
 skyPalettes.push(paletteAmberDrift);
+skyPalettes.push(paletteObsidianDust);
