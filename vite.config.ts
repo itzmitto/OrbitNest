@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         dashboard: fileURLToPath(new URL('./index.html', import.meta.url)),
         mission: fileURLToPath(new URL('./mission.html', import.meta.url)),
+        studio: fileURLToPath(new URL('./studio.html', import.meta.url)),
         background: fileURLToPath(new URL('./src/extension/background.ts', import.meta.url)),
       },
       output: {
