@@ -1,3 +1,4 @@
+import { layoutNebulaBranches } from './nebula-branches.ts';
 import { layoutFibonacciDisk } from './fibonacci-disk.ts';
 import { layoutStellarGrid } from './stellar-grid.ts';
 import { layoutDomainGalaxies } from './domain-galaxies.ts';
@@ -12,3 +13,4 @@ layoutPresets.push(layoutWindowLanes);
 layoutPresets.push(layoutDomainGalaxies);
 layoutPresets.push(layoutStellarGrid);
 layoutPresets.push(layoutFibonacciDisk);
+layoutPresets.push(layoutNebulaBranches);
