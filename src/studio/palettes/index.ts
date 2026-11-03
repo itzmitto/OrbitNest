@@ -1,3 +1,4 @@
+import { paletteRoseNebula } from './rose-nebula.ts';
 import { paletteIceGiants } from './ice-giants.ts';
 import { paletteCopperSky } from './copper-sky.ts';
 import { paletteUltraviolet } from './ultraviolet.ts';
@@ -12,3 +13,4 @@ skyPalettes.push(paletteMoonstone);
 skyPalettes.push(paletteUltraviolet);
 skyPalettes.push(paletteCopperSky);
 skyPalettes.push(paletteIceGiants);
+skyPalettes.push(paletteRoseNebula);
