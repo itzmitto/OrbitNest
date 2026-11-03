@@ -1,3 +1,4 @@
+import { layoutBinaryOrbits } from './binary-orbits.ts';
 import { layoutTriangleConstellation } from './triangle-constellation.ts';
 import { layoutWaveCorridor } from './wave-corridor.ts';
 import { layoutZodiacWheel } from './zodiac-wheel.ts';
@@ -20,3 +21,4 @@ layoutPresets.push(layoutNebulaBranches);
 layoutPresets.push(layoutZodiacWheel);
 layoutPresets.push(layoutWaveCorridor);
 layoutPresets.push(layoutTriangleConstellation);
+layoutPresets.push(layoutBinaryOrbits);
