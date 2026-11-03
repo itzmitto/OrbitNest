@@ -1,3 +1,4 @@
+import { paletteCopperSky } from './copper-sky.ts';
 import { paletteUltraviolet } from './ultraviolet.ts';
 import { paletteMoonstone } from './moonstone.ts';
 import { paletteSupernova } from './supernova.ts';
@@ -8,3 +9,4 @@ skyPalettes.push(paletteAurora);
 skyPalettes.push(paletteSupernova);
 skyPalettes.push(paletteMoonstone);
 skyPalettes.push(paletteUltraviolet);
+skyPalettes.push(paletteCopperSky);
