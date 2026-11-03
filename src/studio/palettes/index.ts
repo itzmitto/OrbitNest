@@ -1,3 +1,4 @@
+import { paletteUltraviolet } from './ultraviolet.ts';
 import { paletteMoonstone } from './moonstone.ts';
 import { paletteSupernova } from './supernova.ts';
 import { paletteAurora } from './aurora.ts';
@@ -6,3 +7,4 @@ export const skyPalettes:StudioPalette[]=[{id:'deep',label:'Deep Space',back:'#0
 skyPalettes.push(paletteAurora);
 skyPalettes.push(paletteSupernova);
 skyPalettes.push(paletteMoonstone);
+skyPalettes.push(paletteUltraviolet);
