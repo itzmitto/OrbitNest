@@ -1,3 +1,4 @@
+import { layoutHemisphereField } from './hemisphere-field.ts';
 import { layoutBinaryOrbits } from './binary-orbits.ts';
 import { layoutTriangleConstellation } from './triangle-constellation.ts';
 import { layoutWaveCorridor } from './wave-corridor.ts';
@@ -22,3 +23,4 @@ layoutPresets.push(layoutZodiacWheel);
 layoutPresets.push(layoutWaveCorridor);
 layoutPresets.push(layoutTriangleConstellation);
 layoutPresets.push(layoutBinaryOrbits);
+layoutPresets.push(layoutHemisphereField);
