@@ -1,3 +1,4 @@
+import { layoutFibonacciDisk } from './fibonacci-disk.ts';
 import { layoutStellarGrid } from './stellar-grid.ts';
 import { layoutDomainGalaxies } from './domain-galaxies.ts';
 import { layoutWindowLanes } from './window-lanes.ts';
@@ -10,3 +11,4 @@ layoutPresets.push(layoutOrbitRings);
 layoutPresets.push(layoutWindowLanes);
 layoutPresets.push(layoutDomainGalaxies);
 layoutPresets.push(layoutStellarGrid);
+layoutPresets.push(layoutFibonacciDisk);
