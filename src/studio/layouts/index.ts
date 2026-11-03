@@ -1,3 +1,4 @@
+import { layoutCometStream } from './comet-stream.ts';
 import { layoutHemisphereField } from './hemisphere-field.ts';
 import { layoutBinaryOrbits } from './binary-orbits.ts';
 import { layoutTriangleConstellation } from './triangle-constellation.ts';
@@ -24,3 +25,4 @@ layoutPresets.push(layoutWaveCorridor);
 layoutPresets.push(layoutTriangleConstellation);
 layoutPresets.push(layoutBinaryOrbits);
 layoutPresets.push(layoutHemisphereField);
+layoutPresets.push(layoutCometStream);
