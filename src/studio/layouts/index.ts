@@ -1,3 +1,4 @@
+import { layoutZodiacWheel } from './zodiac-wheel.ts';
 import { layoutNebulaBranches } from './nebula-branches.ts';
 import { layoutFibonacciDisk } from './fibonacci-disk.ts';
 import { layoutStellarGrid } from './stellar-grid.ts';
@@ -14,3 +15,4 @@ layoutPresets.push(layoutDomainGalaxies);
 layoutPresets.push(layoutStellarGrid);
 layoutPresets.push(layoutFibonacciDisk);
 layoutPresets.push(layoutNebulaBranches);
+layoutPresets.push(layoutZodiacWheel);
