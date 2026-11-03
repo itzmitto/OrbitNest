@@ -1,3 +1,4 @@
+import { layoutTriangleConstellation } from './triangle-constellation.ts';
 import { layoutWaveCorridor } from './wave-corridor.ts';
 import { layoutZodiacWheel } from './zodiac-wheel.ts';
 import { layoutNebulaBranches } from './nebula-branches.ts';
@@ -18,3 +19,4 @@ layoutPresets.push(layoutFibonacciDisk);
 layoutPresets.push(layoutNebulaBranches);
 layoutPresets.push(layoutZodiacWheel);
 layoutPresets.push(layoutWaveCorridor);
+layoutPresets.push(layoutTriangleConstellation);
