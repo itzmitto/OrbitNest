@@ -108,3 +108,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="supernova"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#ff9c6f29 0%,#240d24 56%,#040610 100%);}
 :root[data-theme="supernova"] .z-brand__symbol{background:linear-gradient(142deg,#ff9c6f,#ffda82);box-shadow:0 0 26px #ff9c6f50;}
 :root[data-theme="supernova"] .z-btn--primary{background:linear-gradient(120deg,#ff9c6f,#ffda82);border-color:#ff9c6f88;color:#090d21;}
+
+/* Moonlight: a fully local color and atmosphere design preset */
+:root[data-theme="moonlight"]{--accent:#9ba7d8;--glow:#c5cef1;--signal:#c5cef1;--surface:#111422;--purple:#9ba7d8;--glass:#111422dc;}
+:root[data-theme="moonlight"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#9ba7d829 0%,#111422 56%,#040610 100%);}
+:root[data-theme="moonlight"] .z-brand__symbol{background:linear-gradient(142deg,#9ba7d8,#c5cef1);box-shadow:0 0 26px #9ba7d850;}
+:root[data-theme="moonlight"] .z-btn--primary{background:linear-gradient(120deg,#9ba7d8,#c5cef1);border-color:#9ba7d888;color:#090d21;}
