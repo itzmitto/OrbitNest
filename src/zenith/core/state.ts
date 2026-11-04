@@ -4,7 +4,7 @@ export const defaults:Preferences={theme:'nebula',reducedMotion:false,showLabels
 export const defaultCamera:CameraState={yaw:-.23,pitch:.24,distance:24,targetX:0,targetY:0};
 const prefix='orbitnest.zenith.v1.';
 export function readStored<T>(key:string,fallback:T,validate?:(value:unknown)=>value is T):T {
- try{const raw=localStorage.getItem(prefix+key);if(!raw)return fallback;const parsed:unknown=JSON.parse(raw);return !validate||validate(parsed)?parsed:fallback;}catch{return fallback;}
+ try{const raw=localStorage.getItem(prefix+key);if(!raw)return fallback;const parsed:unknown=JSON.parse(raw);return !validate||validate(parsed)?parsed as T:fallback;}catch{return fallback;}
 }
 export function writeStored(key:string,value:unknown):void {try{localStorage.setItem(prefix+key,JSON.stringify(value));}catch{/* blocked or full */}}
 export function getPreferences():Preferences {

@@ -1,9 +1,8 @@
-import {setContent,stat,toast} from '../ui/shell';
-import {getTabs} from '../core/tabs';
-import {groupDomainCounts} from '../core/scene';
-import {formatHost,escapeHTML} from '../core/math';
-import {safeTitle,uniqueDomains,windowsCount} from '../core/utils';
-import type {BrowserTab} from '../core/types';
+import {setContent,stat} from '../ui/shell.ts';
+import {getTabs} from '../core/tabs.ts';
+import {groupDomainCounts} from '../core/scene.ts';
+import {formatHost,escapeHTML} from '../core/math.ts';
+import {safeTitle,windowsCount} from '../core/utils.ts';
 const swatches=['#8f83ff','#60d7d0','#f6b769','#e78cbc','#8ea9ff','#a5e8b1'];
 export async function mountAtlas():Promise<()=>void>{
  const tabs=await getTabs(),domains=groupDomainCounts(tabs);

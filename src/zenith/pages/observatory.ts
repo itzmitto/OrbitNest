@@ -1,9 +1,9 @@
-import {setContent,stat} from '../ui/shell';
-import {getTabs} from '../core/tabs';
-import {formatHost,escapeHTML} from '../core/math';
-import {groupDomainCounts} from '../core/scene';
-import {uniqueDomains,windowsCount} from '../core/utils';
-import {signals} from '../signals/registry';
+import {setContent,stat} from '../ui/shell.ts';
+import {getTabs} from '../core/tabs.ts';
+import {formatHost,escapeHTML} from '../core/math.ts';
+import {groupDomainCounts} from '../core/scene.ts';
+import {uniqueDomains,windowsCount} from '../core/utils.ts';
+import {signals} from '../signals/registry.ts';
 export async function mountObservatory():Promise<()=>void>{
  const tabs=await getTabs(),systems=groupDomainCounts(tabs),metrics=signals.map(s=>({...s,reading:s.calculate(tabs)}));
  const target=setContent(`<div class="z-stats">${stat('Open tabs',tabs.length,'LIVE SNAPSHOT')}${stat('Domains',uniqueDomains(tabs),'STAR SYSTEMS')}${stat('Windows',windowsCount(tabs),'CONNECTED SPACES')}${stat('Pinned',tabs.filter(t=>t.pinned).length,'QUICK ACCESS')}</div>

@@ -1,8 +1,8 @@
-import {setContent,stat,toast} from '../ui/shell';
-import {getTabs,hasLiveTabs,applyTabAction} from '../core/tabs';
-import {safeTitle,uniqueDomains,windowsCount} from '../core/utils';
-import {formatHost,escapeHTML} from '../core/math';
-import type {BrowserTab} from '../core/types';
+import {setContent,stat,toast} from '../ui/shell.ts';
+import {getTabs,hasLiveTabs,applyTabAction} from '../core/tabs.ts';
+import {safeTitle,uniqueDomains} from '../core/utils.ts';
+import {formatHost,escapeHTML} from '../core/math.ts';
+import type {BrowserTab} from '../core/types.ts';
 function duplicates(tabs:BrowserTab[]):BrowserTab[]{const visited=new Set<string>(),result:BrowserTab[]=[];
  for(const tab of tabs){const key=tab.url.split('#')[0];if(!/^https?:\/\//.test(key))continue;if(visited.has(key))result.push(tab);else visited.add(key);}return result;}
 export async function mountMissionControl():Promise<()=>void>{

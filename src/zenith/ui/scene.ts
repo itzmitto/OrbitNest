@@ -1,8 +1,8 @@
-import type {BrowserTab,CameraState,Planet} from '../core/types';
-import {buildPlanets} from '../core/scene';
-import {clamp} from '../core/math';
-import {project,multiply,lookAt,perspective} from '../engine/matrices';
-import {PlanetGPU} from '../engine/webgl';
+import type {BrowserTab,CameraState,Planet} from '../core/types.ts';
+import {buildPlanets} from '../core/scene.ts';
+import {clamp} from '../core/math.ts';
+import {project,multiply,lookAt,perspective} from '../engine/matrices.ts';
+import {PlanetGPU} from '../engine/webgl.ts';
 interface ControlOptions{onSelect:(planet:Planet|null)=>void;onFrame?:(fps:number)=>void;}
 export class UniverseScene{
  private gpu:PlanetGPU|null=null;private scene:Planet[]=[];
@@ -38,7 +38,7 @@ export class UniverseScene{
    if(difference<limit&&difference<dist){dist=difference;best=planet;}}
   this.selection=best?.id||null;this.options.onSelect(best);
  }
- setTabs(tabs:BrowserTab[],preset?:import('../core/types').OrbitPreset){this.scene=buildPlanets(tabs,preset);this.fit();}
+ setTabs(tabs:BrowserTab[],preset?:import('../core/types.ts').OrbitPreset){this.scene=buildPlanets(tabs,preset);this.fit();}
  setSelection(id:string|null){this.selection=id;}
  getPlanets():Planet[]{return this.scene;}
  fit(){if(!this.scene.length){this.camera.distance=22;return;}

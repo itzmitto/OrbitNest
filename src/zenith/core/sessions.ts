@@ -1,6 +1,5 @@
-import {readStored,writeStored} from './state';
-import {formatHost} from './math';
-import type {BrowserTab} from './types';
+import {readStored,writeStored} from './state.ts';
+import type {BrowserTab} from './types.ts';
 export interface SavedTab {title:string;url:string;pinned:boolean;}
 export interface SavedSession {id:string;name:string;createdAt:string;tabs:SavedTab[];}
 export function validateSession(value:unknown):value is SavedSession{

@@ -1,7 +1,7 @@
-import {setContent,toast} from '../ui/shell';
-import {getTabs,hasLiveTabs} from '../core/tabs';
-import {captureSession,getSessions,saveSession,deleteSession,restoreSession,exportSessions,importSessions} from '../core/sessions';
-import {escapeHTML} from '../core/math';
+import {setContent,toast} from '../ui/shell.ts';
+import {getTabs,hasLiveTabs} from '../core/tabs.ts';
+import {captureSession,getSessions,saveSession,deleteSession,restoreSession,exportSessions,importSessions} from '../core/sessions.ts';
+import {escapeHTML} from '../core/math.ts';
 export async function mountSessions():Promise<()=>void>{
  const target=setContent(`<div class="z-grid"><section class="z-card"><div class="z-card__title"><h2>SAVE A CONSTELLATION</h2><small>LOCAL SNAPSHOTS</small></div>
  <div class="z-form"><label>SESSION NAME <input id="z-session-name" maxlength="70" placeholder="My creative workspace"></label><p class="z-muted">Only HTTP/HTTPS tab URLs are saved on this device. No page content is collected.</p><button class="z-btn z-btn--primary" id="z-save-session">Save current planets</button></div></section>

@@ -1,7 +1,7 @@
-import {sphere,ring,type Geometry} from './geometry';
-import {vertexShader,fragmentShader} from './shaders';
-import {translation,rotationY,scale,multiply,perspective,lookAt,type Mat4} from './matrices';
-import type {Planet,CameraState} from '../core/types';
+import {sphere,ring,type Geometry} from './geometry.ts';
+import {vertexShader,fragmentShader} from './shaders.ts';
+import {translation,rotationY,scale,multiply,perspective,lookAt,type Mat4} from './matrices.ts';
+import type {Planet,CameraState} from '../core/types.ts';
 interface GPUObject{vao:WebGLVertexArrayObject;count:number;}
 function compile(gl:WebGL2RenderingContext,type:number,source:string):WebGLShader{
  const shader=gl.createShader(type);if(!shader)throw Error('Could not create shader');

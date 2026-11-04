@@ -1,11 +1,11 @@
-import {setContent,stat,toast} from '../ui/shell';
-import {UniverseScene} from '../ui/scene';
-import {getTabs,hasLiveTabs,applyTabAction} from '../core/tabs';
-import {filterTabs,uniqueDomains,windowsCount,safeTitle} from '../core/utils';
-import {formatHost,escapeHTML} from '../core/math';
-import type {BrowserTab,Planet} from '../core/types';
-import {getPreferences} from '../core/state';
-import {formations,getFormation,lenses,getLens} from '../core/data';
+import {setContent,stat,toast} from '../ui/shell.ts';
+import {UniverseScene} from '../ui/scene.ts';
+import {getTabs,hasLiveTabs,applyTabAction} from '../core/tabs.ts';
+import {filterTabs,uniqueDomains,windowsCount,safeTitle} from '../core/utils.ts';
+import {formatHost,escapeHTML} from '../core/math.ts';
+import type {BrowserTab,Planet} from '../core/types.ts';
+import {getPreferences} from '../core/state.ts';
+import {formations,getFormation,lenses,getLens} from '../core/data.ts';
 let scene:UniverseScene|null=null;
 let current:BrowserTab[]=[];let selected:Planet|null=null;let query='';let formation='solar-spiral',lens='all';let timer:ReturnType<typeof setInterval>|undefined;
 function selectedPanel():string{

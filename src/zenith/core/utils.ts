@@ -1,5 +1,5 @@
-import type {BrowserTab,Planet} from './types';
-import {formatHost,escapeHTML} from './math';
+import type {BrowserTab,Planet} from './types.ts';
+import {formatHost,escapeHTML} from './math.ts';
 export function safeTitle(tab:BrowserTab):string{return escapeHTML(tab.title||formatHost(tab.url));}
 export function formatTime(date:Date):string{return new Intl.DateTimeFormat('en',{hour:'2-digit',minute:'2-digit'}).format(date);}
 export function uniqueDomains(tabs:BrowserTab[]):number{return new Set(tabs.map(t=>formatHost(t.url))).size;}

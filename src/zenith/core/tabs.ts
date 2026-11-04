@@ -1,5 +1,5 @@
-import type {BrowserTab} from './types';
-import {formatHost} from './math';
+import type {BrowserTab} from './types.ts';
+import {formatHost} from './math.ts';
 const sampleTitles=['GitHub · Development','Creative workspace','Watch later','Documentation','Your email','Music studio','Design references','Project board','New inspiration','OrbitNest'];
 const sampleHosts=['github.com','figma.com','youtube.com','developer.mozilla.org','mail.google.com','open.spotify.com','pinterest.com','linear.app','unsplash.com','orbitnest.local'];
 export const demoTabs:BrowserTab[]=sampleTitles.map((title,index)=>({

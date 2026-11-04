@@ -1,13 +1,13 @@
 import './ui/design.css';
-import {layout,setContent,toast} from './ui/shell';
-import type {Page} from './core/types';
-import {getPreferences} from './core/state';
-import {mountPlanetarium} from './pages/planetarium';
-import {mountAtlas} from './pages/atlas';
-import {mountObservatory} from './pages/observatory';
-import {mountSessions} from './pages/sessions';
-import {mountMissionControl} from './pages/mission-control';
-import {mountPreferences} from './pages/preferences';
+import {layout,setContent,toast} from './ui/shell.ts';
+import type {Page} from './core/types.ts';
+import {getPreferences} from './core/state.ts';
+import {mountPlanetarium} from './pages/planetarium.ts';
+import {mountAtlas} from './pages/atlas.ts';
+import {mountObservatory} from './pages/observatory.ts';
+import {mountSessions} from './pages/sessions.ts';
+import {mountMissionControl} from './pages/mission-control.ts';
+import {mountPreferences} from './pages/preferences.ts';
 const metadata:Record<Page,[string,string]>= {
  'planetarium':['Your universe, reimagined.','Explore your browser tabs as luminous, fully rendered WebGL planets. Rotate, discover and organize your universe.'],
  'atlas':['Map your galaxy.','Find star systems, understand domain clusters and discover the planets orbiting each one.'],

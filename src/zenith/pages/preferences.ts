@@ -1,7 +1,6 @@
-import {setContent,toast} from '../ui/shell';
-import {defaults,getPreferences,savePreferences,writeStored} from '../core/state';
-import {escapeHTML} from '../core/math';
-import type {ThemeName} from '../core/types';
+import {setContent,toast} from '../ui/shell.ts';
+import {defaults,getPreferences,savePreferences} from '../core/state.ts';
+import type {ThemeName} from '../core/types.ts';
 const themes:[ThemeName,string,string][]=[['nebula','Nebula Violet','Soft violet and sapphire'],['eclipse','Black Eclipse','Near-black with silver accents'],['aurora','Arctic Aurora','Emerald and cyan glow'],['solar','Solar Flare','Amber and burning orange']];
 export async function mountPreferences():Promise<()=>void>{
  let value=getPreferences();const target=setContent(`<div class="z-grid"><section class="z-card"><div class="z-card__title"><h2>SPACE APPEARANCE</h2><small>LOCAL SETTINGS</small></div>
