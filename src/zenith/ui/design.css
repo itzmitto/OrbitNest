@@ -84,3 +84,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="pink-nebula"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#d67ee329 0%,#180b2a 56%,#040610 100%);}
 :root[data-theme="pink-nebula"] .z-brand__symbol{background:linear-gradient(142deg,#d67ee3,#faa0d3);box-shadow:0 0 26px #d67ee350;}
 :root[data-theme="pink-nebula"] .z-btn--primary{background:linear-gradient(120deg,#d67ee3,#faa0d3);border-color:#d67ee388;color:#090d21;}
+
+/* Red Dwarf: a fully local color and atmosphere design preset */
+:root[data-theme="red-dwarf"]{--accent:#fe6c7b;--glow:#e9ad6b;--signal:#e9ad6b;--surface:#200c18;--purple:#fe6c7b;--glass:#200c18dc;}
+:root[data-theme="red-dwarf"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#fe6c7b29 0%,#200c18 56%,#040610 100%);}
+:root[data-theme="red-dwarf"] .z-brand__symbol{background:linear-gradient(142deg,#fe6c7b,#e9ad6b);box-shadow:0 0 26px #fe6c7b50;}
+:root[data-theme="red-dwarf"] .z-btn--primary{background:linear-gradient(120deg,#fe6c7b,#e9ad6b);border-color:#fe6c7b88;color:#090d21;}
