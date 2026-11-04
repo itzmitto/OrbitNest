@@ -138,3 +138,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="horizon"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#ee7dbe29 0%,#160c27 56%,#040610 100%);}
 :root[data-theme="horizon"] .z-brand__symbol{background:linear-gradient(142deg,#ee7dbe,#bb8cf2);box-shadow:0 0 26px #ee7dbe50;}
 :root[data-theme="horizon"] .z-btn--primary{background:linear-gradient(120deg,#ee7dbe,#bb8cf2);border-color:#ee7dbe88;color:#090d21;}
+
+/* Cosmic Sand: a fully local color and atmosphere design preset */
+:root[data-theme="cosmic-sand"]{--accent:#edca94;--glow:#ec9e8a;--signal:#ec9e8a;--surface:#1e1a20;--purple:#edca94;--glass:#1e1a20dc;}
+:root[data-theme="cosmic-sand"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#edca9429 0%,#1e1a20 56%,#040610 100%);}
+:root[data-theme="cosmic-sand"] .z-brand__symbol{background:linear-gradient(142deg,#edca94,#ec9e8a);box-shadow:0 0 26px #edca9450;}
+:root[data-theme="cosmic-sand"] .z-btn--primary{background:linear-gradient(120deg,#edca94,#ec9e8a);border-color:#edca9488;color:#090d21;}
