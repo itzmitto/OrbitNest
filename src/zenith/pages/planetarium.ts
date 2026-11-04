@@ -9,6 +9,7 @@ import {formations,getFormation,lenses,getLens} from '../core/data.ts';
 import {attachShortcuts,shortcutHelp} from '../ui/shortcuts.ts';
 import {Starfield} from '../ui/stars.ts';
 import {sortOptions,sortTabs,type SortOrder} from '../core/sort.ts';
+import {presets,cameraPreset,type CameraPreset} from '../engine/camera.ts';
 let scene:UniverseScene|null=null;
 let current:BrowserTab[]=[];let selected:Planet|null=null;let query='',sort:SortOrder='browser';let formation='solar-spiral',lens='all';let timer:ReturnType<typeof setInterval>|undefined;
 function selectedPanel():string{
@@ -35,10 +36,11 @@ export async function mountPlanetarium():Promise<()=>void>{
  <div class="z-scene-overlay"><div><span class="z-scene-tag">YOUR BROWSER AS A UNIVERSE</span><div class="z-scene-heading">Orbit around ideas.</div></div></div>
  <div class="z-scene-bottom"><span class="z-pill">DRAG TO ROTATE · SCROLL TO ZOOM · CLICK TO SELECT</span><span class="z-pill" id="z-fps">WEBGL2</span></div></div>
  <div class="z-controls"><label>SEARCH <input id="z-search" type="search" placeholder="Find a planet..." aria-label="Search tabs"></label>
- <label>SORT <select id="z-sort"></select></label><label>FORMATION <select id="z-formation"></select></label><label>LENS <select id="z-lens"></select></label><button class="z-btn" id="z-fit">Fit all</button><button class="z-btn" id="z-pause">Pause motion</button><button class="z-btn" id="z-refresh">Refresh</button></div><div id="z-key-help"></div></section>
+ <label>CAMERA <select id="z-camera-preset"></select></label><label>SORT <select id="z-sort"></select></label><label>FORMATION <select id="z-formation"></select></label><label>LENS <select id="z-lens"></select></label><button class="z-btn" id="z-fit">Fit all</button><button class="z-btn" id="z-pause">Pause motion</button><button class="z-btn" id="z-refresh">Refresh</button></div><div id="z-key-help"></div></section>
  <section class="z-card"><div class="z-card__title"><h2>EXPLORE TAB PLANETS</h2><small>CLICK TO INSPECT</small></div><div class="z-list" id="z-live-list"></div></section>
  </div><div class="z-stack"><section class="z-card"><div class="z-card__title"><h2>PLANET INSPECTOR</h2><small>DETAILS</small></div><div class="z-inspector" id="z-selected"></div></section>
  <section class="z-card"><div class="z-card__title"><h2>YOUR NEXT DESTINATION</h2></div><div class="z-list"><a class="z-list-row" href="./atlas.html"><span><strong>Galaxy Atlas</strong><small>Organize your domains and constellations</small></span>↗</a><a class="z-list-row" href="./observatory.html"><span><strong>Observatory</strong><small>Understand your workspace signals</small></span>↗</a><a class="z-list-row" href="./sessions.html"><span><strong>Sessions</strong><small>Save and restore your tab constellations</small></span>↗</a></div></section></div></div>`);
+ const cameraBox=target.querySelector<HTMLSelectElement>('#z-camera-preset')!;for(const p of presets)cameraBox.add(new Option(p.label,p.id));cameraBox.onchange=()=>{Object.assign(scene?.camera||{},cameraPreset(scene!.camera,cameraBox.value as CameraPreset));};
  const sortBox=target.querySelector<HTMLSelectElement>('#z-sort')!;for(const [id,title] of sortOptions)sortBox.add(new Option(title,id));sortBox.onchange=()=>{sort=sortBox.value as SortOrder;void refresh();};
  const formationBox=target.querySelector<HTMLSelectElement>('#z-formation')!,lensBox=target.querySelector<HTMLSelectElement>('#z-lens')!;
  for(const f of formations)formationBox.add(new Option(f.label,f.id));for(const l of lenses)lensBox.add(new Option(l.label,l.id));
