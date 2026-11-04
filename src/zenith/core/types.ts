@@ -1,5 +1,5 @@
 export type Page = 'planetarium' | 'atlas' | 'observatory' | 'sessions' | 'mission-control' | 'preferences';
-export type ThemeName = 'nebula' | 'eclipse' | 'aurora' | 'solar';
+export type ThemeName = string;
 export interface BrowserTab {
   id: number; windowId: number; index: number; url: string; title: string;
   favicon: string; active: boolean; pinned: boolean; audible: boolean;

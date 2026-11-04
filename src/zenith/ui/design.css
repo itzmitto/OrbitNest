@@ -72,3 +72,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 .z-scene canvas#z-planet-canvas:active{cursor:grabbing}.z-shortcut-help{padding:12px 22px;color:#9fb0d8;font-size:11px;border-top:1px solid var(--border)}
 .z-shortcut-help summary{cursor:pointer}.z-shortcut-help div{display:flex;gap:20px;flex-wrap:wrap}.z-shortcut-help kbd{background:#263353;padding:3px 6px;border:1px solid #637199;border-radius:5px;color:#fff}
 @media(prefers-reduced-motion:reduce){.z-planet-orb{animation:none!important}}
+
+/* Deep Ocean: a fully local color and atmosphere design preset */
+:root[data-theme="deep-ocean"]{--accent:#1c3e81;--glow:#41c8d8;--signal:#41c8d8;--surface:#060e20;--purple:#1c3e81;--glass:#060e20dc;}
+:root[data-theme="deep-ocean"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#1c3e8129 0%,#060e20 56%,#040610 100%);}
+:root[data-theme="deep-ocean"] .z-brand__symbol{background:linear-gradient(142deg,#1c3e81,#41c8d8);box-shadow:0 0 26px #1c3e8150;}
+:root[data-theme="deep-ocean"] .z-btn--primary{background:linear-gradient(120deg,#1c3e81,#41c8d8);border-color:#1c3e8188;color:#090d21;}

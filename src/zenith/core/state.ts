@@ -1,4 +1,5 @@
 import type {CameraState,ThemeName} from './types.ts';
+import {palettes} from '../palettes/registry.ts';
 export interface Preferences {theme:ThemeName;reducedMotion:boolean;showLabels:boolean;showTrails:boolean;planetScale:number;density:number;}
 export const defaults:Preferences={theme:'nebula',reducedMotion:false,showLabels:true,showTrails:true,planetScale:1,density:1};
 export const defaultCamera:CameraState={yaw:-.23,pitch:.24,distance:24,targetX:0,targetY:0};
@@ -9,7 +10,7 @@ export function readStored<T>(key:string,fallback:T,validate?:(value:unknown)=>v
 export function writeStored(key:string,value:unknown):void {try{localStorage.setItem(prefix+key,JSON.stringify(value));}catch{/* blocked or full */}}
 export function getPreferences():Preferences {
  const input=readStored<Partial<Preferences>>('preferences',{});
- return {...defaults,...input,theme:['nebula','eclipse','aurora','solar'].includes(String(input.theme))?input.theme!:defaults.theme,
+ return {...defaults,...input,theme:palettes.some(p=>p.id===input.theme)?input.theme!:defaults.theme,
  planetScale:typeof input.planetScale==='number'?Math.max(.6,Math.min(1.6,input.planetScale)):1,
  density:typeof input.density==='number'?Math.max(.5,Math.min(2,input.density)):1};
 }

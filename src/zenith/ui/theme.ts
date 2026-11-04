@@ -1,5 +1,5 @@
 import type {ThemeName} from '../core/types.ts';
-export const themeOptions:Record<ThemeName,{name:string;light:string;ring:string}>={
+export const themeOptions:Partial<Record<ThemeName,{name:string;light:string;ring:string}>>={
  nebula:{name:'Nebula Violet',light:'#b5a0ff',ring:'#7dcaff'},
  eclipse:{name:'Black Eclipse',light:'#e1e4f5',ring:'#b6bbcb'},
  aurora:{name:'Arctic Aurora',light:'#7cf2cb',ring:'#59c0d6'},
