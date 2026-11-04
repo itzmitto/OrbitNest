@@ -102,3 +102,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="interstellar"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#58d9fa29 0%,#060e23 56%,#040610 100%);}
 :root[data-theme="interstellar"] .z-brand__symbol{background:linear-gradient(142deg,#58d9fa,#9d8dff);box-shadow:0 0 26px #58d9fa50;}
 :root[data-theme="interstellar"] .z-btn--primary{background:linear-gradient(120deg,#58d9fa,#9d8dff);border-color:#58d9fa88;color:#090d21;}
+
+/* Supernova: a fully local color and atmosphere design preset */
+:root[data-theme="supernova"]{--accent:#ff9c6f;--glow:#ffda82;--signal:#ffda82;--surface:#240d24;--purple:#ff9c6f;--glass:#240d24dc;}
+:root[data-theme="supernova"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#ff9c6f29 0%,#240d24 56%,#040610 100%);}
+:root[data-theme="supernova"] .z-brand__symbol{background:linear-gradient(142deg,#ff9c6f,#ffda82);box-shadow:0 0 26px #ff9c6f50;}
+:root[data-theme="supernova"] .z-btn--primary{background:linear-gradient(120deg,#ff9c6f,#ffda82);border-color:#ff9c6f88;color:#090d21;}
