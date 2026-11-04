@@ -126,3 +126,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="copper"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#dc906329 0%,#1f1212 56%,#040610 100%);}
 :root[data-theme="copper"] .z-brand__symbol{background:linear-gradient(142deg,#dc9063,#efb779);box-shadow:0 0 26px #dc906350;}
 :root[data-theme="copper"] .z-btn--primary{background:linear-gradient(120deg,#dc9063,#efb779);border-color:#dc906388;color:#090d21;}
+
+/* Ice Giants: a fully local color and atmosphere design preset */
+:root[data-theme="ice-giants"]{--accent:#86dbfa;--glow:#b5eaf9;--signal:#b5eaf9;--surface:#07172a;--purple:#86dbfa;--glass:#07172adc;}
+:root[data-theme="ice-giants"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#86dbfa29 0%,#07172a 56%,#040610 100%);}
+:root[data-theme="ice-giants"] .z-brand__symbol{background:linear-gradient(142deg,#86dbfa,#b5eaf9);box-shadow:0 0 26px #86dbfa50;}
+:root[data-theme="ice-giants"] .z-btn--primary{background:linear-gradient(120deg,#86dbfa,#b5eaf9);border-color:#86dbfa88;color:#090d21;}
