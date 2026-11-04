@@ -7,6 +7,7 @@ import type {BrowserTab,Planet} from '../core/types.ts';
 import {getPreferences} from '../core/state.ts';
 import {formations,getFormation,lenses,getLens} from '../core/data.ts';
 import {attachShortcuts,shortcutHelp} from '../ui/shortcuts.ts';
+import {Starfield} from '../ui/stars.ts';
 let scene:UniverseScene|null=null;
 let current:BrowserTab[]=[];let selected:Planet|null=null;let query='';let formation='solar-spiral',lens='all';let timer:ReturnType<typeof setInterval>|undefined;
 function selectedPanel():string{
@@ -29,7 +30,7 @@ export async function mountPlanetarium():Promise<()=>void>{
  const prefs=getPreferences();document.documentElement.dataset.theme=prefs.theme;
  const target=setContent(`<div id="z-counters" class="z-stats"></div><div class="z-grid"><div class="z-stack">
  <section class="z-card"><div class="z-card__title"><h2>LIVE SOLAR SYSTEM</h2><small>WebGL2 · Real sphere geometry</small></div>
- <div class="z-scene"><canvas id="z-planet-canvas" aria-label="Interactive 3D representation of open browser tabs"></canvas>
+ <div class="z-scene"><canvas id="z-stars" aria-hidden="true" style="position:absolute;inset:0"></canvas><canvas id="z-planet-canvas" aria-label="Interactive 3D representation of open browser tabs"></canvas>
  <div class="z-scene-overlay"><div><span class="z-scene-tag">YOUR BROWSER AS A UNIVERSE</span><div class="z-scene-heading">Orbit around ideas.</div></div></div>
  <div class="z-scene-bottom"><span class="z-pill">DRAG TO ROTATE · SCROLL TO ZOOM · CLICK TO SELECT</span><span class="z-pill" id="z-fps">WEBGL2</span></div></div>
  <div class="z-controls"><label>SEARCH <input id="z-search" type="search" placeholder="Find a planet..." aria-label="Search tabs"></label>
@@ -40,6 +41,7 @@ export async function mountPlanetarium():Promise<()=>void>{
  const formationBox=target.querySelector<HTMLSelectElement>('#z-formation')!,lensBox=target.querySelector<HTMLSelectElement>('#z-lens')!;
  for(const f of formations)formationBox.add(new Option(f.label,f.id));for(const l of lenses)lensBox.add(new Option(l.label,l.id));
  formationBox.onchange=()=>{formation=formationBox.value;void refresh();};lensBox.onchange=()=>{lens=lensBox.value;void refresh();};
+ const stars=new Starfield(target.querySelector<HTMLCanvasElement>('#z-stars')!);stars.start();
  const canvas=target.querySelector<HTMLCanvasElement>('#z-planet-canvas')!;
  scene=new UniverseScene(canvas,{onSelect:planet=>{selected=planet;updatePanel();},onFrame:fps=>{const el=document.getElementById('z-fps');if(el)el.textContent=`${Math.round(fps)} FPS · WEBGL2`;}});
  target.querySelector<HTMLInputElement>('#z-search')!.oninput=e=>{query=(e.target as HTMLInputElement).value;void refresh();};
@@ -51,5 +53,5 @@ export async function mountPlanetarium():Promise<()=>void>{
  const shortcuts=[{key:'f',label:'F',description:'Fit the entire solar system',run:()=>scene?.fit()},{key:'+',label:'+',description:'Zoom toward the planets',run:()=>scene?.zoom(.82)},{key:'-',label:'−',description:'Zoom away from the planets',run:()=>scene?.zoom(1.18)},{key:'Escape',label:'Esc',description:'Clear selected planet',run:()=>{selected=null;scene?.setSelection(null);updatePanel();}}];
  const unbind=attachShortcuts(shortcuts);target.querySelector<HTMLElement>('#z-key-help')!.innerHTML=shortcutHelp(shortcuts);
  await refresh();timer=setInterval(()=>{if(!document.hidden)void refresh();},12000);
- return ()=>{if(timer)clearInterval(timer);unbind();scene?.dispose();scene=null;};
+ return ()=>{if(timer)clearInterval(timer);unbind();stars.stop();scene?.dispose();scene=null;};
 }
