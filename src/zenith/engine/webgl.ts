@@ -1,6 +1,6 @@
 import {sphere,ring,type Geometry} from './geometry.ts';
 import {vertexShader,fragmentShader} from './shaders.ts';
-import {translation,rotationY,scale,multiply,perspective,lookAt,type Mat4} from './matrices.ts';
+import {translation,rotationY,scale,multiply,perspective,lookAt} from './matrices.ts';
 import type {Planet,CameraState} from '../core/types.ts';
 interface GPUObject{vao:WebGLVertexArrayObject;count:number;}
 function compile(gl:WebGL2RenderingContext,type:number,source:string):WebGLShader{

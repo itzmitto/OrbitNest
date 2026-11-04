@@ -1,4 +1,4 @@
-import type {BrowserTab,Planet} from './types.ts';
+import type {Planet} from './types.ts';
 export interface FocusResult{planet:Planet|null;index:number;total:number;}
 export function activePlanet(planets:Planet[]):Planet|null{return planets.find(p=>p.tab.active)||null;}
 export function focusNext(planets:Planet[],current:string|null,direction:1|-1=1):FocusResult{

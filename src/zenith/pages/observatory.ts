@@ -1,6 +1,6 @@
 import {setContent,stat} from '../ui/shell.ts';
 import {getTabs} from '../core/tabs.ts';
-import {formatHost,escapeHTML} from '../core/math.ts';
+import {escapeHTML} from '../core/math.ts';
 import {groupDomainCounts} from '../core/scene.ts';
 import {uniqueDomains,windowsCount} from '../core/utils.ts';
 import {signals} from '../signals/registry.ts';

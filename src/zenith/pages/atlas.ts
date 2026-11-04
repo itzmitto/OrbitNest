@@ -1,4 +1,4 @@
-import {setContent,stat} from '../ui/shell.ts';
+import {setContent,stat,toast} from '../ui/shell.ts';
 import {getTabs} from '../core/tabs.ts';
 import {groupDomainCounts} from '../core/scene.ts';
 import {formatHost,escapeHTML} from '../core/math.ts';
