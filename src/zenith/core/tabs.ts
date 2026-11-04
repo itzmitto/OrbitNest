@@ -1,9 +1,9 @@
-import type {BrowserTab} from './types.ts';
-import {formatHost} from './math.ts';
+import type {BrowserTab} from './types';
+import {formatHost} from './math';
 const sampleTitles=['GitHub · Development','Creative workspace','Watch later','Documentation','Your email','Music studio','Design references','Project board','New inspiration','OrbitNest'];
 const sampleHosts=['github.com','figma.com','youtube.com','developer.mozilla.org','mail.google.com','open.spotify.com','pinterest.com','linear.app','unsplash.com','orbitnest.local'];
 export const demoTabs:BrowserTab[]=sampleTitles.map((title,index)=>({
- id:1000+index,windowId:index>=7?2:1,index,url:`https://${sampleHosts[index]}/`,title,
+ id:-1000-index,windowId:index>=7?2:1,index,url:`https://${sampleHosts[index]}/`,title,
  favicon:'',active:index===0,pinned:index===0||index===3,audible:index===2||index===5,muted:false,discarded:false
 }));
 interface BrowserApi { tabs?:{
@@ -29,7 +29,7 @@ export async function getTabs():Promise<BrowserTab[]> {
  return await new Promise(resolve=>{try{chrome.tabs!.query({},items=>resolve(items.map(normalizeTab)));}catch{resolve(demoTabs);}});
 }
 export async function applyTabAction(id:number,action:'open'|'pin'|'unpin'|'mute'|'unmute'|'close'):Promise<boolean> {
- const chrome=api();if(!chrome?.tabs||id>=1000)return false;
+ const chrome=api();if(!chrome?.tabs||id<=-1000)return false;
  return await new Promise(resolve=>{
   try{
    if(action==='close'){chrome.tabs!.remove(id,()=>resolve(true));return;}

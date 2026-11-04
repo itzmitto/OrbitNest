@@ -1,5 +1,5 @@
-import type {BrowserTab,Planet,OrbitPreset} from './types.ts';
-import {hashText,seededRandom,TAU} from './math.ts';
+import type {BrowserTab,Planet,OrbitPreset} from './types';
+import {hashText,seededRandom,TAU} from './math';
 export const defaultFormation:OrbitPreset={id:'solar-spiral',label:'Solar spiral',description:'A balanced 3D elliptical orbit around your tabs.',
  place(index,count,seed){const t=index/(Math.max(count,1))*TAU*2.1+seed*.0001,spread=2.7+Math.sqrt(index+1)*1.8;
  return {x:Math.cos(t)*spread,y:Math.sin(t*1.4)*1.55,z:Math.sin(t)*spread*.7};}};

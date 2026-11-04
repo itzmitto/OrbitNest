@@ -28,7 +28,7 @@ void main(){vec3 n=normalize(vNormal),light=normalize(uLight-vWorld);
  float stripes=sin(vUv.y*94.0+noise(n*6.0)*7.0)*.5+.5;
  float lava=pow(max(0.0,noise(n*9.0)-.47)*2.1,2.4);
  float p=mod(uMaterial,6.0);
- float pattern=p<.5?mix(oceans,stripes,.14):p<1.5?stripes:p<2.5?details:p<3.5?lava:p<4.5?clouds:oceanS;
+ float pattern=p<.5?mix(oceans,stripes,.14):p<1.5?stripes:p<2.5?details:p<3.5?lava:p<4.5?clouds:oceans;
  vec3 base=hueToRgb(fract(uHue));
  if(p>4.5){pattern=oceans;}
  base=mix(base*.17,base*1.42+.16,clamp(pattern*.8+.1,0.0,1.0));
@@ -39,4 +39,4 @@ void main(){vec3 n=normalize(vNormal),light=normalize(uLight-vWorld);
  color=mix(color,color+vec3(.18,.33,.6),uFocus*.26);
  fragColor=vec4(pow(max(color,vec3(0.0)),vec3(.85)),1.0);
 }
-`.replace('oceanS','oceans');
+`;

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Offline system font stacks. No external font requests. */
 :root{font-family:'DM Sans',system-ui,sans-serif;color-scheme:dark;color:#f5f5ff;background:#050816;
  --ink:#e9efff;--muted:#8997bd;--surface:#10182b;--border:rgba(172,192,245,.13);--accent:#8f8bff;--signal:#61dfd4;
  --glass:rgba(11,17,35,.75);--purple:#8889ff;--radius:20px}
