@@ -10,6 +10,7 @@ import {attachShortcuts,shortcutHelp} from '../ui/shortcuts.ts';
 import {Starfield} from '../ui/stars.ts';
 import {sortOptions,sortTabs,type SortOrder} from '../core/sort.ts';
 import {presets,cameraPreset,type CameraPreset} from '../engine/camera.ts';
+import {activePlanet,focusNext} from '../core/focus.ts';
 let scene:UniverseScene|null=null;
 let current:BrowserTab[]=[];let selected:Planet|null=null;let query='',sort:SortOrder='browser';let formation='solar-spiral',lens='all';let timer:ReturnType<typeof setInterval>|undefined;
 function selectedPanel():string{
@@ -54,7 +55,7 @@ export async function mountPlanetarium():Promise<()=>void>{
  target.querySelector<HTMLButtonElement>('#z-refresh')!.onclick=()=>void refresh();
  target.addEventListener('click',e=>{const control=(e.target as HTMLElement).closest<HTMLButtonElement>('[data-action]');if(control&&selected){const action=control.dataset.action as 'open'|'pin'|'unpin'|'mute'|'unmute';void applyTabAction(selected.tab.id,action).then(ok=>{toast(ok?'Tab updated':'Action unavailable in preview');void refresh();});}
  const row=(e.target as HTMLElement).closest<HTMLElement>('[data-tab]');if(row){const id=Number(row.dataset.tab);const planet=scene?.getPlanets().find(p=>p.tab.id===id);if(planet){selected=planet;scene?.setSelection(planet.id);updatePanel();}}});
- const shortcuts=[{key:'f',label:'F',description:'Fit the entire solar system',run:()=>scene?.fit()},{key:'+',label:'+',description:'Zoom toward the planets',run:()=>scene?.zoom(.82)},{key:'-',label:'−',description:'Zoom away from the planets',run:()=>scene?.zoom(1.18)},{key:'Escape',label:'Esc',description:'Clear selected planet',run:()=>{selected=null;scene?.setSelection(null);updatePanel();}}];
+ const shortcuts=[{key:'n',label:'N',description:'Inspect the next planet',run:()=>{selected=focusNext(scene?.getPlanets()||[],selected?.id||null).planet;scene?.setSelection(selected?.id||null);updatePanel();}},{key:'a',label:'A',description:'Select the currently active tab',run:()=>{selected=activePlanet(scene?.getPlanets()||[]);scene?.setSelection(selected?.id||null);updatePanel();}},{key:'f',label:'F',description:'Fit the entire solar system',run:()=>scene?.fit()},{key:'+',label:'+',description:'Zoom toward the planets',run:()=>scene?.zoom(.82)},{key:'-',label:'−',description:'Zoom away from the planets',run:()=>scene?.zoom(1.18)},{key:'Escape',label:'Esc',description:'Clear selected planet',run:()=>{selected=null;scene?.setSelection(null);updatePanel();}}];
  const unbind=attachShortcuts(shortcuts);target.querySelector<HTMLElement>('#z-key-help')!.innerHTML=shortcutHelp(shortcuts);
  await refresh();timer=setInterval(()=>{if(!document.hidden)void refresh();},12000);
  return ()=>{if(timer)clearInterval(timer);unbind();stars.stop();scene?.dispose();scene=null;};
