@@ -78,3 +78,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="deep-ocean"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#1c3e8129 0%,#060e20 56%,#040610 100%);}
 :root[data-theme="deep-ocean"] .z-brand__symbol{background:linear-gradient(142deg,#1c3e81,#41c8d8);box-shadow:0 0 26px #1c3e8150;}
 :root[data-theme="deep-ocean"] .z-btn--primary{background:linear-gradient(120deg,#1c3e81,#41c8d8);border-color:#1c3e8188;color:#090d21;}
+
+/* Pink Nebula: a fully local color and atmosphere design preset */
+:root[data-theme="pink-nebula"]{--accent:#d67ee3;--glow:#faa0d3;--signal:#faa0d3;--surface:#180b2a;--purple:#d67ee3;--glass:#180b2adc;}
+:root[data-theme="pink-nebula"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#d67ee329 0%,#180b2a 56%,#040610 100%);}
+:root[data-theme="pink-nebula"] .z-brand__symbol{background:linear-gradient(142deg,#d67ee3,#faa0d3);box-shadow:0 0 26px #d67ee350;}
+:root[data-theme="pink-nebula"] .z-btn--primary{background:linear-gradient(120deg,#d67ee3,#faa0d3);border-color:#d67ee388;color:#090d21;}
