@@ -1,3 +1,4 @@
+import {orbitBinaryStars} from './binary-stars.ts';
 import {orbitStellarGrid} from './stellar-grid.ts';
 import {orbitKineticOrbits} from './kinetic-orbits.ts';
 import {orbitStarflower} from './starflower.ts';
@@ -16,5 +17,5 @@ import {orbitGoldenRatio} from './golden-ratio.ts';
 import {orbitLogarithmicSpiral} from './logarithmic-spiral.ts';
 import type {OrbitPreset} from '../core/types.ts';
 import {defaultFormation} from '../core/scene.ts';
-export const formations:OrbitPreset[]=[defaultFormation,orbitStellarGrid,orbitKineticOrbits,orbitStarflower,orbitSolarPillars,orbitCometTail,orbitAccretionDisc,orbitCelestialShell,orbitStellarDome,orbitCosmicVortex,orbitLemniscate,orbitSaturnBelt,orbitOrbitalTorus,orbitHelixTower,orbitDoubleSpiral,orbitGoldenRatio,orbitLogarithmicSpiral];
+export const formations:OrbitPreset[]=[defaultFormation,orbitBinaryStars,orbitStellarGrid,orbitKineticOrbits,orbitStarflower,orbitSolarPillars,orbitCometTail,orbitAccretionDisc,orbitCelestialShell,orbitStellarDome,orbitCosmicVortex,orbitLemniscate,orbitSaturnBelt,orbitOrbitalTorus,orbitHelixTower,orbitDoubleSpiral,orbitGoldenRatio,orbitLogarithmicSpiral];
 export function getFormation(id:string):OrbitPreset{return formations.find(p=>p.id===id)||defaultFormation;}
