@@ -132,3 +132,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="ice-giants"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#86dbfa29 0%,#07172a 56%,#040610 100%);}
 :root[data-theme="ice-giants"] .z-brand__symbol{background:linear-gradient(142deg,#86dbfa,#b5eaf9);box-shadow:0 0 26px #86dbfa50;}
 :root[data-theme="ice-giants"] .z-btn--primary{background:linear-gradient(120deg,#86dbfa,#b5eaf9);border-color:#86dbfa88;color:#090d21;}
+
+/* Event Horizon: a fully local color and atmosphere design preset */
+:root[data-theme="horizon"]{--accent:#ee7dbe;--glow:#bb8cf2;--signal:#bb8cf2;--surface:#160c27;--purple:#ee7dbe;--glass:#160c27dc;}
+:root[data-theme="horizon"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#ee7dbe29 0%,#160c27 56%,#040610 100%);}
+:root[data-theme="horizon"] .z-brand__symbol{background:linear-gradient(142deg,#ee7dbe,#bb8cf2);box-shadow:0 0 26px #ee7dbe50;}
+:root[data-theme="horizon"] .z-btn--primary{background:linear-gradient(120deg,#ee7dbe,#bb8cf2);border-color:#ee7dbe88;color:#090d21;}
