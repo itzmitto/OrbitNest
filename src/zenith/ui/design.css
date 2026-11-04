@@ -120,3 +120,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="emerald"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#58eeaa29 0%,#071e1d 56%,#040610 100%);}
 :root[data-theme="emerald"] .z-brand__symbol{background:linear-gradient(142deg,#58eeaa,#7ac9fa);box-shadow:0 0 26px #58eeaa50;}
 :root[data-theme="emerald"] .z-btn--primary{background:linear-gradient(120deg,#58eeaa,#7ac9fa);border-color:#58eeaa88;color:#090d21;}
+
+/* Copper Orbit: a fully local color and atmosphere design preset */
+:root[data-theme="copper"]{--accent:#dc9063;--glow:#efb779;--signal:#efb779;--surface:#1f1212;--purple:#dc9063;--glass:#1f1212dc;}
+:root[data-theme="copper"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#dc906329 0%,#1f1212 56%,#040610 100%);}
+:root[data-theme="copper"] .z-brand__symbol{background:linear-gradient(142deg,#dc9063,#efb779);box-shadow:0 0 26px #dc906350;}
+:root[data-theme="copper"] .z-btn--primary{background:linear-gradient(120deg,#dc9063,#efb779);border-color:#dc906388;color:#090d21;}
