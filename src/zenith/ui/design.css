@@ -96,3 +96,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="starlight"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#b4c7f629 0%,#0b1429 56%,#040610 100%);}
 :root[data-theme="starlight"] .z-brand__symbol{background:linear-gradient(142deg,#b4c7f6,#cad5fb);box-shadow:0 0 26px #b4c7f650;}
 :root[data-theme="starlight"] .z-btn--primary{background:linear-gradient(120deg,#b4c7f6,#cad5fb);border-color:#b4c7f688;color:#090d21;}
+
+/* Interstellar: a fully local color and atmosphere design preset */
+:root[data-theme="interstellar"]{--accent:#58d9fa;--glow:#9d8dff;--signal:#9d8dff;--surface:#060e23;--purple:#58d9fa;--glass:#060e23dc;}
+:root[data-theme="interstellar"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#58d9fa29 0%,#060e23 56%,#040610 100%);}
+:root[data-theme="interstellar"] .z-brand__symbol{background:linear-gradient(142deg,#58d9fa,#9d8dff);box-shadow:0 0 26px #58d9fa50;}
+:root[data-theme="interstellar"] .z-btn--primary{background:linear-gradient(120deg,#58d9fa,#9d8dff);border-color:#58d9fa88;color:#090d21;}
