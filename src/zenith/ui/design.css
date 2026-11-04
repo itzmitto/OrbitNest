@@ -56,3 +56,19 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 @media(max-width:760px){#zenith-root{display:block}.z-side{position:sticky;top:0;width:100%;height:auto;flex-direction:row;align-items:center;justify-content:space-between;padding:10px 15px;gap:8px}.z-brand{display:flex}.z-brand__symbol{width:34px;height:34px;font-size:20px}.z-nav{display:flex;overflow:auto;gap:3px}.z-nav a{font-size:14px;min-width:40px;padding:10px}.z-main{padding:20px 16px 40px}.z-grid{grid-template-columns:1fr}.z-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.z-stat{min-height:90px;padding:13px}.z-scene{height:480px;min-height:370px}.z-collection{grid-template-columns:repeat(2,minmax(0,1fr))}.z-page-head{align-items:start;flex-direction:column}.z-top{margin-bottom:24px}}
 @media(max-width:440px){.z-collection{grid-template-columns:1fr}.z-actions{gap:5px}.z-btn{padding:9px 11px}.z-top-right .z-status{display:none}.z-scene{min-height:360px;height:410px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+:root[data-theme="eclipse"]{--accent:#d5d7ed;--glow:#9192aa;--surface:#10121c;--border:#ffffff14}
+:root[data-theme="aurora"]{--accent:#5cedcd;--glow:#39baae;--surface:#0d2430;--border:#6df0dc22}
+:root[data-theme="solar"]{--accent:#ffbe73;--glow:#e28c51;--surface:#291b28;--border:#efb07122}
+.z-scene canvas#z-stars{z-index:0;pointer-events:none}.z-scene canvas#z-planet-canvas{position:absolute;inset:0;z-index:1;cursor:grab}
+.z-scene canvas#z-planet-canvas:active{cursor:grabbing}.z-shortcut-help{padding:12px 22px;color:#9fb0d8;font-size:11px;border-top:1px solid var(--border)}
+.z-shortcut-help summary{cursor:pointer}.z-shortcut-help div{display:flex;gap:20px;flex-wrap:wrap}.z-shortcut-help kbd{background:#263353;padding:3px 6px;border:1px solid #637199;border-radius:5px;color:#fff}
+@media(prefers-reduced-motion:reduce){.z-planet-orb{animation:none!important}}
+
+:root[data-theme="eclipse"]{--accent:#d5d7ed;--glow:#9192aa;--surface:#10121c;--border:#ffffff14}
+:root[data-theme="aurora"]{--accent:#5cedcd;--glow:#39baae;--surface:#0d2430;--border:#6df0dc22}
+:root[data-theme="solar"]{--accent:#ffbe73;--glow:#e28c51;--surface:#291b28;--border:#efb07122}
+.z-scene canvas#z-stars{z-index:0;pointer-events:none}.z-scene canvas#z-planet-canvas{position:absolute;inset:0;z-index:1;cursor:grab}
+.z-scene canvas#z-planet-canvas:active{cursor:grabbing}.z-shortcut-help{padding:12px 22px;color:#9fb0d8;font-size:11px;border-top:1px solid var(--border)}
+.z-shortcut-help summary{cursor:pointer}.z-shortcut-help div{display:flex;gap:20px;flex-wrap:wrap}.z-shortcut-help kbd{background:#263353;padding:3px 6px;border:1px solid #637199;border-radius:5px;color:#fff}
+@media(prefers-reduced-motion:reduce){.z-planet-orb{animation:none!important}}
