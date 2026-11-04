@@ -90,3 +90,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-s
 :root[data-theme="red-dwarf"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#fe6c7b29 0%,#200c18 56%,#040610 100%);}
 :root[data-theme="red-dwarf"] .z-brand__symbol{background:linear-gradient(142deg,#fe6c7b,#e9ad6b);box-shadow:0 0 26px #fe6c7b50;}
 :root[data-theme="red-dwarf"] .z-btn--primary{background:linear-gradient(120deg,#fe6c7b,#e9ad6b);border-color:#fe6c7b88;color:#090d21;}
+
+/* Starlight: a fully local color and atmosphere design preset */
+:root[data-theme="starlight"]{--accent:#b4c7f6;--glow:#cad5fb;--signal:#cad5fb;--surface:#0b1429;--purple:#b4c7f6;--glass:#0b1429dc;}
+:root[data-theme="starlight"] .z-scene{background:radial-gradient(ellipse at 46% 48%,#b4c7f629 0%,#0b1429 56%,#040610 100%);}
+:root[data-theme="starlight"] .z-brand__symbol{background:linear-gradient(142deg,#b4c7f6,#cad5fb);box-shadow:0 0 26px #b4c7f650;}
+:root[data-theme="starlight"] .z-btn--primary{background:linear-gradient(120deg,#b4c7f6,#cad5fb);border-color:#b4c7f688;color:#090d21;}
