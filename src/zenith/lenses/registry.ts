@@ -1,3 +1,4 @@
+import {lensQuickLookup} from './quick-lookup.ts';
 import {lensLongReading} from './long-reading.ts';
 import {lensDuplicateWorlds} from './duplicate-worlds.ts';
 import {lensMultiWindowWorlds} from './multi-window-worlds.ts';
@@ -18,5 +19,5 @@ import {lensAudioPlanets} from './audio-planets.ts';
 import {lensUnpinnedWorlds} from './unpinned-worlds.ts';
 import {lensPinnedWorlds} from './pinned-worlds.ts';
 import type {TabLens} from '../core/types.ts';
-export const lenses:TabLens[]=[lensLongReading,lensDuplicateWorlds,lensMultiWindowWorlds,lensReferenceWorlds,lensCommunicationWorlds,lensMediaWorlds,lensCreativeWorlds,lensDevWorlds,lensInternalPlanets,lensInsecurePlanets,lensSecurePlanets,lensSleepingPlanets,lensMutedPlanets,lensBackgroundPlanets,lensActivePlanets,lensQuietPlanets,lensAudioPlanets,lensUnpinnedWorlds,lensPinnedWorlds,{id:'all',label:'Every planet',description:'View every open browser tab.',select:tabs=>tabs}];
-export function getLens(id:string):TabLens{return lenses.find(l=>l.id===id)||lenses[0];}
+export const lenses:TabLens[]=[lensQuickLookup,lensLongReading,lensDuplicateWorlds,lensMultiWindowWorlds,lensReferenceWorlds,lensCommunicationWorlds,lensMediaWorlds,lensCreativeWorlds,lensDevWorlds,lensInternalPlanets,lensInsecurePlanets,lensSecurePlanets,lensSleepingPlanets,lensMutedPlanets,lensBackgroundPlanets,lensActivePlanets,lensQuietPlanets,lensAudioPlanets,lensUnpinnedWorlds,lensPinnedWorlds,{id:'all',label:'Every planet',description:'View every open browser tab.',select:tabs=>tabs}];
+export function getLens(id:string):TabLens{return lenses.find(l=>l.id===id)||lenses.find(l=>l.id==='all')!;}
