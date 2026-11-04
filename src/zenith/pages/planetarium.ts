@@ -5,8 +5,9 @@ import {filterTabs,uniqueDomains,windowsCount,safeTitle} from '../core/utils';
 import {formatHost,escapeHTML} from '../core/math';
 import type {BrowserTab,Planet} from '../core/types';
 import {getPreferences} from '../core/state';
+import {formations,getFormation,lenses,getLens} from '../core/data';
 let scene:UniverseScene|null=null;
-let current:BrowserTab[]=[];let selected:Planet|null=null;let query='';let timer:ReturnType<typeof setInterval>|undefined;
+let current:BrowserTab[]=[];let selected:Planet|null=null;let query='';let formation='solar-spiral',lens='all';let timer:ReturnType<typeof setInterval>|undefined;
 function selectedPanel():string{
  const tab=selected?.tab;if(!tab)return `<div class="z-planet-emblem"><div class="z-planet-orb"></div></div><h3>Select a planet</h3><p class="z-muted">Click any planet to explore its tab, domain, window and actions.</p>`;
  return `<div class="z-planet-emblem"><div class="z-planet-orb" style="filter:hue-rotate(${Math.round(selected!.hue*360)}deg)"></div></div>
@@ -17,8 +18,8 @@ function selectedPanel():string{
  <div class="z-actions"><button class="z-btn z-btn--primary" data-action="open">Open tab</button><button class="z-btn" data-action="${tab.pinned?'unpin':'pin'}">${tab.pinned?'Unpin':'Pin'} tab</button><button class="z-btn" data-action="${tab.muted?'unmute':'mute'}">${tab.muted?'Unmute':'Mute'}</button></div>`;
 }
 function updatePanel():void{const el=document.getElementById('z-selected');if(el)el.innerHTML=selectedPanel();}
-async function refresh():Promise<void>{current=await getTabs();const visible=filterTabs(current,query);
- scene?.setTabs(visible);if(selected&&!visible.some(t=>t.id===selected?.tab.id))selected=null;
+async function refresh():Promise<void>{current=await getTabs();const visible=getLens(lens).select(filterTabs(current,query));
+ scene?.setTabs(visible,getFormation(formation));if(selected&&!visible.some(t=>t.id===selected?.tab.id))selected=null;
  const counters=document.getElementById('z-counters');if(counters)counters.innerHTML=stat('Open planets',current.length,'LIVE BROWSER TABS')+stat('Star systems',uniqueDomains(current),'UNIQUE DOMAINS')+stat('Windows',windowsCount(current),'ACTIVE WORKSPACES')+stat('Audio worlds',current.filter(t=>t.audible).length,'PLAYING MEDIA');
  const list=document.getElementById('z-live-list');if(list)list.innerHTML=visible.slice(0,12).map(t=>`<button class="z-list-row" data-tab="${t.id}"><i class="z-dot" style="--hue:${(t.id*17)%360}"></i><span><strong>${safeTitle(t)}</strong><small>${escapeHTML(formatHost(t.url))}</small></span>↗</button>`).join('')||'<div class="z-empty">No tabs match your search.</div>';
  updatePanel();const status=document.getElementById('z-connection');if(status)status.textContent=hasLiveTabs()?'● CONNECTED':'○ DEMO PLANETS';
@@ -31,10 +32,13 @@ export async function mountPlanetarium():Promise<()=>void>{
  <div class="z-scene-overlay"><div><span class="z-scene-tag">YOUR BROWSER AS A UNIVERSE</span><div class="z-scene-heading">Orbit around ideas.</div></div></div>
  <div class="z-scene-bottom"><span class="z-pill">DRAG TO ROTATE · SCROLL TO ZOOM · CLICK TO SELECT</span><span class="z-pill" id="z-fps">WEBGL2</span></div></div>
  <div class="z-controls"><label>SEARCH <input id="z-search" type="search" placeholder="Find a planet..." aria-label="Search tabs"></label>
- <button class="z-btn" id="z-fit">Fit all</button><button class="z-btn" id="z-pause">Pause motion</button><button class="z-btn" id="z-refresh">Refresh</button></div></section>
+ <label>FORMATION <select id="z-formation"></select></label><label>LENS <select id="z-lens"></select></label><button class="z-btn" id="z-fit">Fit all</button><button class="z-btn" id="z-pause">Pause motion</button><button class="z-btn" id="z-refresh">Refresh</button></div></section>
  <section class="z-card"><div class="z-card__title"><h2>EXPLORE TAB PLANETS</h2><small>CLICK TO INSPECT</small></div><div class="z-list" id="z-live-list"></div></section>
  </div><div class="z-stack"><section class="z-card"><div class="z-card__title"><h2>PLANET INSPECTOR</h2><small>DETAILS</small></div><div class="z-inspector" id="z-selected"></div></section>
  <section class="z-card"><div class="z-card__title"><h2>YOUR NEXT DESTINATION</h2></div><div class="z-list"><a class="z-list-row" href="./atlas.html"><span><strong>Galaxy Atlas</strong><small>Organize your domains and constellations</small></span>↗</a><a class="z-list-row" href="./observatory.html"><span><strong>Observatory</strong><small>Understand your workspace signals</small></span>↗</a><a class="z-list-row" href="./sessions.html"><span><strong>Sessions</strong><small>Save and restore your tab constellations</small></span>↗</a></div></section></div></div>`);
+ const formationBox=target.querySelector<HTMLSelectElement>('#z-formation')!,lensBox=target.querySelector<HTMLSelectElement>('#z-lens')!;
+ for(const f of formations)formationBox.add(new Option(f.label,f.id));for(const l of lenses)lensBox.add(new Option(l.label,l.id));
+ formationBox.onchange=()=>{formation=formationBox.value;void refresh();};lensBox.onchange=()=>{lens=lensBox.value;void refresh();};
  const canvas=target.querySelector<HTMLCanvasElement>('#z-planet-canvas')!;
  scene=new UniverseScene(canvas,{onSelect:planet=>{selected=planet;updatePanel();},onFrame:fps=>{const el=document.getElementById('z-fps');if(el)el.textContent=`${Math.round(fps)} FPS · WEBGL2`;}});
  target.querySelector<HTMLInputElement>('#z-search')!.oninput=e=>{query=(e.target as HTMLInputElement).value;void refresh();};
