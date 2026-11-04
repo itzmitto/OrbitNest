@@ -1,3 +1,4 @@
+import {signalShortUrls} from './short-urls.ts';
 import {signalTitleLength} from './title-length.ts';
 import {signalPlainHttp} from './plain-http.ts';
 import {signalUnpinnedCount} from './unpinned-count.ts';
@@ -16,5 +17,5 @@ import {signalPinnedCount} from './pinned-count.ts';
 import {signalWindowCount} from './window-count.ts';
 import {signalDomainDiversity} from './domain-diversity.ts';
 import type {Signal} from '../core/types.ts';
-export const signals:Signal[]=[signalTitleLength,signalPlainHttp,signalUnpinnedCount,signalBackgroundShare,signalMediaShare,signalTabsPerWindow,signalLargestCluster,signalLocalCount,signalSecureShare,signalDuplicateCount,signalDiscardedCount,signalForegroundCount,signalMutedCount,signalAudioCount,signalPinnedCount,signalWindowCount,signalDomainDiversity,];
+export const signals:Signal[]=[signalShortUrls,signalTitleLength,signalPlainHttp,signalUnpinnedCount,signalBackgroundShare,signalMediaShare,signalTabsPerWindow,signalLargestCluster,signalLocalCount,signalSecureShare,signalDuplicateCount,signalDiscardedCount,signalForegroundCount,signalMutedCount,signalAudioCount,signalPinnedCount,signalWindowCount,signalDomainDiversity,];
 export function findSignal(id:string):Signal|undefined{return signals.find(s=>s.id===id);}
