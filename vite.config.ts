@@ -8,6 +8,13 @@ export default defineConfig({
   build: {
     rolldownOptions: {
       input: {
+      'planetarium': fileURLToPath(new URL('./planetarium.html', import.meta.url)),
+      'atlas': fileURLToPath(new URL('./atlas.html', import.meta.url)),
+      'observatory': fileURLToPath(new URL('./observatory.html', import.meta.url)),
+      'sessions': fileURLToPath(new URL('./sessions.html', import.meta.url)),
+      'mission-control': fileURLToPath(new URL('./mission-control.html', import.meta.url)),
+      'preferences': fileURLToPath(new URL('./preferences.html', import.meta.url)),
+
         dashboard: fileURLToPath(new URL('./index.html', import.meta.url)),
         mission: fileURLToPath(new URL('./mission.html', import.meta.url)),
         studio: fileURLToPath(new URL('./studio.html', import.meta.url)),
