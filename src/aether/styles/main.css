@@ -1,0 +1,64 @@
+:root{color-scheme:dark;font-family:Inter,'Segoe UI',system-ui,sans-serif;background:#030711;color:#eff6ff;
+ --a-bg:#030711;--a-panel:rgba(13,23,45,.76);--a-border:rgba(164,200,255,.14);--a-accent:#70e5e5;--a-violet:#9f8cff;--a-muted:#96a9c7;--a-text:#eff6ff;--a-gold:#f2c890;}
+*{box-sizing:border-box}body{margin:0;min-width:310px}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}
+a{color:inherit;text-decoration:none}a:hover{color:var(--a-accent)}:focus-visible{outline:2px solid var(--a-accent);outline-offset:3px}
+.aether-app{min-height:100vh;display:grid;grid-template-columns:248px minmax(0,1fr);background:radial-gradient(ellipse at 70% 15%,#122a4d80 0,transparent 39%),radial-gradient(ellipse at 45% 74%,#321d5e37,transparent 54%),var(--a-bg)}
+.aether-side{position:sticky;top:0;height:100vh;overflow:auto;padding:26px 18px;display:flex;flex-direction:column;gap:28px;border-right:1px solid var(--a-border);background:#060d1cdd;backdrop-filter:blur(22px)}
+.aether-logo{display:flex;gap:12px;align-items:center;font-size:19px;font-weight:850;letter-spacing:-.035em}
+.aether-logo-mark{width:42px;height:42px;position:relative;display:grid;place-items:center;border:1px solid #86e3f788;background:radial-gradient(circle at 35% 30%,#c3efff,#5879c0 37%,#262264 68%,#050b22 100%);border-radius:50%;box-shadow:0 0 24px #6a9be655,inset -6px -6px 12px #06091a;transform:rotate(-25deg)}
+.aether-logo-mark::after{content:'';position:absolute;width:57px;height:15px;border:2px solid #d6efffc4;border-radius:50%;transform:rotate(-30deg)}
+.aether-logo small{display:block;font-size:9px;color:var(--a-muted);letter-spacing:.24em;margin-top:3px;font-weight:650}
+.aether-nav-label,.aether-kicker{font-size:10px;letter-spacing:.22em;font-weight:850;color:var(--a-muted)}
+.aether-nav{display:grid;gap:6px}.aether-nav button{color:#afc1df;background:transparent;border:1px solid transparent;text-align:left;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:650;min-height:44px}
+.aether-nav button[data-current=true]{background:linear-gradient(110deg,#162a45dd,#22325a9c);color:#fff;border-color:#8fb9ef39;box-shadow:inset 3px 0 0 var(--a-accent)}
+.aether-nav button:hover{background:#192d4a; color:#fff}
+.aether-symbol{font-size:18px;width:25px;text-align:center;color:var(--a-accent)}
+.aether-side-footer{margin-top:auto;background:linear-gradient(135deg,#132a43,#0c1631);border:1px solid #6ccddd2d;border-radius:18px;padding:18px;font-size:12px;color:var(--a-muted);line-height:1.6}
+.aether-side-footer strong{display:block;color:var(--a-text);font-size:13px;margin-bottom:5px}
+.aether-main{min-width:0;padding:26px clamp(18px,3vw,48px) 56px;max-width:1920px;width:100%;margin:0 auto}
+.aether-top{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:46px;padding-bottom:22px;border-bottom:1px solid var(--a-border)}
+.aether-breadcrumb{font-size:12px;color:var(--a-muted)}.aether-breadcrumb strong{color:var(--a-text)}
+.aether-online{display:inline-flex;align-items:center;gap:8px;color:#a8efda;font-size:10px;letter-spacing:.12em;font-weight:750}
+.aether-online::before{content:'';width:7px;height:7px;border-radius:50%;background:#72ebbb;box-shadow:0 0 16px #72ebbb99}
+.aether-hero{display:flex;justify-content:space-between;gap:30px;align-items:end;padding:34px 0 26px}
+.aether-hero h1{font-size:clamp(30px,4vw,56px);line-height:1.06;letter-spacing:-.065em;font-weight:800;margin:12px 0 10px;background:linear-gradient(125deg,#fff,#b4c4ee);color:transparent;background-clip:text}
+.aether-hero p{color:var(--a-muted);line-height:1.65;max-width:650px;font-size:13px;margin:0}
+.aether-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid #8cabe837;padding:8px 12px;border-radius:50px;background:#14213e78;font-size:10px;color:#b9cae8;font-weight:750;letter-spacing:.06em}
+.aether-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.aether-stat{background:linear-gradient(135deg,#13243bd9,#101629b8);border:1px solid var(--a-border);border-radius:17px;padding:20px;min-width:0;box-shadow:0 10px 30px #01071538}
+.aether-stat small{font-size:10px;letter-spacing:.14em;color:var(--a-muted);font-weight:750}.aether-stat strong{display:block;font-size:29px;letter-spacing:-.045em;margin-top:10px}.aether-stat em{font-size:10px;font-style:normal;color:var(--a-accent)}
+.aether-layout{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(270px,.78fr);gap:18px;align-items:start}.aether-stack{display:grid;gap:17px;min-width:0}
+.aether-card{border:1px solid var(--a-border);background:linear-gradient(148deg,rgba(16,29,51,.92),rgba(6,12,26,.90));border-radius:22px;overflow:hidden;box-shadow:0 15px 44px #0006}
+.aether-card-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:20px 22px;border-bottom:1px solid var(--a-border)}
+.aether-card-header h2{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase}.aether-card-header small{color:var(--a-muted);font-size:10px}
+.aether-scene{position:relative;overflow:hidden;height:min(62vh,675px);min-height:460px;background:radial-gradient(ellipse at 49% 52%,#21446655,transparent 38%),radial-gradient(circle at 20% 20%,#34257166,transparent 39%),#030813;isolation:isolate}
+.aether-scene::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 60deg,transparent 10%,#55e0e00c 30%,transparent 56%,#a27dff12 76%,transparent);filter:blur(35px);pointer-events:none;animation:aether-nebula 38s linear infinite}
+.aether-stars,.aether-planets{position:absolute;inset:0;width:100%;height:100%}.aether-stars{z-index:0;pointer-events:none}.aether-planets{z-index:1;cursor:grab}.aether-planets:active{cursor:grabbing}
+.aether-scene-heading{position:absolute;top:26px;left:30px;z-index:2;pointer-events:none}.aether-scene-heading h3{font-size:24px;font-weight:750;letter-spacing:-.05em;margin:10px 0 4px}.aether-scene-heading p{font-size:11px;color:#9bb5d7;margin:0}
+.aether-scene-bottom{position:absolute;left:25px;right:25px;bottom:22px;z-index:2;display:flex;justify-content:space-between;gap:12px;align-items:center;pointer-events:none}
+.aether-radar{position:absolute;right:27px;top:24px;border:1px solid #bcd9ff2b;border-radius:50%;width:92px;height:92px;z-index:2;background:repeating-radial-gradient(circle,#5fdcdc16 0px 1px,transparent 1px 22px),linear-gradient(150deg,#0c213985,#0a1c3f50);box-shadow:0 0 34px #1f8ec31c;pointer-events:none}
+.aether-radar::before{content:'';position:absolute;inset:50% auto auto 50%;width:34%;height:1px;background:var(--a-accent);transform-origin:left center;animation:aether-sweep 10s linear infinite}.aether-radar::after{content:'';position:absolute;width:7px;height:7px;top:26px;left:54px;border-radius:50%;background:#80fff1;box-shadow:0 0 10px #80fff1}
+.aether-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:15px 20px;background:#101b31a8;border-top:1px solid var(--a-border)}
+.aether-button,.aether-select,.aether-input{appearance:none;border:1px solid #8ca7d83a;background:#111f38;color:#dcecff;border-radius:10px;padding:10px 13px;font-size:12px;min-height:38px}
+.aether-button:hover{background:#1a3255;border-color:#8bdada80}.aether-button-primary{background:linear-gradient(110deg,#58c8d4,#8de5d2);color:#051721;border-color:transparent;font-weight:800}.aether-button-primary:hover{background:#98eee2;color:#061c25}
+.aether-input{min-width:120px}.aether-select{max-width:220px}.aether-controls-label{color:var(--a-muted);font-size:10px;font-weight:750;display:flex;align-items:center;gap:9px}
+.aether-inspector{padding:22px}.aether-orb{width:120px;height:120px;border-radius:50%;margin:12px auto 26px;background:radial-gradient(circle at 27% 25%,#e2ffff,#75afe7 25%,#4352a6 48%,#151a50 78%,#050c2c);box-shadow:inset -18px -14px 20px #040922dd,0 0 50px #438bcc50,0 0 80px #394cb62b;position:relative}
+.aether-orb::before{content:'';position:absolute;width:170px;height:38px;border:5px solid #b9e2fb99;border-radius:50%;top:42px;left:-25px;transform:rotate(-28deg);box-shadow:0 0 18px #79c7f457}
+.aether-inspector h3{text-align:center;font-size:18px;letter-spacing:-.025em;margin:0 0 7px;overflow-wrap:anywhere}.aether-inspector p{text-align:center;font-size:12px;color:var(--a-muted);margin-bottom:19px;overflow-wrap:anywhere}
+.aether-info-row{display:flex;justify-content:space-between;border-top:1px solid var(--a-border);padding:13px 0;color:var(--a-muted);font-size:12px}.aether-info-row strong{color:var(--a-text);font-weight:700}
+.aether-planet-list{padding:8px}.aether-planet-row{width:100%;display:flex;gap:13px;align-items:center;padding:12px 14px;border:0;border-radius:12px;color:var(--a-text);text-align:left;background:transparent}.aether-planet-row:hover{background:#172e4b}.aether-planet-row span{display:grid;min-width:0}.aether-planet-row strong{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.aether-planet-row small{font-size:10px;color:var(--a-muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aether-mini-orb{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 28% 24%,#d6f9ff,var(--orb-color,#548bd5) 45%,#132454);box-shadow:inset -5px -5px 9px #050c2acc,0 0 14px var(--orb-color,#548bd5)}
+.aether-empty{padding:26px;text-align:center;color:var(--a-muted);line-height:1.65;font-size:12px}.aether-panel-body{padding:23px}.aether-tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:13px}
+.aether-tool-card{border:1px solid var(--a-border);background:#12203b9c;border-radius:18px;padding:20px;text-align:left;color:var(--a-text);min-height:155px;transition:transform .18s,border .18s}
+.aether-tool-card:hover{transform:translateY(-3px);border-color:#82dfe26e;background:#182b4b}.aether-tool-card strong{display:block;font-size:14px;margin:15px 0 7px}.aether-tool-card p{font-size:11px;line-height:1.6;color:var(--a-muted);margin:0}.aether-tool-icon{font-size:21px;color:var(--a-accent)}
+.aether-report{display:grid;gap:18px}.aether-report-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:11px}.aether-report-metric{background:#122641a6;border:1px solid var(--a-border);border-radius:14px;padding:17px}.aether-report-metric small{color:var(--a-muted);font-size:10px}.aether-report-metric strong{font-size:24px;display:block;margin-top:7px}
+.aether-report-row{padding:15px;border-top:1px solid var(--a-border);display:flex;gap:12px;align-items:start}.aether-report-row strong{font-size:12px;display:block}.aether-report-row small{font-size:11px;line-height:1.55;color:var(--a-muted);display:block;margin-top:5px}
+.aether-note{font-size:12px;color:var(--a-muted);line-height:1.65}.aether-toast{position:fixed;bottom:22px;right:25px;z-index:99;background:#193453;border:1px solid #75cde66a;color:#e1f6ff;border-radius:12px;padding:14px 19px;box-shadow:0 12px 38px #0008}
+.aether-settings{display:grid;gap:16px;max-width:740px}.aether-setting{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px 0;border-bottom:1px solid var(--a-border)}.aether-setting strong{font-size:13px}.aether-setting p{font-size:11px;color:var(--a-muted);margin:6px 0 0}.aether-setting input{accent-color:#74dede;width:20px;height:20px}
+@keyframes aether-nebula{to{transform:rotate(360deg)}}@keyframes aether-sweep{to{transform:rotate(360deg)}}
+:root[data-aether-theme="cosmic"]{--a-accent:#bc94ff;--a-violet:#ef8ede;--a-bg:#070518;--a-panel:#27132e;--a-muted:#c0a6cf}
+:root[data-aether-theme="amber"]{--a-accent:#ffc781;--a-violet:#e99c6f;--a-bg:#100b13;--a-panel:#28202b;--a-muted:#c2abba}
+@media(max-width:1250px){.aether-layout{grid-template-columns:minmax(0,1fr) 290px}.aether-app{grid-template-columns:208px minmax(0,1fr)}.aether-side{padding:24px 12px}}
+@media(max-width:950px){.aether-app{display:block}.aether-side{position:relative;height:auto;display:block;padding:15px}.aether-side-footer{display:none}.aether-nav{display:flex;overflow:auto}.aether-nav button{white-space:nowrap}.aether-logo{margin-bottom:12px}.aether-main{padding:18px}.aether-layout{grid-template-columns:1fr}.aether-scene{height:520px}.aether-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.aether-hero{padding:22px 0;display:block}.aether-scene{height:410px;min-height:330px}.aether-scene-heading{top:15px;left:15px}.aether-scene-heading h3{font-size:18px}.aether-radar{display:none}.aether-scene-bottom{left:12px;bottom:12px}.aether-toolbar{padding:12px;gap:7px}.aether-control-label{font-size:9px}.aether-stat{padding:13px}.aether-stat strong{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.aether-scene::before,.aether-radar::before{animation:none}.aether-tool-card{transition:none}}
