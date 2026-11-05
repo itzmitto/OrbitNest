@@ -71,7 +71,12 @@ function mountPlanetarium(){
  input.oninput=()=>{filter=input.value;redrawPlanets();};toolbar.append(input);
  const selector=document.createElement('select');selector.className='aether-select';selector.setAttribute('aria-label','Choose galaxy formation');for(const [index,f] of formations.entries())selector.add(new Option(f.label,String(index)));
  selector.onchange=()=>{cockpit?.setFormation(Number(selector.value));};toolbar.append(selector);
- toolbar.append(button('Fit all',()=>cockpit?.reset()),button(paused?'Resume motion':'Pause motion',()=>{const running=cockpit?.scene.pause();paused=!running;toolbar.querySelectorAll('button')[1].textContent=paused?'Resume motion':'Pause motion';}));
+ const fitButton=button('Fit all',()=>cockpit?.reset());toolbar.append(fitButton);
+ const motionButton=button(paused?'Resume motion':'Pause motion',()=>{const running=cockpit?.scene.pause();paused=!running;motionButton.textContent=paused?'Resume motion':'Pause motion';});toolbar.append(motionButton);
+ const orbitButton=button('Cinematic orbit',()=>{cockpit?.startTour('orbit');toast('Cinematic orbit started. Use Fit all to stop.');});
+ const flyoverButton=button('Planet flyover',()=>{cockpit?.startTour('flyover');toast('Planet flyover started. Use Fit all to stop.');});
+ toolbar.append(orbitButton,flyoverButton);
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){orbitButton.disabled=true;flyoverButton.disabled=true;orbitButton.title='Disabled for reduced motion';}
  const list=element('aether-planet-list');list.addEventListener('click',e=>{const found=(e.target as HTMLElement).closest<HTMLElement>('[data-tab-id]');if(!found)return;const id=Number(found.dataset.tabId);cockpit?.focus(id);const planet=cockpit?.scene.getPlanets().find(p=>p.tab.id===id)||null;selected=planet;inspector(element('aether-inspector'),planet);});
  redrawPlanets();
 }
