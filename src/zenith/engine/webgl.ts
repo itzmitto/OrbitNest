@@ -2,7 +2,7 @@ import {sphere,ring,type Geometry} from './geometry.ts';
 import {vertexShader,fragmentShader} from './shaders.ts';
 import {translation,rotationY,scale,multiply,perspective,lookAt} from './matrices.ts';
 import type {Planet,CameraState} from '../core/types.ts';
-interface GPUObject{vao:WebGLVertexArrayObject;count:number;}
+interface GPUObject{vao:WebGLVertexArrayObject;count:number;buffers:WebGLBuffer[];}
 function compile(gl:WebGL2RenderingContext,type:number,source:string):WebGLShader{
  const shader=gl.createShader(type);if(!shader)throw Error('Could not create shader');
  gl.shaderSource(shader,source);gl.compileShader(shader);
@@ -12,10 +12,12 @@ function compile(gl:WebGL2RenderingContext,type:number,source:string):WebGLShade
 function prepare(gl:WebGL2RenderingContext,geometry:Geometry):GPUObject{
  const vao=gl.createVertexArray();if(!vao)throw Error('Vertex array unavailable');gl.bindVertexArray(vao);
  const attrs:[Float32Array,number,number][]=[[geometry.positions,0,3],[geometry.normals,1,3],[geometry.uvs,2,2]];
- for(const [data,location,size] of attrs){const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);
+ const allocated:WebGLBuffer[]=[];
+ for(const [data,location,size] of attrs){const buffer=gl.createBuffer();if(!buffer)throw Error('Vertex buffer allocation failed');allocated.push(buffer);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);
   gl.enableVertexAttribArray(location);gl.vertexAttribPointer(location,size,gl.FLOAT,false,0,0);}
- const ibo=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ibo);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,geometry.indices,gl.STATIC_DRAW);
- gl.bindVertexArray(null);return {vao,count:geometry.indices.length};
+ const ibo=gl.createBuffer();if(!ibo)throw Error('Index buffer allocation failed');allocated.push(ibo);
+ gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ibo);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,geometry.indices,gl.STATIC_DRAW);
+ gl.bindVertexArray(null);return {vao,count:geometry.indices.length,buffers:allocated};
 }
 export class PlanetGPU {
  private gl:WebGL2RenderingContext;
@@ -51,5 +53,11 @@ export class PlanetGPU {
     gl.disable(gl.CULL_FACE);gl.bindVertexArray(this.ring.vao);gl.drawElements(gl.TRIANGLES,this.ring.count,gl.UNSIGNED_SHORT,0);}
   }gl.bindVertexArray(null);
  }
- dispose():void{this.gl.deleteVertexArray(this.sphere.vao);this.gl.deleteVertexArray(this.ring.vao);this.gl.deleteProgram(this.program);}
+ dispose():void{
+  for(const object of [this.sphere,this.ring]){
+   this.gl.deleteVertexArray(object.vao);
+   for(const buffer of object.buffers)this.gl.deleteBuffer(buffer);
+  }
+  this.gl.deleteProgram(this.program);
+ }
 }
