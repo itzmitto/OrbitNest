@@ -1,4 +1,5 @@
 import './ui/design.css';
+import '../aether/styles/zenith-bridge.css';
 import {layout,setContent,toast} from './ui/shell.ts';
 import type {Page} from './core/types.ts';
 import {getPreferences} from './core/state.ts';

@@ -8,6 +8,7 @@ export default defineConfig({
   build: {
     rolldownOptions: {
       input: {
+      'aether': fileURLToPath(new URL('./aether.html', import.meta.url)),
       'planetarium': fileURLToPath(new URL('./planetarium.html', import.meta.url)),
       'atlas': fileURLToPath(new URL('./atlas.html', import.meta.url)),
       'observatory': fileURLToPath(new URL('./observatory.html', import.meta.url)),

@@ -8,7 +8,7 @@ export function layout(page:Page,title:string,subheading:string):HTMLElement {
  const wrapper=document.createElement('div');wrapper.id='zenith-root';
  const links=routes.map(([key,icon,label])=>`<a href="./${key}.html" ${key===page?'aria-current="page"':''} title="${label}"><b aria-hidden="true">${icon}</b><span>${label}</span></a>`).join('');
  wrapper.innerHTML=`<aside class="z-side"><a href="./planetarium.html" class="z-brand" aria-label="OrbitNest home"><div class="z-brand__symbol">◉</div><div><strong>OrbitNest</strong><span>SPACE OPERATING SYSTEM</span></div></a>
- <div><div class="z-nav-label">Explore your universe</div><nav class="z-nav" aria-label="Space navigation">${links}</nav></div>
+ <div><div class="z-nav-label">Explore your universe</div><nav class="z-nav" aria-label="Space navigation">${links}</nav><a class="z-aether-launch" href="./aether.html">✦ Enter Aether 3D Universe</a></div>
  <div class="z-side-bottom"><span class="z-badge">● LOCAL-FIRST</span><strong>Private by design</strong><small>Browser tab metadata stays in your browser. No cloud account required.</small></div></aside>
  <div class="z-main"><header class="z-top"><div class="z-top-left"><span class="z-crumb">Workspace / <strong>${escapeHTML(title)}</strong></span></div>
  <div class="z-top-right"><a class="z-home-link" href="./index.html">← Classic view</a><span class="z-status" id="z-connection">Loading tabs</span><div class="z-avatar">ON</div></div></header>

@@ -1,0 +1,26 @@
+/* Aether design bridge: a fresh visual treatment for pre-existing Zenith pages. */
+:root{--surface:#0a1427;--glass:rgba(5,12,28,.82);--border:#a2d9ed23;--accent:#72dbde;--muted:#94afcb;--purple:#86a4ed}
+body{background:radial-gradient(circle at 78% 4%,#1c416a72 0,transparent 32%),radial-gradient(circle at 14% 80%,#30235665 0,transparent 38%),#030815}
+#zenith-root{background:transparent}
+.z-side{background:linear-gradient(170deg,rgba(5,13,31,.96),rgba(12,22,48,.9));border-right:1px solid #77a9d42b;backdrop-filter:blur(24px)}
+.z-main{background:transparent}.z-top{border-bottom:1px solid #92c3ee22}.z-page-head{padding-top:18px}
+.z-page-head h1{font-weight:850;letter-spacing:-.055em;background:linear-gradient(90deg,#f7fcff,#b4d8ee);background-clip:text;color:transparent}
+.z-page-head .z-lead{color:#9aaec9;line-height:1.75}
+.z-brand__symbol{background:radial-gradient(circle at 25% 23%,#ebffff,#75b4e4 25%,#394aa2 62%,#07152b 100%);box-shadow:0 0 37px #59c7e44d,inset -9px -9px 18px #040720}
+.z-card{border-radius:21px;border-color:#b2d9ff26;background:linear-gradient(145deg,rgba(12,25,49,.93),rgba(7,12,27,.91));box-shadow:0 20px 54px #01051150}
+.z-card__title{border-color:#98b9dd23}.z-card__title h2{letter-spacing:.12em}
+.z-nav a{border-radius:12px;transition:background .18s,color .18s,transform .18s}
+.z-nav a:hover{background:#18375f;color:#f4fbff;transform:translateX(3px)}
+.z-nav a[aria-current=page]{background:linear-gradient(100deg,#193b5b,#23264f);border-color:#63e3d13a;color:#f4ffff;box-shadow:inset 3px 0 0 #6de4dc}
+.z-aether-launch{display:flex;align-items:center;justify-content:center;gap:9px;padding:13px;margin-top:18px;border:1px solid #70dbdd70;border-radius:12px;background:linear-gradient(120deg,#103553,#12273f);color:#a7f8ea;font-size:11px;font-weight:800;letter-spacing:.05em;text-decoration:none;box-shadow:0 8px 32px #083b5133}
+.z-aether-launch:hover{background:#205c73;color:#fff}
+.z-btn,.z-list-row,.z-collection-card{transition:background .18s,border-color .18s,transform .18s}
+.z-btn{border-radius:11px;border-color:#90c5ec42;background:#112b45;color:#ddecf9}
+.z-btn:hover{background:#1b4562;border-color:#82dddf7b}
+.z-btn--primary{background:linear-gradient(115deg,#65d8db,#a3f1d6);color:#06202a;border:0;font-weight:800}
+.z-scene{border-radius:0;background:radial-gradient(ellipse at 48% 55%,#26557e3d,transparent 50%),radial-gradient(circle at 28% 16%,#44338669,transparent 35%),#010510}
+.z-planet-orb{background:radial-gradient(circle at 28% 22%,#edffff 0,#77bdf4 20%,#4358b5 45%,#13174a 75%,#030824 100%);box-shadow:0 0 70px #5e85dc59,inset -18px -18px 30px #060b25}
+.z-list-row:hover{background:#193755a8;transform:translateX(2px)}
+.z-stat strong{color:#f0fbff}
+@media(max-width:760px){.z-side{backdrop-filter:blur(18px)}.z-aether-launch{padding:10px;margin:0 12px}.z-nav a:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.z-nav a,.z-btn,.z-list-row,.z-collection-card{transition:none;transform:none!important}}
