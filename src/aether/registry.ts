@@ -8,6 +8,7 @@ import {pinned_constellationsFeature} from './instruments/pinned-constellations/
 import {secure_transmissionsFeature} from './instruments/secure-transmissions/feature.ts';
 import {tab_searchFeature} from './instruments/tab-search/feature.ts';
 import {reading_harborFeature} from './instruments/reading-harbor/feature.ts';
-export const features:AetherFeature[]=[reading_harborFeature,tab_searchFeature,secure_transmissionsFeature,pinned_constellationsFeature,window_fleetFeature,audio_observatoryFeature,duplicate_orbitsFeature,domain_systemsFeature,];
+import {developer_hangarFeature} from './instruments/developer-hangar/feature.ts';
+export const features:AetherFeature[]=[developer_hangarFeature,reading_harborFeature,tab_searchFeature,secure_transmissionsFeature,pinned_constellationsFeature,window_fleetFeature,audio_observatoryFeature,duplicate_orbitsFeature,domain_systemsFeature,];
 export function getFeature(id:string):AetherFeature|undefined{return features.find(feature=>feature.id===id);}
 export function categories():string[]{return [...new Set(features.map(feature=>feature.category))];}
