@@ -108,7 +108,9 @@ function renderReport(feature:AetherFeature,report:AetherReport):HTMLElement{
 function mountInstruments(activeFeature?:string){
  setHeading('Mission instruments.','Practical tools for navigating your tabs, understanding your browser and building a calmer workspace.');
  const content=element('aether-content');clear(content);
- if(activeFeature){const feature=getFeature(activeFeature);if(feature){const back=button('← All instruments',()=>navigate('instruments'));back.style.marginBottom='20px';content.append(back,renderReport(feature,feature.analyze(tabs)));return;}}
+ if(activeFeature){const feature=getFeature(activeFeature);if(feature){const back=button('← All instruments',()=>navigate('instruments'));back.style.marginBottom='20px';
+    const report=feature.analyze(tabs);content.append(back,renderReport(feature,report));
+    if(feature.renderDetail)content.append(feature.renderDetail(tabs,report));return;}}
  const container=text('div','','aether-tool-grid');for(const feature of features){const card=text('button','','aether-tool-card') as HTMLButtonElement;card.type='button';card.append(text('span','✦','aether-tool-icon'),text('strong',feature.label),text('p',feature.short));card.onclick=()=>navigate('instruments',feature.id);container.append(card);}content.append(container);
  if(!features.length)content.append(text('div','Mission instruments are being initialized.','aether-empty'));
 }

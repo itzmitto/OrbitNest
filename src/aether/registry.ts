@@ -1,5 +1,6 @@
 import type {AetherFeature} from './core/types.ts';
 /** Feature modules register here when a fully tested surface is available. */
-export const features:AetherFeature[]=[];
+import {domain_systemsFeature} from './instruments/domain-systems/feature.ts';
+export const features:AetherFeature[]=[domain_systemsFeature,];
 export function getFeature(id:string):AetherFeature|undefined{return features.find(feature=>feature.id===id);}
 export function categories():string[]{return [...new Set(features.map(feature=>feature.category))];}

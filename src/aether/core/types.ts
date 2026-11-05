@@ -10,6 +10,7 @@ export interface AetherReport {
 export interface AetherFeature {
  id:string;label:string;category:string;short:string;
  analyze(tabs:BrowserTab[]):AetherReport;
+ renderDetail?(tabs:BrowserTab[],report:AetherReport):HTMLElement;
 }
 export type AetherView='planetarium'|'instruments'|'observatory'|'preferences';
 export type UiTheme='midnight'|'cosmic'|'amber';
