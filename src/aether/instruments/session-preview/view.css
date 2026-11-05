@@ -1,0 +1,6 @@
+.aether-instrument-detail[data-instrument="session-preview"]{--instrument-accent:#7dcaf4;display:grid;gap:13px}
+.aether-instrument-detail[data-instrument="session-preview"] .aether-signal-chart{border-color:color-mix(in srgb,var(--instrument-accent) 34%,transparent)}
+.aether-instrument-detail[data-instrument="session-preview"] .aether-signal-chart h2{color:var(--instrument-accent)}
+.aether-instrument-annotation{padding:14px 20px;border-left:3px solid var(--instrument-accent);background:#1525419c;border-radius:0 12px 12px 0;color:#d9e8fd;font-size:12px;line-height:1.5;margin:0}
+.aether-instrument-privacy{color:var(--a-muted);font-size:11px;line-height:1.5;margin:0 0 12px}
+@media(max-width:560px){.aether-instrument-annotation{padding:12px 14px}}
