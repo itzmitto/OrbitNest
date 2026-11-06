@@ -15,3 +15,18 @@ Nova reuses Aether's WebGL planetary engine and the local Chrome Tabs API. It do
 ## Safety
 
 Session backups include only web URLs. They exclude internal browser pages, and no session is restored without a direct confirmation.
+## Explore the new tools
+
+- **Star systems** groups domain planets and shows relationships when websites share a browser window.
+- **Sessions** stores up to 30 local snapshots with no internal browser URLs. Restoring tabs always asks permission first.
+- **Focus mission** suggests useful tasks and allows an explicit, per-tab mute action.
+- **Duplicate scanner** protects active and pinned tabs. Closing duplicates requires confirmation.
+- **Observatory** displays tab distribution and window counts without collecting historical analytics.
+- **Command deck** is available with `Ctrl+K` or `Command+K`, and `Escape` closes it.
+- **Preferences** stores themes, display density and motion preferences locally.
+
+## Accessibility, reliability and privacy
+
+All tab names are inserted using `textContent`, not untrusted HTML. Tab exports are versioned and only include HTTP(S) addresses. Reduce Motion disables cinematic camera controls. Diagnostics explain missing WebGL2 support. You can switch back to the previous Aether dashboard without resetting data.
+
+The new interface is based on the existing WebGL2 renderer and does not increase extension permissions. Its code is meant to be reviewed and built against the real repository before publication.

@@ -3,6 +3,8 @@ import {AetherCockpit} from '../../aether/ui/scene.ts';
 import type {Planet} from '../../zenith/core/types.ts';
 import {el,action,shortText} from './dom.ts';
 import {domainOf} from '../core/model.ts';
+import {getCurrentSettings} from '../core/theme.ts';
+import {attachDiagnostics} from './diagnostics.ts';
 export interface PlanetariumHandle {update(tabs:NovaTab[]):void;dispose():void;focus(id:number):void;}
 export function mountPlanetarium(stage:HTMLElement,controls:HTMLElement,inspector:HTMLElement,onOpen:(id:number)=>void):PlanetariumHandle {
  let selected:Planet|null=null;let paused=false;let orbit=false;
@@ -22,7 +24,8 @@ export function mountPlanetarium(stage:HTMLElement,controls:HTMLElement,inspecto
  const tour=action('Cinematic orbit',()=>{orbit=!orbit;if(orbit)renderer.startTour('orbit');else renderer.stopTour();tour.textContent=orbit?'Stop orbit':'Cinematic orbit';});
  const flyover=action('Planet flyover',()=>{renderer.startTour('flyover');orbit=false;});
  const toggle=action('Pause scene',()=>{renderer.scene.pause();paused=!paused;toggle.textContent=paused?'Resume scene':'Pause scene';});
- if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){tour.disabled=true;flyover.disabled=true;}
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !getCurrentSettings().motion){tour.disabled=true;flyover.disabled=true;}
+ attachDiagnostics(stage,controls);
  controls.append(fit,tour,flyover,toggle,status);
  const onKey=(event:KeyboardEvent)=>{if(event.target instanceof HTMLInputElement||event.target instanceof HTMLTextAreaElement)return;
   if(event.key==='f'&&(document.activeElement===stage||stage.contains(document.activeElement)))renderer.reset();};
