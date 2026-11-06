@@ -6,11 +6,13 @@ import {createShell,renderStats} from './components/shell.ts';
 import {mountPlanetarium,type PlanetariumHandle} from './components/planetarium.ts';
 import {el,action,empty,shortText} from './components/dom.ts';
 import {findNovaPanel} from './features/registry.ts';
+import {applyNovaSettings,getCurrentSettings} from './core/theme.ts';
 
 export function mountNova(host: HTMLElement, inputTabs: NovaTab[], notify: (message: string) => void, refresh: () => void): () => void {
  let tabs=[...inputTabs];let selectedPage=decodeURIComponent(location.hash.split('/')[1]||'universe');
  let disposed=false;let scene:PlanetariumHandle|null=null;let panelDispose:(()=>void)|void;
  const shell=createShell(host,openPage);
+ applyNovaSettings(shell.root,getCurrentSettings());
  const controls=shell.root.querySelector<HTMLElement>('#nova-scene-controls');
  if(!controls)throw Error('Nova toolbar unavailable');
  const context:PanelContext={get tabs(){return tabs;},refresh,notify,go:openPage,
