@@ -5,7 +5,8 @@ import {sessionsPanel} from './sessions.ts';
 import {focusPanel} from './focus.ts';
 import {duplicatesPanel} from './duplicates.ts';
 import {insightsPanel} from './insights.ts';
-export const novaPanels: NovaPanel[] = [systemsPanel,sessionsPanel,focusPanel,duplicatesPanel,insightsPanel];
+import {commandsPanel} from './commands.ts';
+export const novaPanels: NovaPanel[] = [systemsPanel,sessionsPanel,focusPanel,duplicatesPanel,insightsPanel,commandsPanel];
 export function findNovaPanel(id: string): NovaPanel | undefined {
  return novaPanels.find(panel => panel.id === id);
 }

@@ -13,7 +13,7 @@ export function mountNova(host: HTMLElement, inputTabs: NovaTab[], notify: (mess
  const shell=createShell(host,openPage);
  const controls=shell.root.querySelector<HTMLElement>('#nova-scene-controls');
  if(!controls)throw Error('Nova toolbar unavailable');
- const context:PanelContext={get tabs(){return tabs;},refresh,notify,
+ const context:PanelContext={get tabs(){return tabs;},refresh,notify,go:openPage,
   open:async id=>{
    if(!hasLiveTabs()){notify('Live tab actions are available only inside Chrome extension.');return false;}
    const success=await applyTabAction(id,'open');
@@ -62,5 +62,10 @@ export function mountNova(host: HTMLElement, inputTabs: NovaTab[], notify: (mess
   scene?.update(tabs);updateSystems();openPage(selectedPage);
  });
  renderStats(shell.root.querySelector<HTMLElement>('#nova-stats')!,tabStats(tabs));updateSystems();openPage(selectedPage);
- return ()=>{disposed=true;panelDispose?.();scene?.dispose();scene=null;};
+ const onShortcut=(event:KeyboardEvent)=>{
+  if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();openPage('commands');}
+  else if(event.key==='Escape'&&selectedPage==='commands'){openPage('universe');}
+ };
+ document.addEventListener('keydown',onShortcut);
+ return ()=>{document.removeEventListener('keydown',onShortcut);disposed=true;panelDispose?.();scene?.dispose();scene=null;};
 }

@@ -6,6 +6,7 @@ export interface NovaStats { total: number; windows: number; domains: number; pi
 export interface PanelContext {
   tabs: NovaTab[];
   refresh(): void;
+  go(page: string): void;
   notify(message: string): void;
   open(id: number): Promise<boolean>;
 }
