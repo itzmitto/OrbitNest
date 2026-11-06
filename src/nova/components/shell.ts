@@ -1,6 +1,6 @@
 import {el,action} from './dom.ts';
 import type {NovaStats} from '../core/model.ts';
-const NAV=[['universe','3D Universe','◉'],['systems','Star systems','✧'],['sessions','Sessions','▤'],['focus','Focus mission','◎'],['insights','Observatory','▥'],['commands','Command deck','⌘'],['settings','Preferences','⚙']] as const;
+const NAV=[['universe','3D Universe','◉'],['systems','Star systems','✧'],['sessions','Sessions','▤'],['duplicates','Duplicate scanner','◈'],['focus','Focus mission','◎'],['insights','Observatory','▥'],['commands','Command deck','⌘'],['settings','Preferences','⚙']] as const;
 export interface NovaShell {
  root:HTMLElement;stage:HTMLElement;inspector:HTMLElement;content:HTMLElement;
  menu:HTMLElement;search:HTMLInputElement;status:HTMLElement;title:HTMLElement;
