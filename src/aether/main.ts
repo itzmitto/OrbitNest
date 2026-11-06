@@ -1,4 +1,5 @@
 import './styles/main.css';
+import {mountNova} from '../nova/main.ts';
 import {getTabs,hasLiveTabs,applyTabAction} from '../zenith/core/tabs.ts';
 import {formations} from '../zenith/core/data.ts';
 import type {BrowserTab,Planet} from '../zenith/core/types.ts';
@@ -10,6 +11,7 @@ import type {AetherFeature,AetherReport,AetherView} from './core/types.ts';
 
 const root=document.getElementById('aether-root');if(!root)throw Error('Aether root not found');
 let tabs:BrowserTab[]=[];let cockpit:AetherCockpit|null=null;let selected:Planet|null=null;
+let novaDispose:(()=>void)|null=null;
 let preferences:AetherPreferences=loadPreferences();let currentView:AetherView='planetarium';let filter='';let paused=false;
 const isAlive=()=>Boolean(document.getElementById('aether-root'));
 function toast(message:string){document.querySelector('.aether-toast')?.remove();const notice=document.createElement('div');notice.className='aether-toast';notice.role='status';notice.textContent=message;document.body.append(notice);setTimeout(()=>notice.remove(),3600);}
@@ -24,6 +26,7 @@ function navigate(view:AetherView,feature?:string){
 function shell(){
  root!.innerHTML=`<div class="aether-app"><aside class="aether-side"><a class="aether-logo" href="./aether.html"><span class="aether-logo-mark" aria-hidden="true"></span><span>OrbitNest<small>AETHER EDITION</small></span></a>
  <div class="aether-nav-label">EXPLORE YOUR GALAXY</div><nav class="aether-nav" aria-label="Main navigation">
+ <button type="button" data-view="nova"><span class="aether-symbol">✦</span>Nova 3D cockpit</button>
  <button type="button" data-view="planetarium"><span class="aether-symbol">◎</span>Planetarium</button>
  <button type="button" data-view="instruments"><span class="aether-symbol">⌘</span>Mission instruments</button>
  <button type="button" data-view="observatory"><span class="aether-symbol">◈</span>Observatory</button>
@@ -38,7 +41,7 @@ function shell(){
 function setHeading(title:string,subtitle:string){element('aether-title').textContent=title;element('aether-subtitle').textContent=subtitle;element('aether-current').textContent=currentView.toUpperCase();
  root!.querySelectorAll<HTMLButtonElement>('[data-view]').forEach(link=>link.dataset.current=String(link.dataset.view===currentView));
 }
-function disposeScene(){cockpit?.dispose();cockpit=null;selected=null;}
+function disposeScene(){cockpit?.dispose();cockpit=null;selected=null;novaDispose?.();novaDispose=null;}
 function statGrid():HTMLElement{const metrics=[['OPEN PLANETS',tabs.length,'CURRENT BROWSER TABS'],['STAR SYSTEMS',countBy(tabs,t=>host(t.url)).size,'DISTINCT DOMAINS'],
  ['WORKSPACES',countBy(tabs,t=>String(t.windowId)).size,'BROWSER WINDOWS'],['AUDIO PLANETS',tabs.filter(t=>t.audible).length,'PLAYING SOUND']];
  const grid=text('div','','aether-stats');for(const [label,value,caption] of metrics){const card=text('div','','aether-stat');card.append(text('small',String(label)),text('strong',String(value)),text('em',String(caption)));grid.append(card);}return grid;}
@@ -135,15 +138,16 @@ function mountPreferences(){
  }card.append(body);target.append(card);
 }
 function persist(){document.documentElement.dataset.aetherTheme=preferences.theme;if(!savePreferences(preferences))toast('Browser storage is unavailable');else toast('Preferences saved');}
-function mountView(feature?:string){disposeScene();currentView=['planetarium','instruments','observatory','preferences'].includes(currentView)?currentView:'planetarium';
+function mountView(feature?:string){disposeScene();currentView=['planetarium','instruments','observatory','preferences','nova'].includes(currentView)?currentView:'planetarium';
  document.documentElement.dataset.aetherTheme=preferences.theme;
+ if(currentView==='nova')novaDispose=mountNova(element('aether-content'),tabs,toast,()=>{void updateTabs();});
  if(currentView==='planetarium')mountPlanetarium();if(currentView==='instruments')mountInstruments(feature);
  if(currentView==='observatory')mountObservatory();if(currentView==='preferences')mountPreferences();
  element('aether-live').textContent=hasLiveTabs()?'LIVE TABS CONNECTED':'PREVIEW / DEMO DATA';
 }
 async function updateTabs(){try{tabs=await getTabs();}catch(error){console.error('Unable to load browser tabs',error);toast('Could not read tabs');tabs=[];}
  const featureId=decodeURIComponent(location.hash.split('/')[1]||'');mountView(featureId);}
-function currentLocation(){const [view,feature]=location.hash.replace(/^#/,'').split('/');currentView=(['planetarium','instruments','observatory','preferences'].includes(view)?view:'planetarium') as AetherView;
+function currentLocation(){const [view,feature]=location.hash.replace(/^#/,'').split('/');currentView=(['planetarium','instruments','observatory','preferences','nova'].includes(view)?view:'planetarium') as AetherView;
  return feature?decodeURIComponent(feature):undefined;}
 function attachEvents(){window.addEventListener('hashchange',()=>{currentLocation();mountView(decodeURIComponent(location.hash.split('/')[1]||''));});
  document.addEventListener('keydown',e=>{if((e.target instanceof HTMLInputElement)||(e.target instanceof HTMLTextAreaElement))return;

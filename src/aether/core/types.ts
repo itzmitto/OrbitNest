@@ -12,5 +12,5 @@ export interface AetherFeature {
  analyze(tabs:BrowserTab[]):AetherReport;
  renderDetail?(tabs:BrowserTab[],report:AetherReport):HTMLElement;
 }
-export type AetherView='planetarium'|'instruments'|'observatory'|'preferences';
+export type AetherView='planetarium'|'instruments'|'observatory'|'preferences'|'nova';
 export type UiTheme='midnight'|'cosmic'|'amber';
