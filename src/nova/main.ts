@@ -4,7 +4,7 @@ import type {NovaTab,PanelContext} from './core/model.ts';
 import {clusterTabs,tabStats} from './core/model.ts';
 import {createShell,renderStats} from './components/shell.ts';
 import {mountPlanetarium,type PlanetariumHandle} from './components/planetarium.ts';
-import {el,empty,shortText} from './components/dom.ts';
+import {el,action,empty,shortText} from './components/dom.ts';
 import {findNovaPanel} from './features/registry.ts';
 
 export function mountNova(host: HTMLElement, inputTabs: NovaTab[], notify: (message: string) => void, refresh: () => void): () => void {
@@ -45,7 +45,7 @@ export function mountNova(host: HTMLElement, inputTabs: NovaTab[], notify: (mess
    const grid=el('div','nova-grid');
    for(const item of clusterTabs(tabs).slice(0,8)){
     const tile=el('div','nova-tile');tile.append(el('span','nova-eyebrow',`${item.count} PLANET${item.count===1?'':'S'}`),el('strong','',item.host));grid.append(tile);
-   }card.append(grid);target.append(card);return;
+   }card.append(grid,action('EXPLORE STAR SYSTEMS',()=>openPage('systems'),'nova-button nova-button-accent'));target.append(card);return;
   }
   const panel=findNovaPanel(page);
   if(!panel){target.append(empty('This navigation panel is not part of the installed version.'));return;}
