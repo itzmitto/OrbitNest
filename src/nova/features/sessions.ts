@@ -2,6 +2,7 @@ import type {NovaPanel} from '../core/model.ts';
 import {loadOrbits,saveOrbits,safeBookmarks,type SavedOrbit} from '../core/storage.ts';
 import {previewRestore,restoreBookmarks} from '../core/restore.ts';
 import {el,action,empty} from '../components/dom.ts';
+import {mountTransfer} from '../components/transfer.ts';
 export const sessionsPanel:NovaPanel={
  id:'sessions',title:'Session vault',description:'Save your open planet constellation and inspect it before restoring.',
  render(host,context){
@@ -29,5 +30,5 @@ export const sessionsPanel:NovaPanel={
    const newOrbit:SavedOrbit={id:crypto.randomUUID(),name:name.value.trim()||`Session ${new Date().toLocaleDateString()}`,createdAt:new Date().toLocaleString(),tabs:bookmarks};
    persist([newOrbit,...loadOrbits()].slice(0,30));name.value='';
   },'nova-button nova-button-accent'));
-  host.append(toolbar,list);draw();
+  host.append(toolbar,list);mountTransfer(host,draw,context.notify);draw();
  }};
